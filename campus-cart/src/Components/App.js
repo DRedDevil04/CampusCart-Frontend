@@ -4,6 +4,7 @@ import { IoCart } from "react-icons/io5";
 import SlideShowImg from "./SlideShowImg";
 import SlideShowModal from "./SlideShowModal";
 import { MdOutlineEdit } from "react-icons/md";
+import { IoIosCloseCircle } from "react-icons/io";
 
 // ------------
 
@@ -37,6 +38,7 @@ function App(props) {
 
   const [currentImg, setCurrentImg] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  var [isEditModVisible, setIsEditModVisible] = useState(false);
   function nextImg() {
     setCurrentImg((currentImg + 1) % srcs.length);
   }
@@ -48,6 +50,92 @@ function App(props) {
   }
   return (
     <>
+      {/* ----------------edit product modal------------------------ */}
+      {isEditModVisible && isAdmin ? (
+        <div
+          className="edit-prod add-prod modal"
+          id="modal"
+          style={{ overflow: "auto" }}
+        >
+          <div
+            className="cont-mod"
+            style={{ paddingTop: "60px", paddingBottom: "0px" }}
+          >
+            <form className="add-product-form">
+              <div
+                className="close"
+                onClick={() => {
+                  setIsEditModVisible(false);
+                }}
+              >
+                <IoIosCloseCircle />
+              </div>
+              <div className="form-group">
+                <label htmlFor="name">Product Name:</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Enter the product name"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="price">Price:</label>
+                <input
+                  type="number"
+                  id="price"
+                  name="price"
+                  placeholder="Enter its price"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="discount">Discount Amount:</label>
+                <input
+                  type="number"
+                  id="discount"
+                  name="discount"
+                  placeholder="Enter its discount amount"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="category">Category:</label>
+                <select type="number" id="category" name="category" required>
+                  <option value="0" disabled>
+                    (Select a category)
+                  </option>
+                  <option value="1">Category 1</option>
+                  <option value="1">Category 2</option>
+                  <option value="1">Category 3</option>
+                  <option value="1">Category 4</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label htmlFor="description">Description:</label>
+                <textarea
+                  id="description"
+                  name="description"
+                  placeholder="Enter the description of the product"
+                  required
+                ></textarea>
+              </div>
+              <div className="form-group">
+                <label htmlFor="image">Image:</label>
+                <input
+                  type="text"
+                  id="image"
+                  name="image"
+                  placeholder="Enter the URL of the images (seperate them with a , )"
+                  required
+                />
+              </div>
+              <button type="submit">Edit Product</button>
+            </form>
+          </div>
+        </div>
+      ) : null}
       {/* cursor custom */}{" "}
       <div ref={cursorContRef} className="customCursorCont">
         {" "}
@@ -115,19 +203,23 @@ function App(props) {
           </div>
         </div>
         <div className="cont-container">
-          <div className="prod-cat">Sneaker Company</div>
-          <div className="prod-title">Fall Limited Edition Sneakers</div>
+          <div className="prod-cat">Category</div>
+          <div className="prod-title">Product main Title</div>
           <div className="prod-desc">
-            These low-profile sneakers are your perfect casual wear companion.
-            Featuring a durable rubber outer sole, they’ll withstand everything
-            the weather can offer.
+            (Product Description) <br />
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text
+            ever since the 1500s, when an unknown printer took a galley of type
+            and scrambled it to make a type specimen book. It has survived not
+            only five centuries, but also the leap into electronic typesetting,
+            remaining essentially unchanged. It was popularised
           </div>
           <div className="prod-price">
             <div className="price-top">
-              <h2 className="price-main">${(250 - discountAmt).toFixed(2)}</h2>
+              <h2 className="price-main">₹{(250 - discountAmt).toFixed(2)}</h2>
               <div className="price-disc">{(discountAmt / 250) * 100}%</div>
             </div>
-            <div className="price-cut">$250.00</div>
+            <div className="price-cut">₹250.00</div>
           </div>
           <div className="prod-buy-area">
             <div className="quantity">
@@ -166,7 +258,12 @@ function App(props) {
               <IoCart size={25} /> <span>Add to cart</span>
             </div>
             {isAdmin ? (
-              <div className="edit-cont">
+              <div
+                className="edit-cont"
+                onClick={() => {
+                  setIsEditModVisible(true);
+                }}
+              >
                 <MdOutlineEdit size={25} /> <span>Edit</span>
               </div>
             ) : null}

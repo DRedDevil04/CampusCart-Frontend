@@ -96,7 +96,6 @@ function App(props) {
           <Card />
           <Card />
 
-          {/* TODO: Add a ad product button */}
           {/* TODO: also create components for various part and add various props to these cards */}
         </div>
       </section>
