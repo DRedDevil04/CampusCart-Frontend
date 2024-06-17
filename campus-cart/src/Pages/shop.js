@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
-import "./styles.css";
-import Card from "./Card";
+import "../Components/styles.css";
+import Card from "../Components/Card";
 import { IoIosAddCircle, IoIosCloseCircle } from "react-icons/io";
 
 function App(props) {
