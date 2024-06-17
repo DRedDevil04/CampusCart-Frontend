@@ -3,13 +3,11 @@ import "./styles.css";
 import { IoCart } from "react-icons/io5";
 import SlideShowImg from "./SlideShowImg";
 import SlideShowModal from "./SlideShowModal";
-import { MdOutlineEdit } from "react-icons/md";
 
 // ------------
 
 function App(props) {
   var discountAmt = 90; //TODO: change it to props.discountAmt
-  var isAdmin = true; //TODO: change it to props.isAdmin
 
   const inputRef = useRef(null);
   const minusRef = useRef(null);
@@ -165,11 +163,6 @@ function App(props) {
             <div className="add-to-cart">
               <IoCart size={25} /> <span>Add to cart</span>
             </div>
-            {isAdmin ? (
-              <div className="edit-cont">
-                <MdOutlineEdit size={25} /> <span>Edit</span>
-              </div>
-            ) : null}
           </div>
         </div>
       </section>
