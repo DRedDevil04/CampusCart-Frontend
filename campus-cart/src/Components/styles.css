@@ -209,7 +209,7 @@ html {
 #modal {
   position: fixed;
   z-index: 1000;
-  animation: modalShow 0.2s forwards;
+  animation: modalShow 0.1s forwards;
   left: 0;
   top: 0;
   background-color: #000000c0;
@@ -239,7 +239,6 @@ html {
 }
 
 .img-cont-mod {
-  animation: slideUp 0.2s forwards;
   width: 80vw;
 }
 
@@ -634,6 +633,7 @@ textarea::placeholder {
   }
 
   /* ----------------------- product page ------------------------------- */
+
   .product-page {
     gap: 10px;
     padding: 20px 20px;

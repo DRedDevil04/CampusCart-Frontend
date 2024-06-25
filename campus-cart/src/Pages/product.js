@@ -1,14 +1,15 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, forwardRef } from "react";
 import "../Components/styles.css";
 import { IoCart } from "react-icons/io5";
 import SlideShowImg from "../Components/SlideShowImg";
 import SlideShowModal from "../Components/SlideShowModal";
 import { MdOutlineEdit } from "react-icons/md";
 import { IoIosCloseCircle } from "react-icons/io";
+import EditProd from "../Components/EditProd";
 
 // ------------
 
-function App(props) {
+const App = forwardRef(function App(props, ref) {
   var discountAmt = 90; //TODO: change it to props.discountAmt
   var isAdmin = true; //TODO: change it to props.isAdmin
 
@@ -49,93 +50,26 @@ function App(props) {
     );
   }
   return (
-    <>
+    <div
+      className="product"
+      ref={ref}
+      style={{
+        transition: "all 0.5s",
+        display: "none",
+        opacity: "0",
+        position: "fixed",
+        top: "0",
+        left: "0",
+        bottom: "0",
+        right: "0",
+      }}
+    >
       {/* ----------------edit product modal------------------------ */}
-      {isEditModVisible && isAdmin ? (
-        <div
-          className="edit-prod add-prod modal"
-          id="modal"
-          style={{ overflow: "auto" }}
-        >
-          <div
-            className="cont-mod"
-            style={{ paddingTop: "60px", paddingBottom: "0px" }}
-          >
-            <form className="add-product-form">
-              <div
-                className="close"
-                onClick={() => {
-                  setIsEditModVisible(false);
-                }}
-              >
-                <IoIosCloseCircle />
-              </div>
-              <div className="form-group">
-                <label htmlFor="name">Product Name:</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  placeholder="Enter the product name"
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="price">Price:</label>
-                <input
-                  type="number"
-                  id="price"
-                  name="price"
-                  placeholder="Enter its price"
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="discount">Discount Amount:</label>
-                <input
-                  type="number"
-                  id="discount"
-                  name="discount"
-                  placeholder="Enter its discount amount"
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="category">Category:</label>
-                <select type="number" id="category" name="category" required>
-                  <option value="0" disabled>
-                    (Select a category)
-                  </option>
-                  <option value="1">Category 1</option>
-                  <option value="1">Category 2</option>
-                  <option value="1">Category 3</option>
-                  <option value="1">Category 4</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label htmlFor="description">Description:</label>
-                <textarea
-                  id="description"
-                  name="description"
-                  placeholder="Enter the description of the product"
-                  required
-                ></textarea>
-              </div>
-              <div className="form-group">
-                <label htmlFor="image">Image:</label>
-                <input
-                  type="text"
-                  id="image"
-                  name="image"
-                  placeholder="Enter the URL of the images (seperate them with a , )"
-                  required
-                />
-              </div>
-              <button type="submit">Edit Product</button>
-            </form>
-          </div>
-        </div>
-      ) : null}
+      <EditProd
+        isEditModVisible={isEditModVisible}
+        setIsEditModVisible={setIsEditModVisible}
+        isAdmin={isAdmin}
+      />
       {/* cursor custom */}{" "}
       <div ref={cursorContRef} className="customCursorCont">
         {" "}
@@ -270,8 +204,8 @@ function App(props) {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
-}
+});
 
 export default App;
