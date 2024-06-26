@@ -10,6 +10,9 @@ import EditProd from "../Components/EditProd";
 // ------------
 
 const App = forwardRef(function App(props, ref) {
+
+  console.log("Hello");
+
   var discountAmt = 90; //TODO: change it to props.discountAmt
   var isAdmin = true; //TODO: change it to props.isAdmin
 
@@ -55,9 +58,9 @@ const App = forwardRef(function App(props, ref) {
       ref={ref}
       style={{
         transition: "all 0.5s",
-        display: "none",
-        opacity: "0",
-        position: "fixed",
+        display: "",
+        opacity: "1",
+        position: "",
         top: "0",
         left: "0",
         bottom: "0",
