@@ -101,7 +101,7 @@ export function Login() {
                     <FormHelperText>We'll never share your email.</FormHelperText>
                   </FormControl>
                   <FormControl id='password'>
-                    <HStack justify='space-between'>
+                    <HStack justify-content='space-between'>
                       <FormLabel>Password</FormLabel>
                     </HStack>
                     <Input
