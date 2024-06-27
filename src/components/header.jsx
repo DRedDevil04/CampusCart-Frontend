@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Flex, Text, Avatar, Heading, IconButton, useMediaQuery, Menu, MenuButton, MenuList, MenuItem, MenuDivider, useDisclosure } from '@chakra-ui/react';
 import { ArrowRightIcon } from '@chakra-ui/icons';
-import LogoutModal from './logout'; // Ensure correct import path and component name
+import LogoutModal from './logout.jsx'; // Ensure correct import path and component name
 import api from '../API/api';
 const Header = ({ onOpen }) => {
   const [isNonMobile] = useMediaQuery('(min-width: 420px)');
