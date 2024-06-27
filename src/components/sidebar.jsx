@@ -34,8 +34,8 @@ const Sidebar = ({ isOpen, onClose, btnRef }) => {
                 </Box>
                 <DrawerBody>
                     <Flex p="5%" flexDir="column" width="100%" as="nav">
-                        <NavItem icon={MdDashboard} title="Dashboard" onClick={() => { navigate("/"); onClose(); }} />
-                        <NavItem icon={FaUser} title="Users" onClick={() => { navigate('/userpage'); onClose(); }} />
+                        <NavItem icon={MdDashboard} title="Dashboard" onClick={() => { navigate("/dashboard"); onClose(); }} />
+                        <NavItem icon={FaUser} title="Users" onClick={() => { navigate('/dashboard/userpage'); onClose(); }} />
                         <NavItem icon={FaStore} title="Store" />
                         <NavItem icon={FiSettings} title="Settings" />
                     </Flex>
