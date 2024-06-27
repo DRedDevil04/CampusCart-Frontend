@@ -34,7 +34,12 @@ export function Login() {
 
   useEffect(() => {
     if (userInfo) {
-      navigate('/');
+      const { role } = userInfo;
+      if (role === 'admin') {
+        navigate('/dashboard');
+      } else {
+        navigate('/');
+      }
     }
   }, [userInfo, navigate]);
 
@@ -59,7 +64,13 @@ export function Login() {
     try {
       const res = await login({ email, password }).unwrap();
       dispatch(setCredentials({ ...res.data }));
-      navigate('/');
+      // const { role } = res.data;
+      // if (role === 'admin') {
+      //   navigate('/dashboard');
+      // }
+      //  else {
+      //   navigate('/');
+      // }
 
       setEmail('');
       setPassword('');

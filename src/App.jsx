@@ -13,6 +13,7 @@ import ProductsTable from './components/products_table';
 import UserList from './components/userlist';
 import { useSelector } from 'react-redux';
 import { selectUser } from './slices/authSlice';
+import { useDisclosure } from '@chakra-ui/react';
 
 const Dashboard=({onOpen,isOpen,onClose,btnRef})=>{
   <>
