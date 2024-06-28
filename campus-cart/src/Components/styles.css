@@ -11,6 +11,10 @@ html {
   background-color: var(--tertiary-color);
 }
 
+.this {
+  width: 300px;
+}
+
 :root {
   --primary-color: #3f72af;
   --secondary-color: #112d4e;
@@ -26,11 +30,19 @@ html {
 /* Center the content on the page */
 .page {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
   background-color: var(--tertiary-color);
   margin: auto;
+}
+
+.page > h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin: 20px 0;
 }
 
 /* Create a container for the cards */
@@ -183,6 +195,31 @@ html {
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+.text-hover {
+  position: relative;
+  transition: all 0.2s;
+}
+.text-hover::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 3px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--primary-color);
+  transition: all 0.2s;
+}
+.text-hover:hover {
+  cursor: pointer;
+  color: var(--primary-color);
+}
+.text-hover:hover::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 3px;
 }
 /* ----------------------- modal ------------------- */
 
@@ -375,6 +412,7 @@ textarea::placeholder {
   align-items: center;
   flex-direction: column;
   width: min-content;
+  position: relative;
 }
 
 .prod-img {
@@ -575,6 +613,82 @@ textarea::placeholder {
 
 /* -------------------------------------------------------------------------- */
 
+/* ---------------------------------carousel------------------------------- */
+@keyframes slideLeft {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.img-cont-car {
+  width: 70vw;
+  margin: 20px auto;
+}
+.img-car {
+  height: 500px;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  border-radius: 15px;
+}
+@media screen and (max-width: 900px) {
+  .img-car {
+    height: 300px;
+  }
+  .slick-next,
+  .slick-prev {
+    font-size: 0.8rem !important;
+  }
+
+  .slick-arrow {
+    font-size: 0.8rem !important;
+    width: 30px !important;
+    height: 30px !important;
+  }
+}
+.img-car > img {
+  animation: slideLeft 0.5s forwards;
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  position: absolute;
+  object-fit: cover;
+  border-radius: 15px;
+}
+.left-arrow-car,
+.right-arrow-car {
+  position: absolute;
+  top: 50%;
+  font-size: 1.5rem;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  background-color: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.slick-next::before {
+  margin: 0 !important;
+  padding: 0 !important;
+  content: "❯" !important;
+  font-size: 1.5rem !important;
+}
+.slick-prev::before {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 1.5rem !important;
+  content: "❮" !important;
+}
+/* ------------------------------------------------------------------------ */
+
 /* Responsive styles for smaller screens */
 @media (max-width: 900px) {
   .container {
@@ -670,6 +784,9 @@ textarea::placeholder {
 
 /* Responsive styles for even smaller screens */
 @media (max-width: 500px) {
+  .page > h1 {
+    font-size: 2rem;
+  }
   .modal {
     display: none;
   }
