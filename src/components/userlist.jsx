@@ -14,67 +14,67 @@ import {
     InputGroup,
     InputLeftElement
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { SearchIcon } from '@chakra-ui/icons';
-import UserListRow from './userlist_row';
-
-const initialUserData = [
-    {
-        id: '1',
-        name: 'John Doe',
-        email: 'john.doe@example.com',
-        role: 'admin',
-        createdAt: '2023-01-15',
-        bought: 5,
-        sold: 3,
-        imageUrl: 'https://via.placeholder.com/100'
-    },
-    {
-        id: '2',
-        name: 'Jane Smith',
-        email: 'jane.smith@example.com',
-        role: 'user',
-        createdAt: '2023-02-10',
-        bought: 2,
-        sold: 7,
-        imageUrl: 'https://via.placeholder.com/100'
-    },
-    {
-        id: '3',
-        name: 'Alice Johnson',
-        email: 'alice.johnson@example.com',
-        role: 'user',
-        createdAt: '2023-03-20',
-        bought: 8,
-        sold: 4,
-        imageUrl: 'https://via.placeholder.com/100'
-    },
-    {
-        id: '5',
-        name: 'Shakira',
-        email: 'shakira@example.com',
-        role: 'admin',
-        createdAt: '2023-03-20',
-        bought: 6,
-        sold: 0,
-        imageUrl: 'https://via.placeholder.com/100'
-    },
-    {
-        id: '4',
-        name: 'Bob Brown',
-        email: 'bob.brown@example.com',
-        role: 'user',
-        createdAt: '2023-04-25',
-        bought: 1,
-        sold: 0,
-        imageUrl: 'https://via.placeholder.com/100'
-    }
-];
+import UserListRow from '../helpers/userlist_row';
+import api from '../API/api';
+// const initialUserData = [
+//     {
+//         id: '1',
+//         name: 'John Doe',
+//         email: 'john.doe@example.com',
+//         role: 'admin',
+//         createdAt: '2023-01-15',
+//         bought: 5,
+//         sold: 3,
+//         imageUrl: 'https://via.placeholder.com/100'
+//     },
+//     {
+//         id: '2',
+//         name: 'Jane Smith',
+//         email: 'jane.smith@example.com',
+//         role: 'user',
+//         createdAt: '2023-02-10',
+//         bought: 2,
+//         sold: 7,
+//         imageUrl: 'https://via.placeholder.com/100'
+//     },
+//     {
+//         id: '3',
+//         name: 'Alice Johnson',
+//         email: 'alice.johnson@example.com',
+//         role: 'user',
+//         createdAt: '2023-03-20',
+//         bought: 8,
+//         sold: 4,
+//         imageUrl: 'https://via.placeholder.com/100'
+//     },
+//     {
+//         id: '5',
+//         name: 'Shakira',
+//         email: 'shakira@example.com',
+//         role: 'admin',
+//         createdAt: '2023-03-20',
+//         bought: 6,
+//         sold: 0,
+//         imageUrl: 'https://via.placeholder.com/100'
+//     },
+//     {
+//         id: '4',
+//         name: 'Bob Brown',
+//         email: 'bob.brown@example.com',
+//         role: 'user',
+//         createdAt: '2023-04-25',
+//         bought: 1,
+//         sold: 0,
+//         imageUrl: 'https://via.placeholder.com/100'
+//     }
+// ];
 
 const UserList = () => {
-    const [tableData, setTableData] = useState(initialUserData);
+    const [tableData, setTableData] = useState([]);
     const [search, setSearch] = useState('');
-    const [openPopover, setOpenPopover] = useState(null); // To track which popover is open
+    const [openPopover, setOpenPopover] = useState(null); // track by useriD which popover is open
     const toast = useToast();
 
     const textColor = useColorModeValue("gray.700", "white");
@@ -87,11 +87,8 @@ const UserList = () => {
 
     const handleChangeRole = async (userName, newRole) => {
         try {
-            // Simulate API request to change role
-            // In a real application, this would be replaced with actual API call
             // await api.put('/user/changeRole', { userName, newRole });
-
-            // Update local state after successful role change
+            // Update local state 
             setTableData(prevData =>
                 prevData.map(user =>
                     user.name === userName ? { ...user, role: newRole } : user
@@ -121,6 +118,19 @@ const UserList = () => {
         }
     };
 
+    useEffect(()=>{
+        const getAllusers=async()=>{
+            try{
+            const res=await api.get("/user/getallusers",{withCredentials:true});
+            setTableData(res.data.data);
+            }
+            catch(err)
+            {
+                console.log(`Error:${err}`);
+            }
+        }
+        getAllusers();
+    },[])
     return (
         <>
             <Card mt="1rem" pl={{ base: "0rem", md: "3rem" }} pb="0px">
@@ -178,7 +188,7 @@ const UserList = () => {
                                     key={user.id}
                                     userName={user.name}
                                     email={user.email}
-                                    date={user.createdAt}
+                                    date={new Date(user.__created)}
                                     avatar={user.imageUrl}
                                     role={user.role}
                                     sold={user.sold}

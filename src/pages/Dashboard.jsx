@@ -1,10 +1,10 @@
 // components/Dashboard.jsx
 
 import React from 'react';
-import Header from './header';
-import Sidebar from './sidebar';
-import Stats from './stats';
-import ProductsTable from './products_table';
+import Header from '../components/header';
+import Sidebar from '../components/sidebar';
+import Stats from '../components/stats';
+import ProductsTable from '../components/products_table';
 
 const Dashboard = ({ onOpen, isOpen, onClose, btnRef }) => (
   <>

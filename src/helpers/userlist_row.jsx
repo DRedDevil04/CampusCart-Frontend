@@ -27,7 +27,7 @@ const UserListRow = ({ userName, email, date, avatar, role, sold, bought, isLast
         onChangeRole(userName, newRole);
         onClose(); // Close the popover after role change
     };
-
+    const formattedDate =date.toLocaleString();
     return (
         <Tr
             bg={role === "admin" ? adminBgColor : "transparent"}
@@ -91,7 +91,7 @@ const UserListRow = ({ userName, email, date, avatar, role, sold, bought, isLast
                     color={textColor}
                     fontWeight="bold"
                 >
-                    {date}
+                    {formattedDate}
                 </Text>
             </Td>
             <Td textAlign="center">

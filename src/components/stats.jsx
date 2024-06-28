@@ -1,8 +1,8 @@
 import React, {useState,useEffect} from 'react';
 import { Box, Flex, Stat, StatLabel, StatNumber, SimpleGrid } from '@chakra-ui/react';
 import { BsPerson } from 'react-icons/bs';
-import { FiServer } from 'react-icons/fi';
-import { GoLocation } from 'react-icons/go';
+import { MdProductionQuantityLimits } from "react-icons/md";
+import { MdOutlineReviews } from "react-icons/md";
 import api from '../API/api';
 
 const StatsCard = ({ title, stat, icon }) => (
@@ -30,11 +30,11 @@ const StatsCard = ({ title, stat, icon }) => (
 const Stats = () => {
   const [productCount,setProductCount]=useState(0);
   const [userCount,setUserCount]=useState(0);
-  useEffect(()=>{   
+  useEffect(()=>{    
       const getUserCount=async()=>{
         try{
-          const res=await api.get('/user/getallusers');
-          setUserCount(Array.isArray(res.data) ? res.data.length : 0);
+          const res=await api.get('/user/getallusers',{withCredentials:true});
+          setUserCount(Array.isArray(res.data.data) ? res.data.data.length : 0);
         }catch(err)
         {
           console.log(err);
@@ -71,12 +71,12 @@ const Stats = () => {
         <StatsCard
           title="Products"
           stat={productCount}
-          icon={<FiServer size="3em" />}
+          icon={<MdProductionQuantityLimits size="3em" />}
         />
         <StatsCard
           title="Reviews"
           stat="99+"
-          icon={<GoLocation size="3em" />}
+          icon={<MdOutlineReviews size="3em" />}
         />
       </SimpleGrid>
     </Box>

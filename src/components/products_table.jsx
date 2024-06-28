@@ -21,7 +21,7 @@ import {
     Select,
     Spinner
 } from "@chakra-ui/react";
-import TableRow from "./product_row";
+import TableRow from "../helpers/product_row";
 import { useState } from "react";
 import {
     useGetAllItemsQuery,
@@ -60,12 +60,12 @@ const ProductsTable = () => {
     const handleSaveChanges = async () => {
         try {
             const updatedProduct = {
-                _id: productId,
+                _id:productId,
                 name: productName,
                 categoryID: categoryID,
                 available: status === "true",
             };
-            await updateItem(updatedProduct).unwrap();
+            await updateItem(productId,updatedProduct).unwrap();
             handleCloseModal();
         } catch (err) {
             console.error(`Error updating product: ${err}`);
@@ -117,12 +117,13 @@ const ProductsTable = () => {
                         {tableData.map((item, index) => (
                             <TableRow
                                 key={item._id}
+                                productId={item._id}
                                 productName={item.name}
                                 category={item.category?.name}
                                 date={new Date(item.createdAt)}
                                 status={item.available}
                                 isLast={index === tableData.length - 1}
-                                onEditClick={() => handleEditClick(item._id)}
+                                onEditClick={handleEditClick}
                             />
                         ))}
                     </Tbody>

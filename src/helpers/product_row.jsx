@@ -1,7 +1,7 @@
 import React from "react";
 import { Tr, Td, Text, Badge, Button, useColorModeValue } from "@chakra-ui/react";
 
-const TableRow = ({ productName, category, status, date, isLast, onEditClick }) => {
+const TableRow = ({ productId, productName, category, status, date, isLast, onEditClick }) => {
     const textColor = useColorModeValue("gray.500", "white");
     const titleColor = useColorModeValue("gray.700", "white");
     const bgStatusSold = useColorModeValue("gray.200", "gray.700");
@@ -69,7 +69,7 @@ const TableRow = ({ productName, category, status, date, isLast, onEditClick }) 
                     p="0px"
                     bg="transparent"
                     variant="no-effects"
-                    onClick={() => onEditClick({ productName, category, date, status })}
+                    onClick={() => onEditClick(productId)}
                 >
                     <Text
                         fontSize={{ base: "sm", sm: "md" }}

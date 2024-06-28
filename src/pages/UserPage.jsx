@@ -1,9 +1,9 @@
 // components/UserPage.jsx
 
 import React from 'react';
-import Header from './header';
-import Sidebar from './sidebar';
-import UserList from './userlist';
+import Header from '../components/header';
+import Sidebar from '../components/sidebar';
+import UserList from '../components/userlist';
 
 const UserPage = ({ onOpen, isOpen, onClose, btnRef }) => (
   <>

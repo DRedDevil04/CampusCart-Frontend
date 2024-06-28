@@ -13,7 +13,7 @@ import { FiSettings } from 'react-icons/fi';
 import { FaStore, FaUser } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-import NavItem from './navitems';
+import NavItem from '../helpers/navitems';
 
 const Sidebar = ({ isOpen, onClose, btnRef }) => {
     const navigate = useNavigate();
