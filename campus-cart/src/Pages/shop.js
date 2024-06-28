@@ -3,10 +3,18 @@ import "../Components/styles.css";
 import Card from "../Components/Card";
 import { IoIosAddCircle, IoIosCloseCircle } from "react-icons/io";
 import AddProd from "../Components/AddProd";
+import { useNavigate } from "react-router-dom";
 
 function App(props) {
   var isAdmin = true; // TODO: adding props.isAdmin
   var [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
+
+  const handler = ()=>{
+    console.log("clicked");
+    navigate("/product");
+  }
+
   return (
     <>
       {/* ----------------adding product modal------------------------ */}
