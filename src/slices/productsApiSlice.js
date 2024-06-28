@@ -1,18 +1,18 @@
 import { apiSlice } from './apiSlices';
 
-export const  productsApiSlice = apiSlice.injectEndpoints({
+export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllItems: builder.query({
       query: () => '/item',
     }),
     getItemById: builder.query({
-        query: (id) =>`/item/${id}`,
+      query: (id) => `/item/${id}`,
     }),
     updateItem: builder.mutation({
-      query: (id,updatedItem) => ({
+      query: ({ id, updatedItem }) => ({
         url: `/item/${id}`,
         method: 'PUT',
-        body:updatedItem,
+        body: updatedItem,
         credentials: 'include',
       }),
     }),
