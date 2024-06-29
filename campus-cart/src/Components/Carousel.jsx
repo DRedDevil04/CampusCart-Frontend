@@ -19,7 +19,7 @@ function SampleNextArrow(props) {
         backgroundColor: "#3f72af",
         color: "green",
         display: "flex",
-        right: "-60px",
+        right: "10px",
         justifyContent: "center",
         alignItems: "center",
         borderRadius: "100%",
@@ -50,7 +50,8 @@ function SamplePrevArrow(props) {
         borderRadius: "100%",
         cursor: "pointer",
         transition: "all 0.2s",
-        left: "-60px",
+        left: "10px",
+        zIndex: "1",
       }}
       onClick={onClick}
     />

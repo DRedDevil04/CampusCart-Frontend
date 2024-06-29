@@ -35,11 +35,6 @@ function App(props) {
   }
   //---------------------------------------------------
 
-  const handler = () => {
-    console.log("clicked");
-    navigate("/product");
-  };
-
   return (
     <>
       {/* ----------------adding product modal------------------------ */}
@@ -59,6 +54,41 @@ function App(props) {
             nextImg={nextImg}
             prevImg={prevImg}
           />
+        </div>
+        <h1 className="text-hover">Explore by top categories</h1>
+        <div className="container">
+          <div className="category-card">
+            <img
+              alt="this"
+              draggable="false"
+              src="https://www.nowfoods.com/sites/default/files/styles/masthead_64/public/2023-11/Natrual_Foods_Hero-2_0.jpg?itok=WYhBCrrj"
+            />
+            <div>Food</div>
+          </div>
+          <div className="category-card">
+            <img
+              alt="this"
+              draggable="false"
+              src="https://www.nykaa.com/beauty-blog/wp-content/uploads/images/issue283/8-Breakthrough-Products-That-Are-Selling-Faster-Than-You-Can-Cou_OI.jpg"
+            />
+            <div>Beauty</div>
+          </div>
+          <div className="category-card">
+            <img
+              alt="this"
+              draggable="false"
+              src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-madebymath-90946.jpg&fm=jpg"
+            />
+            <div>Home</div>
+          </div>
+          <div className="category-card">
+            <img
+              alt="this"
+              draggable="false"
+              src="https://cdn.shopify.com/s/files/1/0070/7032/files/trending-products_c8d0d15c-9afc-47e3-9ba2-f7bad0505b9b.png?v=1614559651"
+            />
+            <div>Electronics</div>
+          </div>
         </div>
         <h1 className="text-hover">Our products</h1>
         <div className="container">
