@@ -7,10 +7,16 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 function App(props) {
   return (
     <Router>
-        <Routes>
-          <Route path="/" element={<Shop products={data} />} />
-          <Route path="/product" element={<Product/> } />
-        </Routes>
+      <Routes>
+        <Route path="/" element={<Shop products={data} />} />
+        {data.map((product) => (
+          <Route
+            key={product.id}
+            path={"/product/" + product.id}
+            element={<Product product={product} />}
+          />
+        ))}
+      </Routes>
     </Router>
     // <div>
     //   <Shop products={data} />

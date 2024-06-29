@@ -77,6 +77,7 @@ function App(props) {
           {props.products.map((product) => (
             <Card
               key={product.id}
+              id={product.id}
               img={product.images[0]}
               title={product.title}
               category={product.category}

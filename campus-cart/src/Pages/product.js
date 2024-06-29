@@ -4,16 +4,17 @@ import { IoCart } from "react-icons/io5";
 import SlideShowImg from "../Components/SlideShowImg";
 import SlideShowModal from "../Components/SlideShowModal";
 import { MdOutlineEdit } from "react-icons/md";
-import { IoIosCloseCircle } from "react-icons/io";
 import EditProd from "../Components/EditProd";
 
 // ------------
 
-const App = forwardRef(function App(props, ref) {
-
+const Product = forwardRef((props, ref) => {
   console.log("Hello");
 
-  var discountAmt = 90; //TODO: change it to props.discountAmt
+  var discountAmt = (
+    (props.product.discountPercentage * props.product.price) /
+    100
+  ).toFixed(2);
   var isAdmin = true; //TODO: change it to props.isAdmin
 
   const inputRef = useRef(null);
@@ -31,14 +32,7 @@ const App = forwardRef(function App(props, ref) {
   const cursorRef = useRef(null);
   const cursorContRef = useRef(null);
 
-  const srcs = [
-    "https://www.nykaa.com/beauty-blog/wp-content/uploads/images/issue283/8-Breakthrough-Products-That-Are-Selling-Faster-Than-You-Can-Cou_OI.jpg",
-    "https://cdn.shopify.com/s/files/1/0070/7032/files/trending-products_c8d0d15c-9afc-47e3-9ba2-f7bad0505b9b.png?v=1614559651",
-    "https://hips.hearstapps.com/hmg-prod/images/gh-best-skincare-products-6557978b58b57.png",
-    "https://www.nowfoods.com/sites/default/files/styles/masthead_64/public/2023-11/Natrual_Foods_Hero-2_0.jpg?itok=WYhBCrrj",
-    "https://cdn.shopify.com/s/files/1/1859/8979/files/image17_3cfc7cfb-8215-40b7-a297-db7285d5375b.png?v=1610384290",
-    "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-madebymath-90946.jpg&fm=jpg",
-  ];
+  const srcs = props.product.images;
 
   const [currentImg, setCurrentImg] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
@@ -140,23 +134,23 @@ const App = forwardRef(function App(props, ref) {
           </div>
         </div>
         <div className="cont-container">
-          <div className="prod-cat">Category</div>
-          <div className="prod-title">Product main Title</div>
-          <div className="prod-desc">
-            (Product Description) <br />
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised
-          </div>
+          <div className="prod-cat">{props.product.category}</div>
+          <div className="prod-title">{props.product.title}</div>
+          <div className="prod-desc">{props.product.description}</div>
           <div className="prod-price">
             <div className="price-top">
-              <h2 className="price-main">₹{(250 - discountAmt).toFixed(2)}</h2>
-              <div className="price-disc">{(discountAmt / 250) * 100}%</div>
+              <h2 className="price-main">₹{props.product.price}</h2>
+              <div className="price-disc">
+                {props.product.discountPercentage}%
+              </div>
             </div>
-            <div className="price-cut">₹250.00</div>
+            <div className="price-cut">
+              ₹
+              {(
+                props.product.price /
+                (1 - props.product.discountPercentage / 100)
+              ).toFixed(2)}
+            </div>
           </div>
           <div className="prod-buy-area">
             <div className="quantity">
@@ -211,4 +205,4 @@ const App = forwardRef(function App(props, ref) {
   );
 });
 
-export default App;
+export default Product;

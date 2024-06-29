@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import "./styles.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -73,7 +73,7 @@ export default function Carousel(props) {
     <Slider {...settings}>
       {props.srcs.map((src, index) => {
         return (
-          <div className="img-car">
+          <div className="img-car" key={index}>
             <img
               key={index}
               src={src}

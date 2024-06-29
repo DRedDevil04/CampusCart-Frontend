@@ -5,15 +5,26 @@ import { useNavigate } from "react-router-dom";
 function Card(props) {
   const navigate = useNavigate();
 
-  const handler = ()=>{
+  const handler = (id) => {
     console.log("clicked");
-    navigate("/product");
-  }
+    navigate("/product/" + id);
+  };
   return (
     <>
-      <div className="card" onClick={handler}>
-        <Image src={props.img} alt="Product Image" href="google.com" />
-        <div className="card-content" style={{ cursor: "pointer" }}>
+      <div className="card">
+        <Image
+          src={props.img}
+          alt="Product Image"
+          href="google.com"
+          id={props.id}
+        />
+        <div
+          className="card-content"
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            handler(props.id);
+          }}
+        >
           <h3 className="card-title">{props.title}</h3>
           <p className="card-category">{props.category}</p>
         </div>
