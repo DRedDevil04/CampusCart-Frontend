@@ -18,58 +18,7 @@ import { useState,useEffect } from 'react';
 import { SearchIcon } from '@chakra-ui/icons';
 import UserListRow from '../helpers/userlist_row';
 import api from '../API/api';
-// const initialUserData = [
-//     {
-//         id: '1',
-//         name: 'John Doe',
-//         email: 'john.doe@example.com',
-//         role: 'admin',
-//         createdAt: '2023-01-15',
-//         bought: 5,
-//         sold: 3,
-//         imageUrl: 'https://via.placeholder.com/100'
-//     },
-//     {
-//         id: '2',
-//         name: 'Jane Smith',
-//         email: 'jane.smith@example.com',
-//         role: 'user',
-//         createdAt: '2023-02-10',
-//         bought: 2,
-//         sold: 7,
-//         imageUrl: 'https://via.placeholder.com/100'
-//     },
-//     {
-//         id: '3',
-//         name: 'Alice Johnson',
-//         email: 'alice.johnson@example.com',
-//         role: 'user',
-//         createdAt: '2023-03-20',
-//         bought: 8,
-//         sold: 4,
-//         imageUrl: 'https://via.placeholder.com/100'
-//     },
-//     {
-//         id: '5',
-//         name: 'Shakira',
-//         email: 'shakira@example.com',
-//         role: 'admin',
-//         createdAt: '2023-03-20',
-//         bought: 6,
-//         sold: 0,
-//         imageUrl: 'https://via.placeholder.com/100'
-//     },
-//     {
-//         id: '4',
-//         name: 'Bob Brown',
-//         email: 'bob.brown@example.com',
-//         role: 'user',
-//         createdAt: '2023-04-25',
-//         bought: 1,
-//         sold: 0,
-//         imageUrl: 'https://via.placeholder.com/100'
-//     }
-// ];
+
 
 const UserList = () => {
     const [tableData, setTableData] = useState([]);
@@ -107,19 +56,19 @@ const UserList = () => {
         }));
       };
 
-    const handleChangeRole = async (userId,email, newRole) => {
+    const handleChangeRole = async (userId,email, newrole) => {
         try {
-            await api.put("/user/updaterole",{email,newRole})
+            await api.put("/user/updaterole",{email,newrole})
             setTableData(prevData =>
                 prevData.map(user =>
-                    user.email === email ? { ...user, role: newRole } : user
+                    user.email === email ? { ...user, role: newrole } : user
                 )
             );
 
             // success toast notification
             toast({
                 title: "Role changed.",
-                description: `User's role has been changed to ${newRole}.`,
+                description: `User's role has been changed to ${newrole}.`,
                 status: "success",
                 duration: 3000,
                 isClosable: true,
@@ -206,7 +155,7 @@ const UserList = () => {
                         <Tbody>
                             {filteredData.map((user, index) => (
                                 <UserListRow
-                                    key={user.id}
+                                    key={user._id}
                                     userId={user.id}
                                     userName={user.name}
                                     email={user.email}
