@@ -16,7 +16,7 @@ import {
     Button
 } from '@chakra-ui/react';
 
-const UserListRow = ({ userName, email, date, avatar, role, sold, bought, isLast, onChangeRole, isOpen, onOpen, onClose }) => {
+const UserListRow = ({ userId,userName, email, date, avatar, role, orders,isLast, onChangeRole, isOpen, onOpen, onClose }) => {
     const textColor = useColorModeValue("gray.500", "white");
     const userColor = useColorModeValue("gray.700", "white");
     const adminColor = useColorModeValue("red", "white");
@@ -24,7 +24,7 @@ const UserListRow = ({ userName, email, date, avatar, role, sold, bought, isLast
     const adminBgColor = useColorModeValue("teal.50", "teal.900");
 
     const handleChangeRole = (newRole) => {
-        onChangeRole(userName, newRole);
+        onChangeRole(userId,email,newRole);
         onClose(); // Close the popover after role change
     };
     const formattedDate =date.toLocaleString();
@@ -100,7 +100,7 @@ const UserListRow = ({ userName, email, date, avatar, role, sold, bought, isLast
                     color={textColor}
                     fontWeight="bold"
                 >
-                    {bought} | {sold}
+                    {orders.length}
                 </Text>
             </Td>
         </Tr>

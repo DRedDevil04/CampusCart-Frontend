@@ -74,7 +74,7 @@ import api from '../API/api';
 const UserList = () => {
     const [tableData, setTableData] = useState([]);
     const [search, setSearch] = useState('');
-    const [openPopover, setOpenPopover] = useState(null); // track by useriD which popover is open
+    const [openPopovers, setOpenPopovers] = useState({}); // Initialize an empty object to store popover states
     const toast = useToast();
 
     const textColor = useColorModeValue("gray.700", "white");
@@ -85,26 +85,48 @@ const UserList = () => {
         user.role.toLowerCase().includes(search.toLowerCase())
     );
 
-    const handleChangeRole = async (userName, newRole) => {
+    const handleOpenPopover = (userId) => {
+        setOpenPopovers((prevOpenPopovers) => {
+            // Create a new object with all values set to false using Object.entries and Object.fromEntries
+            const resetPopovers = Object.fromEntries(
+                Object.entries(prevOpenPopovers).map(([key, value]) => [key, false])
+            );
+    
+            // Set the specific popover to true
+            return {
+                ...resetPopovers,
+                [userId]: true,
+            };
+        });
+    };
+      
+      const handleClosePopover = (userId) => {
+        setOpenPopovers((prevOpenPopovers) => ({
+          ...prevOpenPopovers,
+          [userId]: false,
+        }));
+      };
+
+    const handleChangeRole = async (userId,email, newRole) => {
         try {
-            // await api.put('/user/changeRole', { userName, newRole });
-            // Update local state 
+            await api.put("/user/updaterole",{email,newRole})
             setTableData(prevData =>
                 prevData.map(user =>
-                    user.name === userName ? { ...user, role: newRole } : user
+                    user.email === email ? { ...user, role: newRole } : user
                 )
             );
 
-            // Show success toast notification
+            // success toast notification
             toast({
                 title: "Role changed.",
-                description: `User ${userName}'s role has been changed to ${newRole}.`,
+                description: `User's role has been changed to ${newRole}.`,
                 status: "success",
                 duration: 3000,
                 isClosable: true,
             });
         } catch (error) {
             // Show error toast notification
+            console.error('Error:', error.response ? error.response.data : error.message);  // Log the error details
             toast({
                 title: "An error occurred.",
                 description: "Unable to change role.",
@@ -112,9 +134,8 @@ const UserList = () => {
                 duration: 3000,
                 isClosable: true,
             });
-        } finally {
-            // Close the popover after role change
-            setOpenPopover(null);
+        }  finally {
+                handleClosePopover(userId);
         }
     };
 
@@ -177,7 +198,7 @@ const UserList = () => {
                                     Date Registered
                                 </Th>
                                 <Th borderColor={borderColor} color="gray.400">
-                                    BOUGHT | SOLD
+                                    ORDERS
                                 </Th>
                             </Tr>
                         </Thead>
@@ -186,18 +207,18 @@ const UserList = () => {
                             {filteredData.map((user, index) => (
                                 <UserListRow
                                     key={user.id}
+                                    userId={user.id}
                                     userName={user.name}
                                     email={user.email}
                                     date={new Date(user.__created)}
                                     avatar={user.imageUrl}
                                     role={user.role}
-                                    sold={user.sold}
-                                    bought={user.bought}
+                                    orders={user.orders}
                                     isLast={index === filteredData.length - 1}
                                     onChangeRole={handleChangeRole}
-                                    isOpen={openPopover === user.id}
-                                    onOpen={() => setOpenPopover(user.id)}
-                                    onClose={() => setOpenPopover(null)}
+                                    isOpen={openPopovers[user._id]}
+                                    onOpen={() => handleOpenPopover(user._id)}
+                                    onClose={() => handleClosePopover(user._id)}
                                 />
                             ))}
                         </Tbody>
