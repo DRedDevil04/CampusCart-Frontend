@@ -5,6 +5,8 @@ import "slick-carousel/slick/slick-theme.css";
 
 import Slider from "react-slick";
 
+// TODO: add cursor pointer, and other minor style improvements
+
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
   return (

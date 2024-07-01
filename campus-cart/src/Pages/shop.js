@@ -5,6 +5,7 @@ import { IoIosAddCircle, IoIosCloseCircle } from "react-icons/io";
 import AddProd from "../Components/AddProd";
 import { useNavigate } from "react-router-dom";
 import Carousel from "../Components/Carousel";
+import CategoryCard from "../Components/CategoryCard";
 
 function App(props) {
   var isAdmin = true; // TODO: adding props.isAdmin
@@ -44,53 +45,54 @@ function App(props) {
         isAdmin={isAdmin}
       />
       <section className="page">
-        <div className="img-cont-car">
-          <Carousel
-            srcs={srcs}
-            currentImg={currentImg}
-            setCurrentImg={setCurrentImg}
-            isInfinite={true}
-            nextTime={5000}
-            nextImg={nextImg}
-            prevImg={prevImg}
-          />
-        </div>
-        <h1 className="text-hover">Explore by top categories</h1>
-        <div className="container">
-          <div className="category-card">
-            <img
-              alt="this"
-              draggable="false"
-              src="https://www.nowfoods.com/sites/default/files/styles/masthead_64/public/2023-11/Natrual_Foods_Hero-2_0.jpg?itok=WYhBCrrj"
+        {props.isCategory === false && props.isSearched === false ? (
+          <div className="img-cont-car">
+            <Carousel
+              srcs={srcs}
+              currentImg={currentImg}
+              setCurrentImg={setCurrentImg}
+              isInfinite={true}
+              nextTime={5000}
+              nextImg={nextImg}
+              prevImg={prevImg}
             />
-            <div>Food</div>
           </div>
-          <div className="category-card">
-            <img
-              alt="this"
-              draggable="false"
-              src="https://www.nykaa.com/beauty-blog/wp-content/uploads/images/issue283/8-Breakthrough-Products-That-Are-Selling-Faster-Than-You-Can-Cou_OI.jpg"
+        ) : null}
+        {props.isCategory === false && props.isSearched === false ? (
+          <h1 className="text-hover">Explore by top categories</h1>
+        ) : null}
+        {props.isCategory === false && props.isSearched === false ? (
+          <div className="cat-cont container">
+            <CategoryCard
+              category="Food"
+              url="https://www.nowfoods.com/sites/default/files/styles/masthead_64/public/2023-11/Natrual_Foods_Hero-2_0.jpg?itok=WYhBCrrj"
             />
-            <div>Beauty</div>
-          </div>
-          <div className="category-card">
-            <img
-              alt="this"
-              draggable="false"
-              src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-madebymath-90946.jpg&fm=jpg"
+
+            <CategoryCard
+              category="beauty"
+              url="https://www.nykaa.com/beauty-blog/wp-content/uploads/images/issue283/8-Breakthrough-Products-That-Are-Selling-Faster-Than-You-Can-Cou_OI.jpg"
             />
-            <div>Home</div>
-          </div>
-          <div className="category-card">
-            <img
-              alt="this"
-              draggable="false"
-              src="https://cdn.shopify.com/s/files/1/0070/7032/files/trending-products_c8d0d15c-9afc-47e3-9ba2-f7bad0505b9b.png?v=1614559651"
+            <CategoryCard
+              category="Electronics"
+              url="https://cdn.shopify.com/s/files/1/0070/7032/files/trending-products_c8d0d15c-9afc-47e3-9ba2-f7bad0505b9b.png?v=1614559651"
             />
-            <div>Electronics</div>
+            <CategoryCard
+              category="Home"
+              url="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-madebymath-90946.jpg&fm=jpg"
+            />
           </div>
-        </div>
-        <h1 className="text-hover">Our products</h1>
+        ) : null}
+        <h1 className="text-hover">
+          {props.isCategory === false && props.isSearched === false
+            ? "Our products"
+            : props.isCategory === true && props.isSearched === false
+            ? props.products.length > 0
+              ? "Explore " +
+                (props.products[0].category[0].toUpperCase() +
+                  props.products[0].category.slice(1))
+              : "Explore"
+            : "Search Results"}
+        </h1>
         <div className="container">
           {isAdmin ? (
             <div
@@ -104,16 +106,20 @@ function App(props) {
             </div>
           ) : null}
 
-          {props.products.map((product) => (
-            <Card
-              key={product.id}
-              id={product.id}
-              img={product.images[0]}
-              title={product.title}
-              category={product.category}
-              price={product.price}
-            />
-          ))}
+          {props.products.length === 0 ? (
+            <h2 className="no-prod">No products found...</h2>
+          ) : (
+            props.products.map((product) => (
+              <Card
+                key={product.id}
+                id={product.id}
+                img={product.images[0]}
+                title={product.title}
+                category={product.category}
+                price={product.price}
+              />
+            ))
+          )}
 
           {/* TODO: also create components for various part and add various props to these cards */}
         </div>

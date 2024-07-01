@@ -57,6 +57,27 @@ html {
   grid-auto-columns: max-content;
 }
 
+.cat-cont {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+
+.no-prod {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--quaternary-color);
+  border-radius: 20px;
+}
+
 /* Responsive styles for container on smaller screens */
 @media (max-width: 1300px) {
   .container {
@@ -236,6 +257,7 @@ html {
 .text-hover {
   position: relative;
   transition: all 0.2s;
+  text-align: center;
 }
 .text-hover::after {
   content: "";
@@ -670,9 +692,12 @@ textarea::placeholder {
   position: relative;
   border-radius: 15px;
 }
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1050px) {
   .img-car {
-    height: 300px;
+    height: 30svh;
+  }
+  .img-cont-car {
+    width: 90vw;
   }
   .slick-next,
   .slick-prev {
@@ -856,6 +881,15 @@ textarea::placeholder {
   }
   .container {
     gap: 10px;
+  }
+  .category-card {
+    width: 150px;
+    height: 150px;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+  }
+  .category-card > img {
+    opacity: 0.5;
   }
   .card {
     height: 120px;

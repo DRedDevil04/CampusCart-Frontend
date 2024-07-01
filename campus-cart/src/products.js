@@ -1783,6 +1783,10 @@ var data = {
   total: 194,
   skip: 0,
   limit: 30,
+  categories: ["beauty", "electronics", "fragrances", "furniture", "groceries"],
 };
 
+const categories = data.categories;
+
 export default data.products;
+export { categories };
