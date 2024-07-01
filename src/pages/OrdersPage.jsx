@@ -11,7 +11,7 @@ const OrdersPage = () => {
 
   useEffect(() => {
     if (reloadData) {
-      refetchItems();
+      refetchOrders();
       setReloadData(false);
     }
  },[reloadData,refetchOrders]);
@@ -28,7 +28,7 @@ const OrdersPage = () => {
     <Box p={4}>
       <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={5}>
         {orders.map((order, index) => (
-          <OrderCard key={index} order={order} />
+          <OrderCard key={index} order={order} setReloadData={setReloadData}/>
         ))}
       </SimpleGrid>
     </Box>
