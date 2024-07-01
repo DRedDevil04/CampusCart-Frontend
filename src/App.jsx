@@ -9,6 +9,7 @@ import { ProfilePage } from './pages/ProfilePage';
 import Dashboard from "./pages/Dashboard"
 import UserPage from './pages/UserPage';
 import { useDisclosure } from '@chakra-ui/react';
+import OrdersPage from './components/OrdersPage';
 
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -17,6 +18,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/orders" element={<OrdersPage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
 
