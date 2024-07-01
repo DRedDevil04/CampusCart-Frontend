@@ -1,31 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { Box, SimpleGrid, Spinner } from '@chakra-ui/react';
 import OrderCard from '../components/orders';
-import api from '../API/api';
+import { useGetAllOrdersQuery} from '../slices/orderSlice';
 
 const OrdersPage = () => {
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
+  //const [orders, setOrders] = useState([]);
+  const [reloadData, setReloadData] = useState(false); // State to trigger data reload
+
+  const {data:orders=[],isLoading:isLoadingOrders,error:errorOrders,refetch:refetchOrders}= useGetAllOrdersQuery();
 
   useEffect(() => {
-    const getAllOrders = async () => {
-      try {
-        const res = await api.get('/order');
-        setOrders(res.data.orders);
-        setLoading(false);
-      } catch (err) {
-        console.error(`Error: ${err.message}`);
-        setLoading(false);
-      }
-    };
-    getAllOrders();
-  }, []);
+    if (reloadData) {
+      refetchItems();
+      setReloadData(false);
+    }
+ },[reloadData,refetchOrders]);
 
-  if (loading) {
+  if (isLoadingOrders) {
     return <Box p={4}><Spinner size="xl" /></Box>;
   }
 
-  if (orders.length === 0) {
+  if (errorOrders || orders.length === 0) {
     return <Box p={4}>No orders found</Box>;
   }
 

@@ -3,7 +3,10 @@ import { apiSlice } from './apiSlices';
 export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllItems: builder.query({
-      query: () => '/item',
+      query: () => ({
+        url: '/item',
+        credentials: 'include', // Explicitly include credentials
+      }),
     }),
     getItemById: builder.query({
       query: (id) => `/item/${id}`,
