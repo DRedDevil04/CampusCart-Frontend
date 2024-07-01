@@ -23,6 +23,9 @@ const OrdersPage = () => {
   if (errorOrders || orders.length === 0) {
     return <Box p={4}>No orders found</Box>;
   }
+  if(!Array.isArray(orders)){
+    return <Box p={4}>Orders not recieved as array</Box>;
+  }
 
   return (
     <Box p={4}>
