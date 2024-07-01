@@ -9,7 +9,7 @@ import { ProfilePage } from './pages/ProfilePage';
 import Dashboard from "./pages/Dashboard"
 import UserPage from './pages/UserPage';
 import { useDisclosure } from '@chakra-ui/react';
-import OrdersPage from './components/OrdersPage';
+import OrdersPage from './pages/OrdersPage';
 
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure();
