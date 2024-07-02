@@ -16,7 +16,15 @@ export const categoryApiSlice = apiSlice.injectEndpoints({
         credentials: 'include',
       }),
     }),
+    addCategory: builder.mutation({
+      query: ({ item }) => ({
+        url: `/category`,
+        method: 'POST',
+        body: item,
+        credentials: 'include',
+      }),
+    }),
   }),
 });
 
-export const { useGetAllCategoriesQuery, useGetCategoryByIDQuery, useUpdateCategoryMutation } = categoryApiSlice;
+export const { useGetAllCategoriesQuery, useGetCategoryByIDQuery, useUpdateCategoryMutation, useAddCategoryMutation } = categoryApiSlice;

@@ -30,6 +30,7 @@ const StatsCard = ({ title, stat, icon }) => (
 const Stats = () => {
   const [productCount,setProductCount]=useState(0);
   const [userCount,setUserCount]=useState(0);
+  const [ordersCount,setOrdersCount]=useState(0);
   useEffect(()=>{    
       const getUserCount=async()=>{
         try{
@@ -51,10 +52,21 @@ const Stats = () => {
         }
       }
       getProductCount(); 
+      const getOrdersCount=async()=>{
+        try{
+          const res=await api.get('/order');
+          setOrdersCount(Array.isArray(res.data.orders) ? res.data.orders.length : 0);
+        }catch(err)
+        {
+          console.log(err);
+        }
+      }
+      getOrdersCount(); 
 
       const interval= setInterval(()=>{
         getProductCount();
         getUserCount();
+        getOrdersCount();
       },5000);
 
       return ()=>clearInterval(interval)
@@ -71,12 +83,12 @@ const Stats = () => {
         <StatsCard
           title="Products"
           stat={productCount}
-          icon={<MdProductionQuantityLimits size="3em" />}
-        />
-        <StatsCard
-          title="Reviews"
-          stat="99+"
           icon={<MdOutlineReviews size="3em" />}
+          />
+        <StatsCard
+          title="Orders"
+          stat={ordersCount}
+          icon={<MdProductionQuantityLimits size="3em" />}
         />
       </SimpleGrid>
     </Box>

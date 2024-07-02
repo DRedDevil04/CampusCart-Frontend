@@ -2,8 +2,10 @@ import React from 'react';
 import { Box, Flex, Text, Avatar, Heading, IconButton, useMediaQuery, Menu, MenuButton, MenuList, MenuItem, MenuDivider, useDisclosure } from '@chakra-ui/react';
 import { ArrowRightIcon } from '@chakra-ui/icons';
 import LogoutModal from './logout.jsx'; // Ensure correct import path and component name
-import api from '../API/api';
+import { useNavigate } from 'react-router-dom';
+
 const Header = ({ onOpen }) => {
+  const navigate = useNavigate();
   const [isNonMobile] = useMediaQuery('(min-width: 420px)');
   const { isOpen, onOpen: onOpenModal, onClose } = useDisclosure();
 
@@ -16,7 +18,7 @@ const Header = ({ onOpen }) => {
           icon={<ArrowRightIcon />}
           onClick={onOpen}
         />
-        <Heading as="h1" size={['md', 'lg', 'xl', '2xl']} color="white" whiteSpace="nowrap" flexShrink={0}>
+        <Heading as="h1" size={['md', 'lg', 'xl', '2xl']} color="white" whiteSpace="nowrap" flexShrink={0} onClick={() => { navigate("/dashboard"); onClose(); }}>
           Dashboard
         </Heading>
         <Flex alignItems="center" flexDirection={isNonMobile ? "row" : "column-reverse"} gap="2">

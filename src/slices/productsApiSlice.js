@@ -5,7 +5,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
     getAllItems: builder.query({
       query: () => ({
         url: '/item',
-        credentials: 'include', // Explicitly include credentials
+        credentials: 'include',
       }),
     }),
     getItemById: builder.query({
@@ -19,7 +19,15 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         credentials: 'include',
       }),
     }),
+    addItem: builder.mutation({
+      query: ({ item }) => ({
+        url: `/item`,
+        method: 'POST',
+        body: item,
+        credentials: 'include',
+      }),
+    }),
   }),
 });
 
-export const { useGetAllItemsQuery, useGetItemByIdQuery, useUpdateItemMutation } = productsApiSlice;
+export const { useGetAllItemsQuery, useGetItemByIdQuery, useUpdateItemMutation, useAddItemMutation } = productsApiSlice;
