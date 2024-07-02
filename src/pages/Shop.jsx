@@ -3,9 +3,12 @@ import "../components/styles.css";
 import Card from "../components/Card";
 import Carousel from "../components/Carousel";
 import CategoryCard from "../components/CategoryCard";
+import Header from "../components/header";
+import Sidebar from "../components/sidebar";
 
 function App(props) {
   const propData = props;
+  const { onOpen, isOpen, onClose, btnRef } = props;
 
   //----------------- carousel -------------------------
   const srcs = [
@@ -33,6 +36,8 @@ function App(props) {
 
   return (
     <>
+      <Header onOpen={onOpen} />
+      <Sidebar isOpen={isOpen} onClose={onClose} btnRef={btnRef} />
       <section className="page">
         {propData.isCategory === false && propData.isSearched === false ? (
           <div className="img-cont-car">

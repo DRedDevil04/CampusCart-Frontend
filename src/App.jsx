@@ -31,10 +31,10 @@ function App() {
           path="/shop"
           element={
             <Shop
-              onOpen={onOpen}
               products={data}
               isCategory={false}
               isSearched={false}
+              onOpen={onOpen}
               isOpen={isOpen}
               onClose={onClose}
               btnRef={btnRef}
@@ -67,6 +67,10 @@ function App() {
                 )}
                 isCategory={true}
                 isSearched={false}
+                onOpen={onOpen}
+                isOpen={isOpen}
+                onClose={onClose}
+                btnRef={btnRef}
               />
             }
           />
