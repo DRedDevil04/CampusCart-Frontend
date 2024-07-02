@@ -67,7 +67,7 @@ const ProductsTable = () => {
     
     const { discount } = selectedItem.price || {};
     setPriceDiscount({
-      amount: discount?.amount || '',
+      percentage: discount?.percentage || '',
       start: discount?.start ? new Date(discount.start).toISOString().substr(0, 10) : '',
       end: discount?.end ? new Date(discount.end).toISOString().substr(0, 10) : '',
     });
@@ -85,7 +85,7 @@ const ProductsTable = () => {
     setPriceCurrency('');
     setPriceAmount('');
     setPriceDiscount({
-      amount: '',
+      percentage: '',
       start: '',
       end: '',
     });
@@ -106,7 +106,7 @@ const ProductsTable = () => {
           currency: priceCurrency,
           amount: priceAmount,
           discount: {
-            amount: priceDiscount.amount,
+            percentage: priceDiscount.percentage,
             start: priceDiscount.start,
             end: priceDiscount.end,
           },
@@ -252,13 +252,13 @@ const ProductsTable = () => {
                 name="priceAmount"
               />
 
-              <Text mb="0.5rem">Price Discount Amount:</Text>
+              <Text mb="0.5rem">Price Discount Percentage:</Text>
               <Input
                 mb="1rem"
                 type="number"
-                value={priceDiscount.amount}
-                onChange={(e) => setPriceDiscount(prev => ({ ...prev, amount: e.target.value }))}
-                name="priceDiscountAmount"
+                value={priceDiscount.percentage}
+                onChange={(e) => setPriceDiscount(prev => ({ ...prev, percentage: e.target.value }))}
+                name="priceDiscountPercentage"
               />
 
               <Text mb="0.5rem">Price Discount Start Date:</Text>

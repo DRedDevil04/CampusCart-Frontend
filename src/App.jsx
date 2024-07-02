@@ -13,6 +13,7 @@ import OrdersPage from "./pages/OrdersPage";
 import data, { categories } from "./products";
 import Shop from "./pages/Shop";
 import Product from "./pages/Product";
+import AddItemPage from "./pages/AddItem";
 
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -21,7 +22,6 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/orders" element={<OrdersPage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
 
@@ -77,6 +77,32 @@ function App() {
           element={
             <ProtectedRoute>
               <Dashboard
+                onOpen={onOpen}
+                isOpen={isOpen}
+                onClose={onClose}
+                btnRef={btnRef}
+              />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/add-item"
+          element={
+            <ProtectedRoute>
+              <AddItemPage
+                onOpen={onOpen}
+                isOpen={isOpen}
+                onClose={onClose}
+                btnRef={btnRef}
+              />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/orders"
+          element={
+            <ProtectedRoute>
+              <OrdersPage
                 onOpen={onOpen}
                 isOpen={isOpen}
                 onClose={onClose}
