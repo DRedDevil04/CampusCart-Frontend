@@ -15,10 +15,17 @@ import Shop from "./pages/Shop";
 import Product from "./pages/Product";
 import AddItemPage from "./pages/AddItem";
 import AddCategoryPage from "./pages/AddCategory";
+import { useGetAllItemsQuery } from "./slices/productsApiSlice";
+import { useGetAllCategoriesQuery } from "./slices/categoryApiSlice";
 
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
+
+  const { data: tableData = [], isLoading: isLoadingItems, error: errorItems, refetch: refetchItems } = useGetAllItemsQuery();
+  const { data: categories = [], isLoading: isLoadingCategories, error: errorCategories } = useGetAllCategoriesQuery();
+  console.log(tableData);
+  console.log(categories)
   return (
     <Router>
       <Routes>
@@ -41,10 +48,10 @@ function App() {
             />
           }
         />
-        {data.map((product) => (
+        {tableData.map((product) => (
           <Route
-            key={product.id}
-            path={"/product/" + product.id}
+            key={product._id}
+            path={"/product/" + product._id}
             element={
               <Product
                 product={product}
@@ -56,6 +63,20 @@ function App() {
             }
           />
         ))}
+        {/* This is the correct and and better way but I can't convert code */}
+        {/* <Route
+          path="/product/:id"
+          element={
+            <Product
+                product={"product.id which I don't know how to get"}
+                onOpen={onOpen}
+                isOpen={isOpen}
+                onClose={onClose}
+                btnRef={btnRef}
+              />
+            // <Shop products={data} isCategory={false} isSearched={false} />
+          }
+        /> */}
         {categories.map((category) => (
           <Route
             key={category}

@@ -3,11 +3,14 @@ import "../components/styles.css";
 import { IoCart } from "react-icons/io5";
 import SlideShowImg from "../components/SlideShowImg";
 import SlideShowModal from "../components/SlideShowModal";
+import axios from "axios";
 
 // ------------
 
 const Product = forwardRef(function Product(props, ref) {
-  const propsData = props;
+
+  let propsData = props.product;
+  console.log(props);
 
   const inputRef = React.useRef(null);
   const minusRef = useRef(null);
@@ -24,7 +27,7 @@ const Product = forwardRef(function Product(props, ref) {
   const cursorRef = useRef(null);
   const cursorContRef = useRef(null);
 
-  const srcs = propsData.product.images;
+  const srcs = propsData.images;
 
   const [currentImg, setCurrentImg] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
@@ -53,14 +56,14 @@ const Product = forwardRef(function Product(props, ref) {
       }}
     >
       {/* cursor custom */}{" "}
-      <div ref={cursorContRef} className="customCursorCont">
+      {/* <div ref={cursorContRef} className="customCursorCont">
         {" "}
         <div className="customCursor" ref={cursorRef}>
           View Image
         </div>
-      </div>
+      </div> */}
       {/* --------slideshow modal-------------- */}
-      {isVisible ? (
+      {/* {isVisible ? (
         <SlideShowModal
           srcs={srcs}
           currentImg={currentImg}
@@ -68,10 +71,10 @@ const Product = forwardRef(function Product(props, ref) {
           escaping={() => setIsVisible(false)}
           isSelected={currentImg}
         />
-      ) : null}
+      ) : null} */}
       <section className="product-page">
         {/* -----------------normal----------------- */}
-        <div className="prod-img-cont">
+        {/* <div className="prod-img-cont">
           <div className="img-cont">
             <div
               className="prod-img"
@@ -117,23 +120,23 @@ const Product = forwardRef(function Product(props, ref) {
               })}
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="cont-container">
-          <div className="prod-cat">{propsData.product.category}</div>
-          <div className="prod-title">{propsData.product.title}</div>
-          <div className="prod-desc">{propsData.product.description}</div>
+          <div className="prod-cat">{propsData.category}</div>
+          <div className="prod-title">{propsData.title}</div>
+          <div className="prod-desc">{propsData.description}</div>
           <div className="prod-price">
             <div className="price-top">
-              <h2 className="price-main">₹{propsData.product.price}</h2>
+              <h2 className="price-main">₹{propsData.price.amount}</h2>
               <div className="price-disc">
-                {propsData.product.discountPercentage}%
+                {propsData.price.discount}%
               </div>
             </div>
             <div className="price-cut">
               ₹
               {(
-                propsData.product.price /
-                (1 - propsData.product.discountPercentage / 100)
+                propsData.price.amount /
+                (1 - propsData.price.discount / 100)
               ).toFixed(2)}
             </div>
           </div>

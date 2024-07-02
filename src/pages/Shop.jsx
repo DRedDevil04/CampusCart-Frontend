@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../components/styles.css";
 import Card from "../components/Card";
 import Carousel from "../components/Carousel";
 import CategoryCard from "../components/CategoryCard";
+import { useGetAllItemsQuery } from '../slices/productsApiSlice';
+import { useGetAllCategoriesQuery } from '../slices/categoryApiSlice';
+import axios from "axios";
 
 function App(props) {
+
+  const { data: tableData = [], isLoading: isLoadingItems, error: errorItems, refetch: refetchItems } = useGetAllItemsQuery();
+  const { data: categories = [], isLoading: isLoadingCategories, error: errorCategories } = useGetAllCategoriesQuery();
+  console.log(tableData);
+  console.log(categories)
+
   const propData = props;
 
   //----------------- carousel -------------------------
@@ -50,27 +59,18 @@ function App(props) {
         {propData.isCategory === false && propData.isSearched === false ? (
           <h1 className="text-hover">Explore by top categories</h1>
         ) : null}
-        {propData.isCategory === false && propData.isSearched === false ? (
-          <div className="cat-cont container">
+        
+        <div className="cat-cont container">
+        {
+          categories?.map((category)=>(
             <CategoryCard
-              category="Groceries"
-              url="https://www.nowfoods.com/sites/default/files/styles/masthead_64/public/2023-11/Natrual_Foods_Hero-2_0.jpg?itok=WYhBCrrj"
+              key={category._id}
+              category={category.name}
+              url={category.icon}
             />
-
-            <CategoryCard
-              category="Beauty"
-              url="https://www.nykaa.com/beauty-blog/wp-content/uploads/images/issue283/8-Breakthrough-Products-That-Are-Selling-Faster-Than-You-Can-Cou_OI.jpg"
-            />
-            <CategoryCard
-              category="Electronics"
-              url="https://cdn.shopify.com/s/files/1/0070/7032/files/trending-products_c8d0d15c-9afc-47e3-9ba2-f7bad0505b9b.png?v=1614559651"
-            />
-            <CategoryCard
-              category="Fragrances"
-              url="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-madebymath-90946.jpg&fm=jpg"
-            />
-          </div>
-        ) : null}
+          ))
+        }
+        </div>
         <h1 className="text-hover">
           {propData.isCategory === false && propData.isSearched === false
             ? "Our products"
@@ -83,17 +83,17 @@ function App(props) {
             : "Search Results"}
         </h1>
         <div className="container">
-          {propData.products.length === 0 ? (
+          {tableData?.length === 0 ? (
             <h2 className="no-prod">No products found...</h2>
           ) : (
-            propData.products.map((product) => (
+            tableData?.map((product) => (
               <Card
-                key={product.id}
-                id={product.id}
+                key={product._id}
+                id={product._id}
                 img={product.images[0]}
-                title={product.title}
-                category={product.category}
-                price={product.price}
+                title={product.name}
+                category={product.category.name}
+                price={product.price.amount}
               />
             ))
           )}
