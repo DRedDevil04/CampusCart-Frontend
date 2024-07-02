@@ -15,7 +15,7 @@ const CardView = ({ imageSrc, cardText, link }) => {
         borderColor="gray.200"
         bg="white"
       >
-        <Image src={imageSrc} alt="Item Image" />
+        <Image src={imageSrc} alt="Item Image" height='180px' width='180px' object-fit='cover'/>
         <Text mt="2" fontWeight="semibold" fontSize="xl" textAlign="center">
           {cardText}
         </Text>

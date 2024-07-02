@@ -1,4 +1,3 @@
-// components/Dashboard.jsx
 import React from 'react';
 import styled from 'styled-components';
 import Header from '../components/header';
@@ -46,6 +45,11 @@ const CardRow = styled.div`
   justify-content: center;
   gap: 20px;
   margin: 0 1rem; /* Adjust margin as needed */
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export default Dashboard;
