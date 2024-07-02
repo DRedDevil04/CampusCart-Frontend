@@ -1,15 +1,10 @@
 import React from "react";
 import "../components/styles.css";
 import Card from "../components/Card";
-import { IoIosAddCircle } from "react-icons/io";
-import AddProd from "../components/AddProd";
 import Carousel from "../components/Carousel";
 import CategoryCard from "../components/CategoryCard";
 
 function App(props) {
-  var isAdmin = true; // TODO: adding props.isAdmin
-  var [isVisible, setIsVisible] = React.useState(false);
-
   const propData = props;
 
   //----------------- carousel -------------------------
@@ -38,12 +33,6 @@ function App(props) {
 
   return (
     <>
-      {/* ----------------adding product modal------------------------ */}
-      <AddProd
-        isVisible={isVisible}
-        setIsVisible={setIsVisible}
-        isAdmin={isAdmin}
-      />
       <section className="page">
         {propData.isCategory === false && propData.isSearched === false ? (
           <div className="img-cont-car">
@@ -94,18 +83,6 @@ function App(props) {
             : "Search Results"}
         </h1>
         <div className="container">
-          {isAdmin ? (
-            <div
-              className="add card"
-              onClick={() => {
-                setIsVisible(true);
-              }}
-            >
-              <IoIosAddCircle size={30} />
-              <div>Add a product</div>
-            </div>
-          ) : null}
-
           {propData.products.length === 0 ? (
             <h2 className="no-prod">No products found...</h2>
           ) : (

@@ -3,17 +3,11 @@ import "../components/styles.css";
 import { IoCart } from "react-icons/io5";
 import SlideShowImg from "../components/SlideShowImg";
 import SlideShowModal from "../components/SlideShowModal";
-import { MdOutlineEdit } from "react-icons/md";
-import EditProd from "../components/EditProd";
 
 // ------------
 
 const Product = forwardRef(function Product(props, ref) {
-  var discountAmt = (
-    (props.product.discountPercentage * props.product.price) /
-    100
-  ).toFixed(2);
-  var isAdmin = true; //TODO: change it to props.isAdmin
+  const propsData = props;
 
   const inputRef = React.useRef(null);
   const minusRef = useRef(null);
@@ -30,11 +24,10 @@ const Product = forwardRef(function Product(props, ref) {
   const cursorRef = useRef(null);
   const cursorContRef = useRef(null);
 
-  const srcs = props.product.images;
+  const srcs = propsData.product.images;
 
   const [currentImg, setCurrentImg] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  var [isEditModVisible, setIsEditModVisible] = useState(false);
   function nextImg() {
     setCurrentImg((currentImg + 1) % srcs.length);
   }
@@ -59,12 +52,6 @@ const Product = forwardRef(function Product(props, ref) {
         right: "0",
       }}
     >
-      {/* ----------------edit product modal------------------------ */}
-      <EditProd
-        isEditModVisible={isEditModVisible}
-        setIsEditModVisible={setIsEditModVisible}
-        isAdmin={isAdmin}
-      />
       {/* cursor custom */}{" "}
       <div ref={cursorContRef} className="customCursorCont">
         {" "}
@@ -88,7 +75,7 @@ const Product = forwardRef(function Product(props, ref) {
           <div className="img-cont">
             <div
               className="prod-img"
-              onMouseOver={(e) => {
+              onMouseOver={() => {
                 cursorRef.current.style.opacity = "0.9";
                 cursorRef.current.style.transform = "scale(1)";
               }}
@@ -132,21 +119,21 @@ const Product = forwardRef(function Product(props, ref) {
           </div>
         </div>
         <div className="cont-container">
-          <div className="prod-cat">{props.product.category}</div>
-          <div className="prod-title">{props.product.title}</div>
-          <div className="prod-desc">{props.product.description}</div>
+          <div className="prod-cat">{propsData.product.category}</div>
+          <div className="prod-title">{propsData.product.title}</div>
+          <div className="prod-desc">{propsData.product.description}</div>
           <div className="prod-price">
             <div className="price-top">
-              <h2 className="price-main">₹{props.product.price}</h2>
+              <h2 className="price-main">₹{propsData.product.price}</h2>
               <div className="price-disc">
-                {props.product.discountPercentage}%
+                {propsData.product.discountPercentage}%
               </div>
             </div>
             <div className="price-cut">
               ₹
               {(
-                props.product.price /
-                (1 - props.product.discountPercentage / 100)
+                propsData.product.price /
+                (1 - propsData.product.discountPercentage / 100)
               ).toFixed(2)}
             </div>
           </div>
@@ -185,16 +172,6 @@ const Product = forwardRef(function Product(props, ref) {
             <div className="add-to-cart">
               <IoCart size={25} /> <span>Add to cart</span>
             </div>
-            {isAdmin ? (
-              <div
-                className="edit-cont"
-                onClick={() => {
-                  setIsEditModVisible(true);
-                }}
-              >
-                <MdOutlineEdit size={25} /> <span>Edit</span>
-              </div>
-            ) : null}
           </div>
         </div>
       </section>
