@@ -53,12 +53,12 @@ function App(props) {
         {propData.isCategory === false && propData.isSearched === false ? (
           <div className="cat-cont container">
             <CategoryCard
-              category="Food"
+              category="Groceries"
               url="https://www.nowfoods.com/sites/default/files/styles/masthead_64/public/2023-11/Natrual_Foods_Hero-2_0.jpg?itok=WYhBCrrj"
             />
 
             <CategoryCard
-              category="beauty"
+              category="Beauty"
               url="https://www.nykaa.com/beauty-blog/wp-content/uploads/images/issue283/8-Breakthrough-Products-That-Are-Selling-Faster-Than-You-Can-Cou_OI.jpg"
             />
             <CategoryCard
@@ -66,7 +66,7 @@ function App(props) {
               url="https://cdn.shopify.com/s/files/1/0070/7032/files/trending-products_c8d0d15c-9afc-47e3-9ba2-f7bad0505b9b.png?v=1614559651"
             />
             <CategoryCard
-              category="Home"
+              category="Fragrances"
               url="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-madebymath-90946.jpg&fm=jpg"
             />
           </div>
