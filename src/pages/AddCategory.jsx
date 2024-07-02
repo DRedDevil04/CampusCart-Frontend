@@ -2,15 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import Header from '../components/header';
 import Sidebar from '../components/sidebar';
-import AddItem from '../components/AddItem';
+import AddCategory from '../components/AddCategory';
 
-const AddItemPage = ({ onOpen, isOpen, onClose, btnRef }) => (
+const AddCategoryPage = ({ onOpen, isOpen, onClose, btnRef }) => (
   <>
     <HeaderWrapper>
       <Header onOpen={onOpen} />
     </HeaderWrapper>
     <Sidebar isOpen={isOpen} onClose={onClose} btnRef={btnRef} />
-    <AddItem />
+    <AddCategory />
   </>
 );
 
@@ -21,4 +21,4 @@ const HeaderWrapper = styled.div`
   background-color: white;
 `;
 
-export default AddItemPage;
+export default AddCategoryPage;

@@ -14,6 +14,7 @@ import data, { categories } from "./products";
 import Shop from "./pages/Shop";
 import Product from "./pages/Product";
 import AddItemPage from "./pages/AddItem";
+import AddCategoryPage from "./pages/AddCategory";
 
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -90,6 +91,19 @@ function App() {
           element={
             <ProtectedRoute>
               <AddItemPage
+                onOpen={onOpen}
+                isOpen={isOpen}
+                onClose={onClose}
+                btnRef={btnRef}
+              />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/add-category"
+          element={
+            <ProtectedRoute>
+              <AddCategoryPage
                 onOpen={onOpen}
                 isOpen={isOpen}
                 onClose={onClose}
