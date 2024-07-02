@@ -6,6 +6,8 @@ import CategoryCard from "../components/CategoryCard";
 import { useGetAllItemsQuery } from '../slices/productsApiSlice';
 import { useGetAllCategoriesQuery } from '../slices/categoryApiSlice';
 import axios from "axios";
+import Header from "../components/header";
+import Sidebar from "../components/sidebar";
 
 function App(props) {
 
@@ -15,6 +17,7 @@ function App(props) {
   console.log(categories)
 
   const propData = props;
+  const { onOpen, isOpen, onClose, btnRef } = props;
 
   //----------------- carousel -------------------------
   const srcs = [
@@ -42,6 +45,8 @@ function App(props) {
 
   return (
     <>
+      <Header onOpen={onOpen} />
+      <Sidebar isOpen={isOpen} onClose={onClose} btnRef={btnRef} />
       <section className="page">
         {propData.isCategory === false && propData.isSearched === false ? (
           <div className="img-cont-car">
