@@ -3,21 +3,28 @@ import "../components/styles.css";
 import Card from "../components/Card";
 import Carousel from "../components/Carousel";
 import CategoryCard from "../components/CategoryCard";
-import { useGetAllItemsQuery } from '../slices/productsApiSlice';
-import { useGetAllCategoriesQuery } from '../slices/categoryApiSlice';
+import { useGetAllItemsQuery } from "../slices/productsApiSlice";
+import { useGetAllCategoriesQuery } from "../slices/categoryApiSlice";
 import axios from "axios";
 import Header from "../components/header";
 import Sidebar from "../components/sidebar";
 
-function App(props) {
-
-  const { data: tableData = [], isLoading: isLoadingItems, error: errorItems, refetch: refetchItems } = useGetAllItemsQuery();
-  const { data: categories = [], isLoading: isLoadingCategories, error: errorCategories } = useGetAllCategoriesQuery();
-  console.log(tableData);
-  console.log(categories)
+function Shop(props) {
+  // const {
+  //   data: tableData = [],
+  //   isLoading: isLoadingItems,
+  //   error: errorItems,
+  //   refetch: refetchItems,
+  // } = useGetAllItemsQuery();
+  // const {
+  //   data: categories = [],
+  //   isLoading: isLoadingCategories,
+  //   error: errorCategories,
+  // } = useGetAllCategoriesQuery();
 
   const propData = props;
   const { onOpen, isOpen, onClose, btnRef } = props;
+  console.log(propData.products);
 
   //----------------- carousel -------------------------
   const srcs = [
@@ -31,11 +38,9 @@ function App(props) {
 
   const [currentImg, setCurrentImg] = React.useState(0);
   function nextImg() {
-    console.log("next");
     setCurrentImg((currentImg + 1) % srcs.length);
   }
   function prevImg() {
-    console.log("prev");
     setCurrentImg(
       (currentImg - 1 < 0 ? currentImg - 1 + srcs.length : currentImg - 1) %
         srcs.length
@@ -64,17 +69,15 @@ function App(props) {
         {propData.isCategory === false && propData.isSearched === false ? (
           <h1 className="text-hover">Explore by top categories</h1>
         ) : null}
-        
+
         <div className="cat-cont container">
-        {
-          categories?.map((category)=>(
+          {propData.categories?.map((category) => (
             <CategoryCard
               key={category._id}
               category={category.name}
               url={category.icon}
             />
-          ))
-        }
+          ))}
         </div>
         <h1 className="text-hover">
           {propData.isCategory === false && propData.isSearched === false
@@ -88,17 +91,17 @@ function App(props) {
             : "Search Results"}
         </h1>
         <div className="container">
-          {tableData?.length === 0 ? (
+          {propData.products.length === 0 ? (
             <h2 className="no-prod">No products found...</h2>
           ) : (
-            tableData?.map((product) => (
+            propData.products.map((product) => (
               <Card
-                key={product._id}
-                id={product._id}
+                key={product.id}
+                id={product.id}
                 img={product.images[0]}
-                title={product.name}
-                category={product.category.name}
-                price={product.price.amount}
+                title={product.title}
+                category={product.category}
+                price={product.price}
               />
             ))
           )}
@@ -110,4 +113,4 @@ function App(props) {
   );
 }
 
-export default App;
+export default Shop;

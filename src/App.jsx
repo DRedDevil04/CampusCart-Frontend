@@ -22,10 +22,18 @@ function App() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
 
-  const { data: tableData = [], isLoading: isLoadingItems, error: errorItems, refetch: refetchItems } = useGetAllItemsQuery();
-  const { data: categories = [], isLoading: isLoadingCategories, error: errorCategories } = useGetAllCategoriesQuery();
-  console.log(tableData);
-  console.log(categories)
+  const {
+    data: tableData = [],
+    isLoading: isLoadingItems,
+    error: errorItems,
+    refetch: refetchItems,
+  } = useGetAllItemsQuery();
+  const {
+    data: categories = [],
+    isLoading: isLoadingCategories,
+    error: errorCategories,
+  } = useGetAllCategoriesQuery();
+  console.log(categories);
   return (
     <Router>
       <Routes>
@@ -39,6 +47,7 @@ function App() {
           element={
             <Shop
               products={data}
+              categories={categories}
               isCategory={false}
               isSearched={false}
               onOpen={onOpen}
@@ -48,10 +57,11 @@ function App() {
             />
           }
         />
-        {tableData.map((product) => (
+        {/* This is the correct and and better way but I can't convert code */}
+        {data.map((product) => (
           <Route
-            key={product._id}
-            path={"/product/" + product._id}
+            key={product.id}
+            path={"/product/" + product.id}
             element={
               <Product
                 product={product}
@@ -63,28 +73,15 @@ function App() {
             }
           />
         ))}
-        {/* This is the correct and and better way but I can't convert code */}
-        {/* <Route
-          path="/product/:id"
-          element={
-            <Product
-                product={"product.id which I don't know how to get"}
-                onOpen={onOpen}
-                isOpen={isOpen}
-                onClose={onClose}
-                btnRef={btnRef}
-              />
-            // <Shop products={data} isCategory={false} isSearched={false} />
-          }
-        /> */}
-        {categories.map((category) => (
+        {categories.map((cat) => (
           <Route
-            key={category}
-            path={"/category/" + category}
+            key={cat._id}
+            path={"/category/" + cat.name}
+            categories={categories}
             element={
               <Shop
                 products={data.filter(
-                  (product) => product.category === category
+                  (product) => product.category === cat.name.toLowerCase()
                 )}
                 isCategory={true}
                 isSearched={false}
