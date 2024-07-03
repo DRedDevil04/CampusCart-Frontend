@@ -27,6 +27,11 @@ const Dashboard = ({ onOpen, isOpen, onClose, btnRef }) => (
         cardText="Add New Category"
         link="/dashboard/add-category"
       />
+      {/* <CardView
+        imageSrc={AddCategoryImage}
+        cardText="Edit existing Category"
+        link="/dashboard/add-category"
+      /> */}
     </CardRow>
 
     <ProductsTable />

@@ -14,13 +14,19 @@ function App(props) {
             <Shop products={data} isCategory={false} isSearched={false} />
           }
         />
-        {data.map((product) => (
+        {/* {data.map((product) => (
           <Route
             key={product.id}
             path={"/product/" + product.id}
             element={<Product product={product} />}
           />
-        ))}
+        ))} */}
+        <Route
+          path="/product/:id"
+          element={
+            <Shop products={data} isCategory={false} isSearched={false} />
+          }
+        />
         {categories.map((category) => (
           <Route
             key={category}

@@ -10,15 +10,28 @@ import Dashboard from "./pages/Dashboard";
 import UserPage from "./pages/UserPage";
 import { useDisclosure } from "@chakra-ui/react";
 import OrdersPage from "./pages/OrdersPage";
-import data, { categories } from "./products";
 import Shop from "./pages/Shop";
 import Product from "./pages/Product";
 import AddItemPage from "./pages/AddItem";
 import AddCategoryPage from "./pages/AddCategory";
+import { useGetAllItemsQuery } from "./slices/productsApiSlice";
+import { useGetAllCategoriesQuery } from "./slices/categoryApiSlice";
 
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
+
+  const {
+    data: data = [],
+    isLoading: isLoadingItems,
+    error: errorItems,
+    refetch: refetchItems,
+  } = useGetAllItemsQuery();
+  const {
+    data: categories = [],
+    isLoading: isLoadingCategories,
+    error: errorCategories,
+  } = useGetAllCategoriesQuery();
   return (
     <Router>
       <Routes>
@@ -31,20 +44,22 @@ function App() {
           path="/shop"
           element={
             <Shop
-              onOpen={onOpen}
               products={data}
+              categories={categories}
               isCategory={false}
               isSearched={false}
+              onOpen={onOpen}
               isOpen={isOpen}
               onClose={onClose}
               btnRef={btnRef}
             />
           }
         />
+        {/* This is the correct and and better way but I can't convert code */}
         {data.map((product) => (
           <Route
-            key={product.id}
-            path={"/product/" + product.id}
+            key={product._id}
+            path={"/product/" + product._id}
             element={
               <Product
                 product={product}
@@ -56,17 +71,24 @@ function App() {
             }
           />
         ))}
-        {categories.map((category) => (
+        {categories.map((cat) => (
           <Route
-            key={category}
-            path={"/category/" + category}
+            key={cat._id}
+            path={"/category/" + cat.name}
+            categories={categories}
             element={
               <Shop
                 products={data.filter(
-                  (product) => product.category === category
+                  (product) =>
+                    product.category.name.toLowerCase() ==
+                    cat.name.toLowerCase()
                 )}
                 isCategory={true}
                 isSearched={false}
+                onOpen={onOpen}
+                isOpen={isOpen}
+                onClose={onClose}
+                btnRef={btnRef}
               />
             }
           />

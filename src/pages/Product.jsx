@@ -3,11 +3,12 @@ import "../components/styles.css";
 import { IoCart } from "react-icons/io5";
 import SlideShowImg from "../components/SlideShowImg";
 import SlideShowModal from "../components/SlideShowModal";
+import axios from "axios";
 
 // ------------
 
 const Product = forwardRef(function Product(props, ref) {
-  const propsData = props;
+  let propsData = props.product;
 
   const inputRef = React.useRef(null);
   const minusRef = useRef(null);
@@ -24,7 +25,7 @@ const Product = forwardRef(function Product(props, ref) {
   const cursorRef = useRef(null);
   const cursorContRef = useRef(null);
 
-  const srcs = propsData.product.images;
+  const srcs = propsData.images;
 
   const [currentImg, setCurrentImg] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
@@ -98,7 +99,7 @@ const Product = forwardRef(function Product(props, ref) {
               <div className="left-arrow" onClick={prevImg}>
                 ❮
               </div>
-              <img src={srcs[currentImg]} alt="this" />
+              <img src={srcs[currentImg].url} alt="this" />
               <div className="right-arrow" onClick={nextImg}>
                 ❯
               </div>
@@ -107,7 +108,7 @@ const Product = forwardRef(function Product(props, ref) {
               {srcs.map((src, index) => {
                 return (
                   <SlideShowImg
-                    src={src}
+                    src={src.url}
                     alt={"this"}
                     key={index}
                     onClick={() => setCurrentImg(index)}
@@ -119,21 +120,20 @@ const Product = forwardRef(function Product(props, ref) {
           </div>
         </div>
         <div className="cont-container">
-          <div className="prod-cat">{propsData.product.category}</div>
-          <div className="prod-title">{propsData.product.title}</div>
-          <div className="prod-desc">{propsData.product.description}</div>
+          <div className="prod-cat">{propsData.category.name}</div>
+          <div className="prod-title">{propsData.name}</div>
+          <div className="prod-desc">{propsData.description}</div>
           <div className="prod-price">
             <div className="price-top">
-              <h2 className="price-main">₹{propsData.product.price}</h2>
+              <h2 className="price-main">₹{propsData.price.amount}</h2>
               <div className="price-disc">
-                {propsData.product.discountPercentage}%
+                {propsData.price.discount.percentage}%
               </div>
             </div>
             <div className="price-cut">
-              ₹
               {(
-                propsData.product.price /
-                (1 - propsData.product.discountPercentage / 100)
+                propsData.price.amount /
+                (1 - propsData.price.discount.percentage / 100)
               ).toFixed(2)}
             </div>
           </div>
