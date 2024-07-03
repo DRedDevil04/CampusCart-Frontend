@@ -99,7 +99,7 @@ const Product = forwardRef(function Product(props, ref) {
               <div className="left-arrow" onClick={prevImg}>
                 ❮
               </div>
-              <img src={srcs[currentImg]} alt="this" />
+              <img src={srcs[currentImg].url} alt="this" />
               <div className="right-arrow" onClick={nextImg}>
                 ❯
               </div>
@@ -108,7 +108,7 @@ const Product = forwardRef(function Product(props, ref) {
               {srcs.map((src, index) => {
                 return (
                   <SlideShowImg
-                    src={src}
+                    src={src.url}
                     alt={"this"}
                     key={index}
                     onClick={() => setCurrentImg(index)}
@@ -120,19 +120,20 @@ const Product = forwardRef(function Product(props, ref) {
           </div>
         </div>
         <div className="cont-container">
-          <div className="prod-cat">{propsData.category}</div>
-          <div className="prod-title">{propsData.title}</div>
+          <div className="prod-cat">{propsData.category.name}</div>
+          <div className="prod-title">{propsData.name}</div>
           <div className="prod-desc">{propsData.description}</div>
           <div className="prod-price">
             <div className="price-top">
-              <h2 className="price-main">₹{propsData.price}</h2>
-              <div className="price-disc">{propsData.discountPercentage}%</div>
+              <h2 className="price-main">₹{propsData.price.amount}</h2>
+              <div className="price-disc">
+                {propsData.price.discount.percentage}%
+              </div>
             </div>
             <div className="price-cut">
-              ₹
               {(
-                propsData.price /
-                (1 - propsData.discountPercentage / 100)
+                propsData.price.amount /
+                (1 - propsData.price.discount.percentage / 100)
               ).toFixed(2)}
             </div>
           </div>

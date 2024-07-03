@@ -10,7 +10,6 @@ import Dashboard from "./pages/Dashboard";
 import UserPage from "./pages/UserPage";
 import { useDisclosure } from "@chakra-ui/react";
 import OrdersPage from "./pages/OrdersPage";
-import data, { categories } from "./products";
 import Shop from "./pages/Shop";
 import Product from "./pages/Product";
 import AddItemPage from "./pages/AddItem";
@@ -23,7 +22,7 @@ function App() {
   const btnRef = React.useRef();
 
   const {
-    data: tableData = [],
+    data: data = [],
     isLoading: isLoadingItems,
     error: errorItems,
     refetch: refetchItems,
@@ -33,7 +32,6 @@ function App() {
     isLoading: isLoadingCategories,
     error: errorCategories,
   } = useGetAllCategoriesQuery();
-  console.log(categories);
   return (
     <Router>
       <Routes>
@@ -60,8 +58,8 @@ function App() {
         {/* This is the correct and and better way but I can't convert code */}
         {data.map((product) => (
           <Route
-            key={product.id}
-            path={"/product/" + product.id}
+            key={product._id}
+            path={"/product/" + product._id}
             element={
               <Product
                 product={product}
@@ -81,7 +79,9 @@ function App() {
             element={
               <Shop
                 products={data.filter(
-                  (product) => product.category === cat.name.toLowerCase()
+                  (product) =>
+                    product.category.name.toLowerCase() ==
+                    cat.name.toLowerCase()
                 )}
                 isCategory={true}
                 isSearched={false}

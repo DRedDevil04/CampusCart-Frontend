@@ -85,8 +85,8 @@ function Shop(props) {
             : propData.isCategory === true && propData.isSearched === false
             ? propData.products.length > 0
               ? "Explore " +
-                (propData.products[0].category[0].toUpperCase() +
-                  propData.products[0].category.slice(1))
+                (propData.products[0].category.name[0].toUpperCase() +
+                  propData.products[0].category.name.slice(1))
               : "Explore"
             : "Search Results"}
         </h1>
@@ -96,12 +96,16 @@ function Shop(props) {
           ) : (
             propData.products.map((product) => (
               <Card
-                key={product.id}
-                id={product.id}
-                img={product.images[0]}
-                title={product.title}
-                category={product.category}
-                price={product.price}
+                key={product._id}
+                id={product._id}
+                img={
+                  product.images.length > 0
+                    ? product.images[0].url
+                    : "https://placehold.co/400"
+                }
+                title={product.name}
+                category={product.category.name}
+                price={product.price.amount}
               />
             ))
           )}
