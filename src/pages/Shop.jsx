@@ -1,32 +1,18 @@
-import React, { useEffect } from "react";
-import "../components/styles.css";
-import Card from "../components/Card";
-import Carousel from "../components/Carousel";
-import CategoryCard from "../components/CategoryCard";
-import { useGetAllItemsQuery } from "../slices/productsApiSlice";
-import { useGetAllCategoriesQuery } from "../slices/categoryApiSlice";
-import axios from "axios";
-import Header from "../components/header";
-import Sidebar from "../components/sidebar";
+import React from 'react';
+import '../components/styles.css';
+import Card from '../components/Card';
+import Carousel from '../components/Carousel';
+import CategoryCard from '../components/CategoryCard';
+import Header from '../components/header';
+import Sidebar from '../components/sidebar';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../slices/authSlice';
 
 function Shop(props) {
-  // const {
-  //   data: tableData = [],
-  //   isLoading: isLoadingItems,
-  //   error: errorItems,
-  //   refetch: refetchItems,
-  // } = useGetAllItemsQuery();
-  // const {
-  //   data: categories = [],
-  //   isLoading: isLoadingCategories,
-  //   error: errorCategories,
-  // } = useGetAllCategoriesQuery();
+  const { onOpen, isOpen, onClose, btnRef, isCategory, isSearched, products, categories } = props;
+  const userInfo = useSelector(selectUser);
+  const email = userInfo?.email;
 
-  const propData = props;
-  const { onOpen, isOpen, onClose, btnRef } = props;
-  console.log(propData.products);
-
-  //----------------- carousel -------------------------
   const srcs = [
     "https://www.nykaa.com/beauty-blog/wp-content/uploads/images/issue283/8-Breakthrough-Products-That-Are-Selling-Faster-Than-You-Can-Cou_OI.jpg",
     "https://cdn.shopify.com/s/files/1/0070/7032/files/trending-products_c8d0d15c-9afc-47e3-9ba2-f7bad0505b9b.png?v=1614559651",
@@ -37,23 +23,16 @@ function Shop(props) {
   ];
 
   const [currentImg, setCurrentImg] = React.useState(0);
-  function nextImg() {
-    setCurrentImg((currentImg + 1) % srcs.length);
-  }
-  function prevImg() {
-    setCurrentImg(
-      (currentImg - 1 < 0 ? currentImg - 1 + srcs.length : currentImg - 1) %
-        srcs.length
-    );
-  }
-  //---------------------------------------------------
+
+  const nextImg = () => setCurrentImg((currentImg + 1) % srcs.length);
+  const prevImg = () => setCurrentImg((currentImg - 1 + srcs.length) % srcs.length);
 
   return (
     <>
       <Header onOpen={onOpen} />
       <Sidebar isOpen={isOpen} onClose={onClose} btnRef={btnRef} />
       <section className="page">
-        {propData.isCategory === false && propData.isSearched === false ? (
+        {!isCategory && !isSearched && (
           <div className="img-cont-car">
             <Carousel
               srcs={srcs}
@@ -65,13 +44,10 @@ function Shop(props) {
               prevImg={prevImg}
             />
           </div>
-        ) : null}
-        {propData.isCategory === false && propData.isSearched === false ? (
-          <h1 className="text-hover">Explore by top categories</h1>
-        ) : null}
-
+        )}
+        {!isCategory && !isSearched && <h1 className="text-hover">Explore by top categories</h1>}
         <div className="cat-cont container">
-          {propData.categories?.map((category) => (
+          {categories?.map((category) => (
             <CategoryCard
               key={category._id}
               category={category.name}
@@ -80,37 +56,30 @@ function Shop(props) {
           ))}
         </div>
         <h1 className="text-hover">
-          {propData.isCategory === false && propData.isSearched === false
+          {!isCategory && !isSearched
             ? "Our products"
-            : propData.isCategory === true && propData.isSearched === false
-            ? propData.products.length > 0
-              ? "Explore " +
-                (propData.products[0].category.name[0].toUpperCase() +
-                  propData.products[0].category.name.slice(1))
+            : isCategory && !isSearched
+            ? products.length > 0
+              ? "Explore " + products[0].category.name[0].toUpperCase() + products[0].category.name.slice(1)
               : "Explore"
             : "Search Results"}
         </h1>
         <div className="container">
-          {propData.products.length === 0 ? (
+          {products.length === 0 ? (
             <h2 className="no-prod">No products found...</h2>
           ) : (
-            propData.products.map((product) => (
+            products.map((product) => (
               <Card
                 key={product._id}
-                id={product._id}
-                img={
-                  product.images.length > 0
-                    ? product.images[0].url
-                    : "https://placehold.co/400"
-                }
+                ID={product._id}
+                img={product.images.length > 0 ? product.images[0].url : "https://placehold.co/400"}
                 title={product.name}
                 category={product.category.name}
                 price={product.price.amount}
+                email={email}
               />
             ))
           )}
-
-          {/* TODO: also create components for various part and add various props to these cards */}
         </div>
       </section>
     </>

@@ -16,7 +16,8 @@ import AddItemPage from "./pages/AddItem";
 import AddCategoryPage from "./pages/AddCategory";
 import { useGetAllItemsQuery } from "./slices/productsApiSlice";
 import { useGetAllCategoriesQuery } from "./slices/categoryApiSlice";
-
+import Cart from "./components/cart";
+import CartPage from "./pages/CartPage";
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
@@ -38,7 +39,12 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-
+        <Route path="/cart" element={<CartPage 
+              onOpen={onOpen}
+              isOpen={isOpen}
+              onClose={onClose}
+              btnRef={btnRef}/>} 
+        />
         {/* shop and product page */}
         <Route
           path="/shop"

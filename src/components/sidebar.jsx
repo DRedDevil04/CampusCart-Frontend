@@ -9,8 +9,7 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
-import { FiSettings } from "react-icons/fi";
-import { FaStore, FaUser } from "react-icons/fa";
+import { FaStore, FaUser,FaShopify } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import NavItem from "../helpers/navitems";
@@ -65,7 +64,11 @@ const Sidebar = ({ isOpen, onClose, btnRef }) => {
                 onClose();
               }}
             />
-            <NavItem icon={FiSettings} title="Settings" />
+            <NavItem icon={FaShopify} title="Shop Page"
+             onClick={() => {
+                      navigate("/shop");
+                      onClose();
+                      }} />
           </Flex>
         </DrawerBody>
       </DrawerContent>
