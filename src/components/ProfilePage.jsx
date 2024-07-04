@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import axios from 'axios'
-import '../Components/styles.css'
+import './styles.css'
+
 function ProfilePage() {
     const [user , setUser] = useState({
         name : "Kushagra",
@@ -105,7 +106,7 @@ shipping : {
         <div className='outer-box'>
             <h1 className='heading1'>My ProfilePage</h1>
                 <div className='data-box'>
-                    <h2 >ProfilePage Picture</h2>
+                    <h2 >Profile Picture</h2>
                     <div >
                         <img className='profilePicture' src='https://images.justwatch.com/poster/304428670/s332/season-2' alt="No profile Picture" />
                     </div>
@@ -279,4 +280,4 @@ shipping : {
     )
 }
 
-export default ProfilePage
+export default ProfilePage;
