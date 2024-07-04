@@ -9,13 +9,18 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
-import { FaStore, FaUser,FaShopify } from "react-icons/fa";
+import { FaStore, FaUser, FaShopify } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import NavItem from "../helpers/navitems";
+import { selectUser } from "../slices/authSlice.js";
+import { useSelector } from "react-redux";
+import { TiShoppingCart } from "react-icons/ti";
 
 const Sidebar = ({ isOpen, onClose, btnRef }) => {
   const navigate = useNavigate();
+  const userInfo = useSelector(selectUser);
+  const isAdmin = userInfo.role === "admin";
 
   return (
     <Drawer
@@ -39,37 +44,61 @@ const Sidebar = ({ isOpen, onClose, btnRef }) => {
           />
         </Box>
         <DrawerBody>
-          <Flex p="5%" flexDir="column" width="100%" as="nav">
-            <NavItem
-              icon={MdDashboard}
-              title="Dashboard"
-              onClick={() => {
-                navigate("/dashboard");
-                onClose();
-              }}
-            />
-            <NavItem
-              icon={FaUser}
-              title="Users"
-              onClick={() => {
-                navigate("/dashboard/userpage");
-                onClose();
-              }}
-            />
-            <NavItem
-              icon={FaStore}
-              title="Orders"
-              onClick={() => {
-                navigate("/dashboard/orders");
-                onClose();
-              }}
-            />
-            <NavItem icon={FaShopify} title="Shop Page"
-             onClick={() => {
-                      navigate("/shop");
-                      onClose();
-                      }} />
-          </Flex>
+          {isAdmin ? (
+            <Flex p="5%" flexDir="column" width="100%" as="nav">
+              <NavItem
+                icon={MdDashboard}
+                title="Dashboard"
+                onClick={() => {
+                  navigate("/dashboard");
+                  onClose();
+                }}
+              />
+              <NavItem
+                icon={FaUser}
+                title="Users"
+                onClick={() => {
+                  navigate("/dashboard/userpage");
+                  onClose();
+                }}
+              />
+              <NavItem
+                icon={FaStore}
+                title="Orders"
+                onClick={() => {
+                  navigate("/dashboard/orders");
+                  onClose();
+                }}
+              />
+              <NavItem
+                icon={FaShopify}
+                title="Shop Page"
+                onClick={() => {
+                  navigate("/shop");
+                  onClose();
+                }}
+              />
+            </Flex>
+          ) : (
+            <Flex p="5%" flexDir="column" width="100%" as="nav">
+              <NavItem
+                icon={FaShopify}
+                title="Shop Page"
+                onClick={() => {
+                  navigate("/shop");
+                  onClose();
+                }}
+              />
+              <NavItem
+                icon={TiShoppingCart}
+                title="My Cart"
+                onClick={() => {
+                  navigate("/cart");
+                  onClose();
+                }}
+              />
+            </Flex>
+          )}
         </DrawerBody>
       </DrawerContent>
     </Drawer>

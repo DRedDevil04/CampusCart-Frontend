@@ -1,15 +1,24 @@
-import React from 'react';
-import '../components/styles.css';
-import Card from '../components/Card';
-import Carousel from '../components/Carousel';
-import CategoryCard from '../components/CategoryCard';
-import Header from '../components/header';
-import Sidebar from '../components/sidebar';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../slices/authSlice';
+import React from "react";
+import "../components/styles.css";
+import Card from "../components/Card";
+import Carousel from "../components/Carousel";
+import CategoryCard from "../components/CategoryCard";
+import Header from "../components/header";
+import Sidebar from "../components/sidebar";
+import { useSelector } from "react-redux";
+import { selectUser } from "../slices/authSlice";
 
 function Shop(props) {
-  const { onOpen, isOpen, onClose, btnRef, isCategory, isSearched, products, categories } = props;
+  const {
+    onOpen,
+    isOpen,
+    onClose,
+    btnRef,
+    isCategory,
+    isSearched,
+    products,
+    categories,
+  } = props;
   const userInfo = useSelector(selectUser);
   const email = userInfo?.email;
 
@@ -25,7 +34,20 @@ function Shop(props) {
   const [currentImg, setCurrentImg] = React.useState(0);
 
   const nextImg = () => setCurrentImg((currentImg + 1) % srcs.length);
-  const prevImg = () => setCurrentImg((currentImg - 1 + srcs.length) % srcs.length);
+  const prevImg = () =>
+    setCurrentImg((currentImg - 1 + srcs.length) % srcs.length);
+
+  function imageExists(image_url) {
+    var imgg = new Image();
+    imgg.src = image_url;
+    imgg.onload = function () {
+      return true;
+    };
+    imgg.onerror = function (e) {
+      return false;
+    };
+    return imgg.complete;
+  }
 
   return (
     <>
@@ -45,22 +67,36 @@ function Shop(props) {
             />
           </div>
         )}
-        {!isCategory && !isSearched && <h1 className="text-hover">Explore by top categories</h1>}
+        {!isCategory && !isSearched && (
+          <h1 className="text-hover">Explore by top categories</h1>
+        )}
         <div className="cat-cont container">
-          {categories?.map((category) => (
-            <CategoryCard
-              key={category._id}
-              category={category.name}
-              url={category.icon}
-            />
-          ))}
+          {categories?.map((category) =>
+            !imageExists(category.icon) ? (
+              <CategoryCard
+                key={category._id}
+                category={category.name}
+                url={
+                  "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Black.png/220px-Black.png"
+                }
+              />
+            ) : (
+              <CategoryCard
+                key={category._id}
+                category={category.name}
+                url={category.icon}
+              />
+            )
+          )}
         </div>
         <h1 className="text-hover">
           {!isCategory && !isSearched
             ? "Our products"
             : isCategory && !isSearched
             ? products.length > 0
-              ? "Explore " + products[0].category.name[0].toUpperCase() + products[0].category.name.slice(1)
+              ? "Explore " +
+                products[0].category.name[0].toUpperCase() +
+                products[0].category.name.slice(1)
               : "Explore"
             : "Search Results"}
         </h1>
@@ -72,7 +108,11 @@ function Shop(props) {
               <Card
                 key={product._id}
                 ID={product._id}
-                img={product.images.length > 0 ? product.images[0].url : "https://placehold.co/400"}
+                img={
+                  product.images.length > 0
+                    ? product.images[0].url
+                    : "https://placehold.co/400"
+                }
                 title={product.name}
                 category={product.category.name}
                 price={product.price.amount}
