@@ -206,6 +206,7 @@ function Profile() {
 
             <Heading size="lg" mb={6}>Order History</Heading>
             <Stack spacing={6}>
+                {userResponse.data.orders.length==0 ? <Text mb={2}>No Order Found!</Text> : <></>}
                 {userResponse.data.orders &&
                     userResponse.data.orders.map((order, index) => (
                         <Box key={index} p={6} bg="white" borderRadius="md" boxShadow="md">

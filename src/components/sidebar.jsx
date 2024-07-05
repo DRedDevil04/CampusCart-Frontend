@@ -17,7 +17,6 @@ import { selectUser } from "../slices/authSlice.js";
 import { useSelector } from "react-redux";
 import { TiShoppingCart } from "react-icons/ti";
 import { FaCircleUser } from "react-icons/fa6";
-import { FaShoppingBag } from "react-icons/fa";
 
 const Sidebar = ({ isOpen, onClose, btnRef }) => {
   const navigate = useNavigate();
@@ -147,22 +146,6 @@ const Sidebar = ({ isOpen, onClose, btnRef }) => {
           ) : (
             <Flex p="5%" flexDir="column" width="100%" as="nav">
               <NavItem
-                icon={FaShopify}
-                title="Shop"
-                onClick={() => {
-                  navigate("/");
-                  onClose();
-                }}
-              />
-              <NavItem
-                icon={TiShoppingCart}
-                title="My Cart"
-                onClick={() => {
-                  navigate("/cart");
-                  onClose();
-                }}
-              />
-              <NavItem
                 icon={FaCircleUser}
                 title="My Profile"
                 onClick={() => {
@@ -170,11 +153,19 @@ const Sidebar = ({ isOpen, onClose, btnRef }) => {
                   onClose();
                 }}
               />
+                <NavItem
+                  icon={TiShoppingCart}
+                  title="My Cart"
+                  onClick={() => {
+                    navigate("/cart");
+                    onClose();
+                  }}
+                />
               <NavItem
-                icon={FaShoppingBag}
-                title="Order History"
+                icon={FaShopify}
+                title="Shop"
                 onClick={() => {
-                  navigate("/shop");
+                  navigate("/");
                   onClose();
                 }}
               />
