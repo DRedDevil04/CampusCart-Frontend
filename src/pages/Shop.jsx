@@ -37,16 +37,10 @@ function Shop(props) {
   const prevImg = () =>
     setCurrentImg((currentImg - 1 + srcs.length) % srcs.length);
 
-  function imageExists(image_url) {
-    var imgg = new Image();
-    imgg.src = image_url;
-    imgg.onload = function () {
-      return true;
-    };
-    imgg.onerror = function (e) {
-      return false;
-    };
-    return imgg.complete;
+  function handleError(e) {
+    console.log(e);
+    e.target.src =
+      "https://placehold.co/400/dbe2ef/3f72af?text=Image+not+available";
   }
 
   return (
@@ -71,23 +65,13 @@ function Shop(props) {
           <h1 className="text-hover">Explore by top categories</h1>
         )}
         <div className="cat-cont container">
-          {categories?.map((category) =>
-            !imageExists(category.icon) ? (
-              <CategoryCard
-                key={category._id}
-                category={category.name}
-                url={
-                  "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Black.png/220px-Black.png"
-                }
-              />
-            ) : (
-              <CategoryCard
-                key={category._id}
-                category={category.name}
-                url={category.icon}
-              />
-            )
-          )}
+          {categories?.map((category) => (
+            <CategoryCard
+              key={category._id}
+              category={category.name}
+              url={category.icon}
+            />
+          ))}
         </div>
         <h1 className="text-hover">
           {!isCategory && !isSearched

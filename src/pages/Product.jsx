@@ -38,16 +38,10 @@ const Product = forwardRef(function Product(props, ref) {
         srcs.length
     );
   }
-  function imageExists(image_url) {
-    var imgg = new Image();
-    imgg.src = image_url;
-    imgg.onload = function () {
-      return true;
-    };
-    imgg.onerror = function (e) {
-      return false;
-    };
-    return imgg.complete;
+  function handleError(e) {
+    console.log(e);
+    e.target.src =
+      "https://placehold.co/400/dbe2ef/3f72af?text=Image+not+available";
   }
   return (
     <div
@@ -110,28 +104,20 @@ const Product = forwardRef(function Product(props, ref) {
               <div className="left-arrow" onClick={prevImg}>
                 ❮
               </div>
-              {imageExists(srcs[currentImg].url) ? (
-                <img src={srcs[currentImg].url} alt="this" />
-              ) : (
-                <img
-                  src={
-                    "https://placehold.co/400/dbe2ef/3f72af?text=Image+not+available"
-                  }
-                  alt="this"
-                />
-              )}
+              <img
+                src={srcs[currentImg].url}
+                alt="this"
+                onError={handleError}
+              />
               <div className="right-arrow" onClick={nextImg}>
                 ❯
               </div>
             </div>
             <div className="prod-img-slideshow " id="drag">
               {srcs.map((src, index) => {
-                const srcurl = imageExists(src.url)
-                  ? src.url
-                  : "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=";
                 return (
                   <SlideShowImg
-                    src={srcurl}
+                    src={src}
                     alt={"this"}
                     key={index}
                     onClick={() => setCurrentImg(index)}

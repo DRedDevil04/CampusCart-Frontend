@@ -10,19 +10,11 @@ function CardImage(props) {
     console.log("clicked");
     navigate("/product/" + id);
   }
-  function imageExists(image_url) {
-    var imgg = new Image();
-    imgg.src = image_url;
-    imgg.onload = function () {
-      return true;
-    };
-    imgg.onerror = function (e) {
-      return false;
-    };
-    return imgg.complete;
-  }
-  if (!imageExists(src)) {
-    src = "https://placehold.co/400/dbe2ef/3f72af?text=Image+not+available";
+
+  function handleError(e) {
+    console.log(e);
+    e.target.src =
+      "https://placehold.co/400/dbe2ef/3f72af?text=Image+not+available";
   }
 
   return (
@@ -34,7 +26,7 @@ function CardImage(props) {
           handler(props.id);
         }}
       >
-        <img src={src} alt={props.alt} />
+        <img onError={handleError} src={src} alt={props.alt} />
       </div>
     </>
   );
