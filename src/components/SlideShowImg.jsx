@@ -1,8 +1,8 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 function SlideShowImg(props) {
   function handleError(e) {
-    console.log(e);
     e.target.src =
       "https://placehold.co/400/dbe2ef/3f72af?text=Image+not+available";
   }
@@ -17,5 +17,12 @@ function SlideShowImg(props) {
     />
   );
 }
+
+SlideShowImg.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  isSelected: PropTypes.bool.isRequired,
+  src: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+};
 
 export default SlideShowImg;

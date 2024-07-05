@@ -12,7 +12,6 @@ import {
 const CartItem = ({ product, onIncrease, onDecrease }) => {
   const { title, img, price, quantity } = product;
   function handleError(e) {
-    console.log(e);
     e.target.src =
       "https://placehold.co/400/dbe2ef/3f72af?text=Image+not+available";
   }

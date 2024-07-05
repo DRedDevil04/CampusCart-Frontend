@@ -7,12 +7,10 @@ function CardImage(props) {
   var src = props.src;
 
   function handler(id) {
-    console.log("clicked");
     navigate("/product/" + id);
   }
 
   function handleError(e) {
-    console.log(e);
     e.target.src =
       "https://placehold.co/400/dbe2ef/3f72af?text=Image+not+available";
   }

@@ -1,11 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "./styles.css";
 import { useNavigate } from "react-router-dom";
 
 export default function CategoryCard(props) {
   const navigate = useNavigate();
   function handleError(e) {
-    console.log(e);
     e.target.src =
       "https://icons.veryicon.com/png/o/miscellaneous/fangshan-design_icon/category-18.png";
   }
@@ -20,3 +20,8 @@ export default function CategoryCard(props) {
     </div>
   );
 }
+
+CategoryCard.propTypes = {
+  category: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+};

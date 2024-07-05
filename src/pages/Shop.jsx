@@ -7,6 +7,7 @@ import Header from "../components/header";
 import Sidebar from "../components/sidebar";
 import { useSelector } from "react-redux";
 import { selectUser } from "../slices/authSlice";
+import PropTypes from "prop-types";
 
 function Shop(props) {
   const {
@@ -36,12 +37,6 @@ function Shop(props) {
   const nextImg = () => setCurrentImg((currentImg + 1) % srcs.length);
   const prevImg = () =>
     setCurrentImg((currentImg - 1 + srcs.length) % srcs.length);
-
-  function handleError(e) {
-    console.log(e);
-    e.target.src =
-      "https://placehold.co/400/dbe2ef/3f72af?text=Image+not+available";
-  }
 
   return (
     <>
@@ -109,5 +104,17 @@ function Shop(props) {
     </>
   );
 }
+
+Shop.propTypes = {
+  product: PropTypes.object.isRequired,
+  btnRef: PropTypes.object,
+  onOpen: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  isCategory: PropTypes.bool.isRequired,
+  isSearched: PropTypes.bool.isRequired,
+  products: PropTypes.array.isRequired,
+  categories: PropTypes.array.isRequired,
+};
 
 export default Shop;

@@ -1,8 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
-import Header from '../components/header';
-import Sidebar from '../components/sidebar';
-import AddCategory from '../components/AddCategory';
+import React from "react";
+import styled from "styled-components";
+import Header from "../components/header";
+import Sidebar from "../components/sidebar";
+import AddCategory from "../components/AddCategory";
+
+import PropTypes from "prop-types";
 
 const AddCategoryPage = ({ onOpen, isOpen, onClose, btnRef }) => (
   <>
@@ -13,6 +15,13 @@ const AddCategoryPage = ({ onOpen, isOpen, onClose, btnRef }) => (
     <AddCategory />
   </>
 );
+
+AddCategoryPage.propTypes = {
+  onOpen: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  btnRef: PropTypes.object.isRequired,
+};
 
 const HeaderWrapper = styled.div`
   position: sticky;
