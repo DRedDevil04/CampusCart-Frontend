@@ -10,8 +10,10 @@ const ProtectedRoute = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user?.role !== 'admin') {
+    if (!user) {
       navigate('/');
+    } else if (user.role !== 'admin') {
+     navigate('/');
     }
   }, [user, navigate]);
 

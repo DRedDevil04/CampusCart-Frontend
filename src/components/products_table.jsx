@@ -126,10 +126,12 @@ const ProductsTable = () => {
   };
 
   const handleImageChange = (index, field, value) => {
-    const updatedImages = [...images];
-    updatedImages[index][field] = value;
+    const updatedImages = images.map((image, i) => 
+      i === index ? { ...image, [field]: value } : image
+    );
     setImages(updatedImages);
   };
+  
 
   const addImageField = () => {
     setImages([...images, { url: '', altText: '' }]);
@@ -296,7 +298,7 @@ const ProductsTable = () => {
                     onChange={(e) => handleImageChange(index, 'altText', e.target.value)}
                     name={`imageAltText${index}`}
                   />
-                  {images.length > 1 && (
+                  {images.length > 0 && (
                     <Button
                       mb="1rem"
                       colorScheme="red"

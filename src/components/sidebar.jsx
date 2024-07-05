@@ -20,7 +20,62 @@ import { TiShoppingCart } from "react-icons/ti";
 const Sidebar = ({ isOpen, onClose, btnRef }) => {
   const navigate = useNavigate();
   const userInfo = useSelector(selectUser);
-  const isAdmin = userInfo.role === "admin";
+
+  if (!userInfo) {
+    return (
+      <Drawer
+        isOpen={isOpen}
+        placement="left"
+        onClose={onClose}
+        finalFocusRef={btnRef}
+      >
+        <DrawerContent maxW={{ base: "80%", sm: "250px" }}>
+          <Box mt={2} display="flex" alignItems="center" p={4} width="100%">
+            <Text flex="1" fontSize="3xl" fontWeight="bold">
+              Menu
+            </Text>
+            <IconButton
+              ml="40px"
+              variant="outline"
+              onClick={onClose}
+              colorScheme="teal"
+              icon={<ArrowLeftIcon />}
+              size="sm"
+            />
+          </Box>
+          <DrawerBody>
+            <Flex p="5%" flexDir="column" width="100%" as="nav">
+              <NavItem
+                icon={FaShopify}
+                title="Shop"
+                onClick={() => {
+                  navigate("/");
+                  onClose();
+                }}
+              />
+              <NavItem
+                icon={FaUser}
+                title="Login"
+                onClick={() => {
+                  navigate("/login");
+                  onClose();
+                }}
+              />
+              <NavItem
+                icon={FaUser}
+                title="Register"
+                onClick={() => {
+                  navigate("/register");
+                  onClose();
+                }}
+              />
+            </Flex>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+    );
+  }
+  const isAdmin = userInfo?.role === "admin";
 
   return (
     <Drawer
@@ -72,9 +127,9 @@ const Sidebar = ({ isOpen, onClose, btnRef }) => {
               />
               <NavItem
                 icon={FaShopify}
-                title="Shop Page"
+                title="Shop"
                 onClick={() => {
-                  navigate("/shop");
+                  navigate("/");
                   onClose();
                 }}
               />
@@ -83,9 +138,9 @@ const Sidebar = ({ isOpen, onClose, btnRef }) => {
             <Flex p="5%" flexDir="column" width="100%" as="nav">
               <NavItem
                 icon={FaShopify}
-                title="Shop Page"
+                title="Shop"
                 onClick={() => {
-                  navigate("/shop");
+                  navigate("/");
                   onClose();
                 }}
               />
