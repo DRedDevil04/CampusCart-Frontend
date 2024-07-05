@@ -257,6 +257,7 @@ body::-webkit-scrollbar,
   text-align: center;
   font-weight: 700;
   opacity: 0;
+  top: -120px;
 }
 .customCursorCont {
   position: fixed;

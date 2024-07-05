@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import SlideShowImgMod from "./SlideShowImgMod";
 import "./styles.css";
 import { IoIosCloseCircle } from "react-icons/io";
+import { calc } from "@chakra-ui/react";
 
 function SlideShowModal(props) {
   const slideshowImgRef = useRef(null);
