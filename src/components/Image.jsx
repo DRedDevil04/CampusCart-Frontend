@@ -22,8 +22,7 @@ function CardImage(props) {
     return imgg.complete;
   }
   if (!imageExists(src)) {
-    src =
-      "https://thumbs.dreamstime.com/b/packing-product-icon-design-style-packing-product-icon-packing-yellow-boxes-package-service-transportation-parcel-deliver-165924492.jpg";
+    src = "https://placehold.co/400/dbe2ef/3f72af?text=Image+not+available";
   }
 
   return (

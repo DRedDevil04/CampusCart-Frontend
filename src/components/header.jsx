@@ -13,6 +13,7 @@ import {
   MenuItem,
   MenuDivider,
   useDisclosure,
+  Tooltip,
 } from "@chakra-ui/react";
 import LogoutModal from "./logout";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -43,12 +44,7 @@ const Header = ({ onOpen }) => {
 
   return (
     <Box minW="320px" w="100%" className="Header" bg={"#3f72af"} p={4}>
-      <Flex
-        align="center"
-        display={"flex"}
-        justifyContent="space-between"
-        // position={"relative"}
-      >
+      <Flex align="center" display={"flex"} justifyContent="space-between">
         <IconButton
           colorScheme="whiteAlpha"
           aria-label="Open Sidebar"

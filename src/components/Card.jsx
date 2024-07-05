@@ -29,7 +29,11 @@ function Card(props) {
   return (
     <div className="card">
       <Image
-        src={img !== null ? img : "http://localhost:5173/shop"}
+        src={
+          img !== null
+            ? img
+            : "https://placehold.co/400/dbe2ef/3f72af?text=Image+not+available"
+        }
         alt="Product Image"
         id={ID}
       />
