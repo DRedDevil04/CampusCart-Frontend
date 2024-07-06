@@ -3,11 +3,14 @@ import {Box,Card,CardHeader,CardBody,Text,Button,HStack,VStack,Stack,Flex,Badge,
 import { selectCarts } from '../slices/cartSlice';
 import { selectUser } from '../slices/authSlice';
 import { useSelector } from 'react-redux';
+import { clearCart } from '../slices/cartSlice';
+import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 import { useAddNewOrderMutation } from '../slices/orderSlice';
 const Checkout = ({address}) => {
     const carts=useSelector(selectCarts);
     const userInfo = useSelector(selectUser);
     const [payment,setPayment]=useState('COD');
+    const [orderSuccess,setOrderSuccess]=useState(false);
     const email = userInfo.email;
     let total=0;
     {carts[email].map((item)=>{
@@ -21,20 +24,37 @@ const Checkout = ({address}) => {
             quantity:item.quantity,
             price:item.price
         }))
+        const paymentobj={payment_method:paymentMethod,amount:total};
         const orderDetails={
             items,
-            payment:payment,
-            shipping:address,
-            user:{_id:userInfo._id}
+            payment:paymentobj,
+            shipping:{address:address},
+            user:{_id:userInfo.id}
         };
 
         try{
         const res=await placeOrder(orderDetails).unwrap();
+        if(res.message)
+        {
+          setOrderSuccess(true);
+          dispatch(clearCart({email:userInfo.email}));
+        }
+        console.log('Response message:' ,res.message)
         alert(res.message);
         } catch (error) {
-        console.error('Error placing order:', error);
+        console.error('Error placing order:', error.message);
         alert('Error placing order. Please try again.');
         }
+    }
+
+    if(orderSuccess)
+    {
+      return(
+        <Flex justify="center" height="100vh" alignItems="center" direction="column">
+           <IoMdCheckmarkCircleOutline color="green" size="70px"/>
+          <Text fontSize="40px">Order Placed Successfully</Text>
+        </Flex>
+      )
     }
   return (
     <Box>
@@ -75,12 +95,10 @@ const Checkout = ({address}) => {
                 <Flex justify="space-between" mt="1rem" alignItems="center">
                   <Text as="b" fontSize="20px">Payment Options</Text> 
                   <RadioGroup onChange= {(value)=>setPayment(value)}  value={payment} >
-
                      <VStack alignItems="flex-start">
                         <Radio value="Google Form">Pay Now</Radio>
                         <Radio value="COD">Cash on Delivery</Radio>
                     </VStack>  
-
                   </RadioGroup>
                     <Button onClick={() => handleOrder(payment)} mt="1rem" colorScheme="blue">
                         Confirm Order
@@ -94,4 +112,4 @@ const Checkout = ({address}) => {
   )
 }
 
-export default Checkout
+export default Checkout;

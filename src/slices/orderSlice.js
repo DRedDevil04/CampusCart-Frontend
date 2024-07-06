@@ -12,7 +12,8 @@ export const orderSlice = apiSlice.injectEndpoints({
             query:(orderDetails)=>({
                 url:'/order',
                 method:'POST',
-                body:orderDetails
+                body:orderDetails,
+                credentials: 'include',
             })
         }),
         editOrderStatus: builder.mutation({
