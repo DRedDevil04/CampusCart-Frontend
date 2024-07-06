@@ -8,6 +8,7 @@ import Sidebar from "../components/sidebar";
 import { useSelector } from "react-redux";
 import { selectUser } from "../slices/authSlice";
 import PropTypes from "prop-types";
+import { IoArrowBackCircle } from "react-icons/io5";
 
 function Shop(props) {
   const {
@@ -56,6 +57,7 @@ function Shop(props) {
             />
           </div>
         )}
+
         {!isCategory && !isSearched && (
           <h1 className="text-hover">Explore by top categories</h1>
         )}
@@ -68,6 +70,11 @@ function Shop(props) {
             />
           ))}
         </div>
+        {(isCategory || isSearched) && (
+          <div className="back-shop" onClick={() => history.back()}>
+            <IoArrowBackCircle /> <div>Back to shop</div>
+          </div>
+        )}
         <h1 className="text-hover">
           {!isCategory && !isSearched
             ? "Our products"
@@ -106,15 +113,14 @@ function Shop(props) {
 }
 
 Shop.propTypes = {
-  product: PropTypes.object.isRequired,
   btnRef: PropTypes.object,
   onOpen: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  isCategory: PropTypes.bool.isRequired,
-  isSearched: PropTypes.bool.isRequired,
+  isCategory: PropTypes.bool,
+  isSearched: PropTypes.bool,
   products: PropTypes.array.isRequired,
-  categories: PropTypes.array.isRequired,
+  categories: PropTypes.array,
 };
 
 export default Shop;

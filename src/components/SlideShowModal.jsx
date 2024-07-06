@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import SlideShowImgMod from "./SlideShowImgMod";
 import "./styles.css";
 import { IoIosCloseCircle } from "react-icons/io";
-import { calc } from "@chakra-ui/react";
 
 function SlideShowModal(props) {
   const slideshowImgRef = useRef(null);
@@ -70,7 +69,7 @@ function SlideShowModal(props) {
             }}
           >
             <img
-              src={props.srcs[props.currentImg]}
+              src={props.srcs[props.currentImg].url}
               alt="this"
               draggable="false"
               onError={handleError}
@@ -80,7 +79,7 @@ function SlideShowModal(props) {
             {props.srcs.map((src, index) => {
               return (
                 <SlideShowImgMod
-                  src={src}
+                  src={src.url}
                   alt={"this"}
                   key={index}
                   onClick={() => props.setCurrentImg(index)}

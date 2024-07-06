@@ -1,6 +1,6 @@
 import React, { useRef, useState, forwardRef } from "react";
 import "../components/styles.css";
-import { IoCart } from "react-icons/io5";
+import { IoCart, IoArrowBackCircle } from "react-icons/io5";
 import SlideShowImg from "../components/SlideShowImg";
 import SlideShowModal from "../components/SlideShowModal";
 import Header from "../components/header";
@@ -67,7 +67,6 @@ const Product = forwardRef(function Product(props, ref) {
       >
         {/* cursor custom */}
         <div ref={cursorContRef} className="customCursorCont">
-          {" "}
           <div className="customCursor" ref={cursorRef}>
             View Image
           </div>
@@ -83,6 +82,9 @@ const Product = forwardRef(function Product(props, ref) {
           />
         ) : null}
         <section className="product-page">
+          <div className="prod-back-shop" onClick={() => history.back()}>
+            <IoArrowBackCircle /> <div>Go back</div>
+          </div>
           {/* -----------------normal----------------- */}
           <div className="prod-img-cont">
             <div className="img-cont">
@@ -124,7 +126,7 @@ const Product = forwardRef(function Product(props, ref) {
                 {srcs.map((src, index) => {
                   return (
                     <SlideShowImg
-                      src={src}
+                      src={src.url}
                       alt={"this"}
                       key={index}
                       onClick={() => setCurrentImg(index)}
@@ -203,10 +205,9 @@ Product.propTypes = {
   onOpen: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  isCategory: PropTypes.bool.isRequired,
-  isSearched: PropTypes.bool.isRequired,
-  products: PropTypes.array.isRequired,
-  categories: PropTypes.array.isRequired,
+  isCategory: PropTypes.bool,
+  isSearched: PropTypes.bool,
+  categories: PropTypes.array,
 };
 
 export default Product;
