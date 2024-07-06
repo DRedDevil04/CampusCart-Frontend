@@ -1,12 +1,28 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function Image(props) {
+function CardImage(props) {
   const navigate = useNavigate();
+  //console.log(props);
+  var src = props.src;
 
   function handler(id) {
     console.log("clicked");
     navigate("/product/" + id);
+  }
+  function imageExists(image_url) {
+    var imgg = new Image();
+    imgg.src = image_url;
+    imgg.onload = function () {
+      return true;
+    };
+    imgg.onerror = function (e) {
+      return false;
+    };
+    return imgg.complete;
+  }
+  if (!imageExists(src)) {
+    src = "https://placehold.co/400/dbe2ef/3f72af?text=Image+not+available";
   }
 
   return (
@@ -18,10 +34,10 @@ function Image(props) {
           handler(props.id);
         }}
       >
-        <img src={props.src} alt={props.alt} />
+        <img src={src} alt={props.alt} />
       </div>
     </>
   );
 }
 
-export default Image;
+export default CardImage;

@@ -2,10 +2,9 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
-import { Home } from "./pages/Home";
 import PrivateRoute from "./components/PrivateRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
-import { ProfilePage } from "./pages/ProfilePage";
+import ProfilePage from "./pages/ProfilePage";
 import Dashboard from "./pages/Dashboard";
 import UserPage from "./pages/UserPage";
 import { useDisclosure } from "@chakra-ui/react";
@@ -16,7 +15,6 @@ import AddItemPage from "./pages/AddItem";
 import AddCategoryPage from "./pages/AddCategory";
 import { useGetAllItemsQuery } from "./slices/productsApiSlice";
 import { useGetAllCategoriesQuery } from "./slices/categoryApiSlice";
-import Cart from "./components/cart";
 import CartPage from "./pages/CartPage";
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -36,7 +34,6 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cart" element={<CartPage 
@@ -47,7 +44,7 @@ function App() {
         />
         {/* shop and product page */}
         <Route
-          path="/shop"
+          path="/"
           element={
             <Shop
               products={data}
@@ -167,7 +164,14 @@ function App() {
           }
         />
         <Route path="/" element={<PrivateRoute />}>
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile" element={
+            <ProfilePage
+            onOpen={onOpen}
+            isOpen={isOpen}
+            onClose={onClose}
+            btnRef={btnRef}
+          />
+          } />
         </Route>
       </Routes>
     </Router>
