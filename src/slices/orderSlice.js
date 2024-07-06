@@ -8,6 +8,13 @@ export const orderSlice = apiSlice.injectEndpoints({
                 credentials: 'include',
             }),
         }),
+        addNewOrder:builder.mutation({
+            query:(orderDetails)=>({
+                url:'/order',
+                method:'POST',
+                body:orderDetails
+            })
+        }),
         editOrderStatus: builder.mutation({
             query: ({ id, status }) => ({
                 url: `/order/status/${id}`,
@@ -36,7 +43,8 @@ export const orderSlice = apiSlice.injectEndpoints({
 });
 
 export const { 
-    useGetAllOrdersQuery, 
+    useGetAllOrdersQuery,
+    useAddNewOrderMutation, 
     useEditOrderStatusMutation, 
     useEditPaymentStatusMutation, 
     useEditShippingStatusMutation 

@@ -17,7 +17,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         method: 'PUT',
         credentials: 'include',
         body: data,
-      }),
+      }), 
     }),
     login: builder.mutation({
       query: (data) => ({
