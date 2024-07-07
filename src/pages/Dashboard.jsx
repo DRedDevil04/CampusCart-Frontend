@@ -4,6 +4,7 @@ import Header from '../components/header';
 import Sidebar from '../components/sidebar';
 import Stats from '../components/stats';
 import ProductsTable from '../components/products_table';
+import CategoriesTable from '../components/category_table';
 import CardView from '../components/AddItemCard';
 import AddItemImage from '../assets/additem.svg';
 import AddCategoryImage from '../assets/category.svg';
@@ -34,6 +35,7 @@ const Dashboard = ({ onOpen, isOpen, onClose, btnRef }) => (
       /> */}
     </CardRow>
 
+    <CategoriesTable />
     <ProductsTable />
   </>
 );

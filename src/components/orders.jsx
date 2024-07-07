@@ -18,7 +18,7 @@ import {
   useEditOrderStatusMutation,
   useEditPaymentStatusMutation,
   useEditShippingStatusMutation,
-} from '../slices/orderSlice'; // Adjust import paths as per your project structure
+} from '../slices/orderSlice';
 
 const OrderCard = ({ order, setReloadData }) => {
   const [editOrderStatus, setEditOrderStatus] = useState(false);
@@ -26,9 +26,9 @@ const OrderCard = ({ order, setReloadData }) => {
   const [editShippingStatus, setEditShippingStatus] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
 
-  const [orderStatus, setOrderStatus] = useState(order.order_status);
-  const [estimatedDeliveryDate, setEstimatedDeliveryDate] = useState(order.shipping.estimated_delivery_date);
-  const [paymentStatus, setPaymentStatus] = useState(order.payment.status);
+  const [orderStatus, setOrderStatus] = useState(order.order_status || 'Confirmation Awaited');
+  const [estimatedDeliveryDate, setEstimatedDeliveryDate] = useState(order.shipping.estimated_delivery_date || '');
+  const [paymentStatus, setPaymentStatus] = useState(order.payment.status || 'Pending');
 
   const orderStatusOptions = ['Confirmation Awaited', 'Confirmed', 'Processing', 'Shipped', 'Out for Delivery', 'Delivered', 'Cancelled'];
   const paymentStatusOptions = ['Pending', 'Paid', 'Failed', 'Refunded', 'Cancelled'];
@@ -73,6 +73,15 @@ const OrderCard = ({ order, setReloadData }) => {
   return (
     <Card border="2px" borderColor="teal.500" borderRadius="md" bg="white" boxShadow="md" mb="2rem">
       <Stack spacing="2rem" p="1.5rem">
+        {/* Render 'Delivered' orders at the top */}
+        {order.order_status === 'Delivered' && (
+          <Flex justifyContent="center" alignItems="center" mb="1rem">
+            <Text fontSize="lg" fontWeight="bold" color="green.500">
+              Delivered
+            </Text>
+          </Flex>
+        )}
+
         <Flex justifyContent="space-between" alignItems="center">
           <Text fontSize="lg" fontWeight="bold" color="teal.400">
             Order Date
@@ -95,7 +104,7 @@ const OrderCard = ({ order, setReloadData }) => {
             {order.items && order.items.map((item, index) => (
               <Box key={index} mt="1.5rem">
                 <Text>Name: {item.item.name}</Text>
-                <Text>Price: ${item.price}</Text>
+                <Text>Price: {item.price} {item.item.price.currency}</Text>
                 <Text>Quantity: {item.quantity}</Text>
               </Box>
             ))}
@@ -106,6 +115,7 @@ const OrderCard = ({ order, setReloadData }) => {
               Buyer Details
             </Text>
             <Text>Name: {order.customer.name}</Text>
+            <Text>Enrollment Number: {order.customer.enrollment_number}</Text>
             <Text>Email: {order.customer.email}</Text>
             <Text>Address: {order.shipping.address.room}, {order.shipping.address.floor} floor, {order.shipping.address.hostel}</Text>
             <Text>Contact Number: {order.shipping.address.contact_number}</Text>

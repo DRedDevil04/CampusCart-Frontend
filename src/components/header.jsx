@@ -14,33 +14,26 @@ import {
   MenuDivider,
   useDisclosure,
   Tooltip,
+  Badge,
 } from "@chakra-ui/react";
 import LogoutModal from "./logout";
 import { useNavigate, useLocation } from "react-router-dom";
 import { IoMenu } from "react-icons/io5";
+import { IoMdCart, IoIosLogIn, IoMdPersonAdd } from "react-icons/io";
 import { selectUser } from "../slices/authSlice";
 import { useSelector } from "react-redux";
-import { TiShoppingCart } from "react-icons/ti";
-import { FaSignInAlt, FaUserPlus } from "react-icons/fa"; // Import icons for Login and Register
+import { selectCarts } from "../slices/cartSlice";
 
 const Header = ({ onOpen }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [isNonMobile] = useMediaQuery("(min-width: 420px)");
   const { isOpen, onOpen: onOpenModal, onClose } = useDisclosure();
   const userInfo = useSelector(selectUser);
-  const isAdmin = userInfo?.role === "admin";
-  const isShopPage = location.pathname === "/";
+  const cartItems = useSelector(selectCarts);
+  const isShopPage = location.pathname === "/" || location.pathname === "/cart" || location.pathname.startsWith("/category/") || location.pathname.startsWith("/product/");
 
-  const handleLogin = () => {
-    navigate("/login");
-    onClose();
-  };
+  const totalItemsInCart = userInfo ? (cartItems[userInfo.email]?.reduce((acc, item) => acc + item.quantity, 0) || 0) : 0;
 
-  const handleRegister = () => {
-    navigate("/register");
-    onClose();
-  };
 
   return (
     <Box minW="320px" w="100%" className="Header" bg={"#3f72af"} p={4}>
@@ -70,31 +63,42 @@ const Header = ({ onOpen }) => {
 
         <Flex alignItems="center" gap="1rem">
           {isShopPage && userInfo && (
-            <IconButton
-              bg="none"
-              _hover={{ bg: "#3f72af", transform: "scale(1.1)" }}
-              onClick={() => navigate("/cart")}
-            >
-              <TiShoppingCart size="md" color="white" />
-            </IconButton>
+            <Box position="relative">
+              <IconButton
+                colorScheme="whiteAlpha"
+                aria-label="Open Cart"
+                icon={<IoMdCart size={35} />}
+                onClick={() => navigate("/cart")}
+              />
+              {totalItemsInCart > 0 && (
+                <Badge
+                  position="absolute"
+                  top="0"
+                  right="0"
+                  transform="translate(25%, -25%)"
+                  colorScheme="red"
+                  borderRadius="full"
+                  px={2}
+                >
+                  {totalItemsInCart}
+                </Badge>
+              )}
+            </Box>
           )}
           {!userInfo ? (
             <Flex gap="1rem">
               <IconButton
-              bg="none"
-              _hover={{ bg: "#3f72af", transform: "scale(1.1)" }}
-              onClick={() => navigate("/register")}
-            >
-              <FaUserPlus size="md" color="white" />
-            </IconButton>
+                colorScheme="whiteAlpha"
+                aria-label="Open Login"
+                icon={<IoIosLogIn size={35} />}
+                onClick={() => navigate("/login")}
+              />
               <IconButton
-              bg="none"
-              _hover={{ bg: "#3f72af", transform: "scale(1.1)" }}
-              onClick={() => navigate("/login")}
-            >
-              <FaSignInAlt size="md" color="white" />
-            </IconButton>
-              
+                colorScheme="whiteAlpha"
+                aria-label="Open SignUp"
+                icon={<IoMdPersonAdd size={35} />}
+                onClick={() => navigate("/register")}
+              />
             </Flex>
           ) : (
             <Flex
@@ -102,9 +106,6 @@ const Header = ({ onOpen }) => {
               flexDirection={{ base: "column-reverse", lg: "row" }}
               gap="2"
               whiteSpace={"nowrap"}
-              //pr={{base:"1rem"}}
-              // position={"absolute"}
-              // right={0}
             >
               <Text
                 fontSize={["sm", "md", "xl", "2xl"]}

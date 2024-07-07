@@ -1,15 +1,20 @@
 import React from "react";
 import Image from "./Image";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addItemToCart } from "../slices/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addItemToCart, selectCarts } from "../slices/cartSlice";
 import { useToast } from "@chakra-ui/react";
 
 function Card(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { ID, img, title, category, price, email } = props;
   const toast = useToast();
+
+  const { ID, img, title, category, price, email } = props;
+
+  const cartItems = useSelector(selectCarts);
+
+  const isInCart = cartItems.hasOwnProperty(email) && cartItems[email].some(item => item.ID === ID);
 
   const handleAddToCart = () => {
     const item = { ID, title, category, price, img };
@@ -47,9 +52,15 @@ function Card(props) {
       </div>
       <div className="card-footer">
         <div className="price">₹{price}</div>
-        <button className="btn" onClick={handleAddToCart}>
-          <p>Add to Cart</p>
-        </button>
+        {isInCart ? (
+          <button className="btn" onClick={() => navigate("/cart")}>
+            <p>Go to Cart</p>
+          </button>
+        ) : (
+          <button className="btn" onClick={handleAddToCart}>
+            <p>Add to Cart</p>
+          </button>
+        )}
       </div>
     </div>
   );

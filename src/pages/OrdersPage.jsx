@@ -34,17 +34,25 @@ const OrdersPage = ({ onOpen, isOpen, onClose, btnRef }) => {
   }
 
   if (errorOrders || orders.length === 0) {
-    return <Box p={4}>No orders found</Box>;
+    return (
+      <>
+        <HeaderWrapper>
+          <Header onOpen={onOpen} />
+        </HeaderWrapper>
+        <Sidebar isOpen={isOpen} onClose={onClose} btnRef={btnRef} />
+        <Box p={4}>No orders found</Box>
+      </>
+    );
   }
-  if(!Array.isArray(orders)){
+  if (!Array.isArray(orders)) {
     return <Box p={4}>Orders not recieved as array</Box>;
   }
 
   return (
     <>
       <HeaderWrapper>
-      <Header onOpen={onOpen} />
-    </HeaderWrapper>
+        <Header onOpen={onOpen} />
+      </HeaderWrapper>
       <Sidebar isOpen={isOpen} onClose={onClose} btnRef={btnRef} />
       <Box p={4} >
         <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={5}>

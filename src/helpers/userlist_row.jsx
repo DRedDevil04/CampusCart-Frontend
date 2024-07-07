@@ -16,7 +16,7 @@ import {
     Button
 } from '@chakra-ui/react';
 
-const UserListRow = ({ userId,userName, email, date, avatar, role, orders,isLast, onChangeRole, isOpen, onOpen, onClose }) => {
+const UserListRow = ({ userId,userName, email,enrollment_number, date, avatar, role, orders,isLast, onChangeRole, isOpen, onOpen, onClose }) => {
     const textColor = useColorModeValue("gray.500", "white");
     const userColor = useColorModeValue("gray.700", "white");
     const adminColor = useColorModeValue("red", "white");
@@ -55,6 +55,15 @@ const UserListRow = ({ userId,userName, email, date, avatar, role, orders,isLast
                     fontWeight="bold"
                 >
                     {email}
+                </Text>
+            </Td>
+            <Td>
+                <Text
+                    fontSize={{ base: "sm", sm: "md" }}
+                    color={textColor}
+                    fontWeight="bold"
+                >
+                    {enrollment_number}
                 </Text>
             </Td>
             <Td>

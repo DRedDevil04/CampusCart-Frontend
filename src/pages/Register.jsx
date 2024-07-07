@@ -26,6 +26,7 @@ import { setCredentials } from '../slices/authSlice';
 export function Register() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [enrollment_number, setEnrollment_Number] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
@@ -46,6 +47,10 @@ export function Register() {
         setName(e.target.value);
         if (error) setError('');
     };
+    const handleEnrollmentChange = (e) => {
+        setEnrollment_Number(e.target.value);
+        if (error) setError('');
+    };
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -64,7 +69,7 @@ export function Register() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!name || !email || !password || !confirmPassword) {
+        if (!name || !email || !password || !confirmPassword || !enrollment_number) {
             setError('All fields are required');
             return;
         }
@@ -75,11 +80,12 @@ export function Register() {
         }
 
         try {
-            const res = await register({ name, email, password }).unwrap();
+            const res = await register({ name, email,enrollment_number, password }).unwrap();
             dispatch(setCredentials({ ...res.data }));
             navigate('/');
             setName('');
             setEmail('');
+            setEnrollment_Number('');
             setPassword('');
             setConfirmPassword('');
             setError('');
@@ -118,6 +124,10 @@ export function Register() {
                                     <FormControl id='name'>
                                         <FormLabel>Name</FormLabel>
                                         <Input type='text' value={name} onChange={handleNameChange} />
+                                    </FormControl>
+                                    <FormControl id='enrollment_number'>
+                                        <FormLabel>Enrollment Number</FormLabel>
+                                        <Input type='text' value={enrollment_number} onChange={handleEnrollmentChange} />
                                     </FormControl>
                                     <FormControl id='email'>
                                         <FormLabel>Email address</FormLabel>

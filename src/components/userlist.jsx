@@ -138,7 +138,10 @@ const UserList = () => {
                                     User Name
                                 </Th>
                                 <Th borderColor={borderColor} color="gray.400">
-                                    email
+                                    Email
+                                </Th>
+                                <Th borderColor={borderColor} color="gray.400">
+                                    Enrollment Number
                                 </Th>
                                 <Th borderColor={borderColor} color="gray.400">
                                     Role
@@ -159,6 +162,7 @@ const UserList = () => {
                                     userId={user.id}
                                     userName={user.name}
                                     email={user.email}
+                                    enrollment_number={user.enrollment_number}
                                     date={new Date(user.__created)}
                                     avatar={user.imageUrl}
                                     role={user.role}

@@ -41,8 +41,8 @@ const TableRow = ({ productId, productName, category, status, date, isLast, onEd
             {/* Product Status */}
             <Td borderColor={borderColor} borderBottom={isLast ? "none" : null}>
                 <Badge
-                     bg={status === true ? bgStatusNotSold : bgStatusSold}
-                    color={status===true ? "white" : "black" }
+                    bg={status === true ? bgStatusNotSold : bgStatusSold}
+                    color={status === true ? "white" : "black"}
                     fontSize={{ base: "xs", sm: "md" }}
                     p="3px 10px"
                     borderRadius="8px"
@@ -65,21 +65,9 @@ const TableRow = ({ productId, productName, category, status, date, isLast, onEd
 
             {/* Edit Button */}
             <Td borderColor={borderColor} borderBottom={isLast ? "none" : null}>
-                <Button
-                    p="0px"
-                    bg="transparent"
-                    variant="no-effects"
-                    onClick={() => onEditClick(productId)}
-                >
-                    <Text
-                        fontSize={{ base: "sm", sm: "md" }}
-                        color="gray.400"
-                        fontWeight="bold"
-                        cursor="pointer"
-                    >
-                        Edit
-                    </Text>
+                <Button colorScheme="teal" onClick={() => onEditClick(productId)}>                    Edit
                 </Button>
+
             </Td>
         </Tr>
     );
