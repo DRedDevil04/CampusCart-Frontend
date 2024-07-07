@@ -5,17 +5,66 @@ import SlideShowImg from "../components/SlideShowImg";
 import SlideShowModal from "../components/SlideShowModal";
 import Header from "../components/header";
 import Sidebar from "../components/sidebar";
-
-// ------------
+import { useToast } from "@chakra-ui/react";
+import { useDispatch } from "react-redux";
+import { addItemToCart, selectCarts } from "../slices/cartSlice";
+import { useSelector } from "react-redux";
+import { selectUser } from "../slices/authSlice";
+import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 import PropTypes from "prop-types";
 
 const Product = forwardRef(function Product(props, ref) {
   let propsData = props.product;
+  const userInfo = useSelector(selectUser);
+  const email = userInfo?.email;
   const { onOpen, isOpen, onClose, btnRef } = props;
-
-  const inputRef = React.useRef(null);
+  const item = {
+    ID: props.product._id,
+    title: props.product.name,
+    category: props.product.category.name,
+    price: props.product.price.amount,
+    img:
+      props.product.images.length > 0
+        ? props.product.images[0].url
+        : "https://placehold.co/400",
+  };
+  const toast = useToast();
+  const dispatch = useDispatch();
+  const inputRef = useRef(null);
   const minusRef = useRef(null);
+  const cursorRef = useRef(null);
+  const cursorContRef = useRef(null);
+
+  const srcs = propsData.images;
+  const [currentImg, setCurrentImg] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleAddToCart = () => {
+    const quantity = parseInt(inputRef.current.value);
+    for (let i = 0; i < quantity; i++) {
+      dispatch(addItemToCart({ email, item }));
+    }
+    toast({
+      title: "Added to cart",
+      status: "success",
+      duration: 4000,
+      isClosable: true,
+    });
+  };
+
+  const cartItems = useSelector(selectCarts);
+  const isInCart = cartItems.hasOwnProperty(email)
+    ? cartItems[email].some((cartItem) => cartItem.ID === item.ID)
+    : false;
+
+  const goToCart = () => {
+    navigate("/cart");
+  };
+
   function updateButtons() {
     if (inputRef.current.value === "0") {
       minusRef.current.style.opacity = "0.5";
@@ -26,22 +75,17 @@ const Product = forwardRef(function Product(props, ref) {
     }
   }
 
-  const cursorRef = useRef(null);
-  const cursorContRef = useRef(null);
-
-  const srcs = propsData.images;
-
-  const [currentImg, setCurrentImg] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
   function nextImg() {
     setCurrentImg((currentImg + 1) % srcs.length);
   }
+
   function prevImg() {
     setCurrentImg(
       (currentImg - 1 < 0 ? currentImg - 1 + srcs.length : currentImg - 1) %
-        srcs.length
+      srcs.length
     );
   }
+
   function handleError(e) {
     e.target.src =
       "https://placehold.co/400/dbe2ef/3f72af?text=Image+not+available";
@@ -156,41 +200,63 @@ const Product = forwardRef(function Product(props, ref) {
               </div>
             </div>
             <div className="prod-buy-area">
-              <div className="quantity">
-                <button
-                  className="minus"
-                  ref={minusRef}
-                  onClick={function () {
-                    if (inputRef.current.value > 0) {
+              {!isInCart && (
+                <div className="quantity">
+                  <button
+                    className="minus"
+                    ref={minusRef}
+                    onClick={function () {
+                      if (inputRef.current.value > 0) {
+                        inputRef.current.value =
+                          parseInt(inputRef.current.value) - 1;
+                      }
+                      updateButtons();
+                    }}
+                  >
+                    &minus;
+                  </button>
+                  <input
+                    type="number"
+                    ref={inputRef}
+                    className="quantity-inp"
+                    defaultValue={"1"}
+                    min={"0"}
+                  />
+                  <button
+                    className="plus"
+                    onClick={function () {
                       inputRef.current.value =
-                        parseInt(inputRef.current.value) - 1;
-                    }
-                    updateButtons();
-                  }}
-                >
-                  &minus;
-                </button>
-                <input
-                  type="number"
-                  ref={inputRef}
-                  className="quantity-inp"
-                  defaultValue={"1"}
-                  min={"0"}
-                />
-                <button
-                  className="plus"
-                  onClick={function () {
-                    inputRef.current.value =
-                      parseInt(inputRef.current.value) + 1;
-                    updateButtons();
-                  }}
-                >
-                  &#43;
-                </button>
-              </div>
-              <div className="add-to-cart">
-                <IoCart size={25} /> <span>Add to cart</span>
-              </div>
+                        parseInt(inputRef.current.value) + 1;
+                      updateButtons();
+                    }}
+                  >
+                    &#43;
+                  </button>
+                </div>
+              )}
+              {isInCart ? (
+                <div className="add-to-cart">
+                  <div
+                    className="add-to-cart-btn"
+                    onClick={goToCart}
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    <IoCart size={25} />
+                    <span style={{ marginLeft: "5px" }}>Go to Cart</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="add-to-cart">
+                  <div
+                    className="add-to-cart-btn"
+                    onClick={handleAddToCart}
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    <IoCart size={25} />
+                    <span style={{ marginLeft: "5px" }}>Add to Cart</span>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </section>

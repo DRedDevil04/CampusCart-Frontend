@@ -1,23 +1,9 @@
-// components/ProtectedRoute.jsx
+import { Outlet, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../slices/authSlice';
-
-const ProtectedRoute = ({ children }) => {
-  const user = useSelector(selectUser);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!user) {
-      navigate('/');
-    } else if (user.role !== 'admin') {
-     navigate('/');
-    }
-  }, [user, navigate]);
-
-  return user?.role === 'admin' ? children : null;
-};
+const ProtectedRoute = ()=>{
+    const UserInfo = useSelector((state)=> state.auth.userInfo);
+    return UserInfo ? <Outlet /> : <Navigate to='/login' replace />
+}
 
 export default ProtectedRoute;

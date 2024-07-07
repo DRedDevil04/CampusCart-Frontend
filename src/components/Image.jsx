@@ -1,32 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Spinner } from "@chakra-ui/react";
 
 function CardImage(props) {
   const navigate = useNavigate();
-  //console.log(props);
-  var src = props.src;
+  const [imageLoading, setImageLoading] = useState(true);
+  const [imageAvailable, setImageAvailable] = useState(true);
+  const { id, src, alt } = props;
 
-  function handler(id) {
-    navigate("/product/" + id);
-  }
+  const handleImageClick = () => {
+    navigate(`/product/${id}`);
+  };
 
-  function handleError(e) {
-    e.target.src =
-      "https://placehold.co/400/dbe2ef/3f72af?text=Image+not+available";
-  }
+  const handleImageLoad = () => {
+    setImageLoading(false);
+  };
+
+  const handleImageError = () => {
+    setImageAvailable(false);
+    setImageLoading(false); 
+  };
 
   return (
-    <>
-      <div
-        className="card-image"
-        style={{ cursor: "pointer" }}
-        onClick={() => {
-          handler(props.id);
-        }}
-      >
-        <img onError={handleError} src={src} alt={props.alt} />
-      </div>
-    </>
+    <div
+      className="card-image"
+      style={{ cursor: "pointer", position: "relative" }} 
+      onClick={handleImageClick}
+    >
+      {imageLoading && (
+        <Spinner
+          size="sm" 
+          position="absolute"
+          top="50%"
+          left="50%"
+          transform="translate(-50%, -50%)"
+        />
+      )}
+      {imageAvailable ? (
+        <img
+          src={src}
+          alt={alt}
+          onLoad={handleImageLoad}
+          onError={handleImageError}
+          style={{ display: imageLoading ? "none" : "block" }}
+        />
+      ) : (
+        <img
+          src="https://placehold.co/400/dbe2ef/3f72af?text=Image+not+available"
+          alt="Image not available"
+        />
+      )}
+    </div>
   );
 }
 

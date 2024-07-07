@@ -40,10 +40,9 @@ const OrdersPage = ({ onOpen, isOpen, onClose, btnRef }) => {
           <Header onOpen={onOpen} />
         </HeaderWrapper>
         <Sidebar isOpen={isOpen} onClose={onClose} btnRef={btnRef} />
-
-        <Box p={4}>No orders found</Box>;
+        <Box p={4}>No orders found</Box>
       </>
-    )
+    );
   }
   if (!Array.isArray(orders)) {
     return <Box p={4}>Orders not recieved as array</Box>;

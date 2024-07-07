@@ -2,6 +2,9 @@ import { apiSlice } from './apiSlices';
 
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    authenticate:builder.query({
+        query:()=>"/user/authenticate"
+    }),
     getAllUsers:builder.query({
         query:()=>"/user/getallusers"
     }),
@@ -17,7 +20,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         method: 'PUT',
         credentials: 'include',
         body: data,
-      }),
+      }), 
     }),
     login: builder.mutation({
       query: (data) => ({
@@ -45,4 +48,4 @@ export const usersApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetProfileQuery, useUpdateProfileMutation,useLoginMutation, useLogoutMutation, useRegisterMutation } = usersApiSlice;
+export const { useGetProfileQuery,useAuthenticateQuery, useUpdateProfileMutation,useLoginMutation, useLogoutMutation, useRegisterMutation } = usersApiSlice;

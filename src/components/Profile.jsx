@@ -13,6 +13,8 @@ import {
     Spinner,
     Alert,
     AlertIcon,
+    VStack,
+    Badge
 } from '@chakra-ui/react';
 import { useGetProfileQuery, useUpdateProfileMutation } from '../slices/userApiSlice';
 
@@ -35,6 +37,7 @@ function Profile() {
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [enrollment_number, setEnrollment_Number] = useState('');
     const [profilePicture, setProfilePic] = useState('');
     const [address, setAddress] = useState({
         room: '',
@@ -45,6 +48,7 @@ function Profile() {
 
     const [nameEdit, setNameEdit] = useState(false);
     const [emailEdit, setEmailEdit] = useState(false);
+    const [enrollment_numberedit, setEnrollment_NumberEdit] = useState(false);
     const [addressEdit, setAddressEdit] = useState(false);
     const [emailExistsError, setEmailExistsError] = useState(false);
 
@@ -53,6 +57,7 @@ function Profile() {
             const user = userResponse.data;
             setName(user.name);
             setEmail(user.email);
+            setEnrollment_Number(user.enrollment_number);
             setProfilePic(user.profilePicture);
             setAddress(user.address);
         }
@@ -72,6 +77,9 @@ function Profile() {
                 case 'address':
                     updatedData.address = address;
                     break;
+                case 'enrollment_number':
+                    updatedData.enrollment_number = enrollment_number;
+                    break;
                 default:
                     break;
             }
@@ -86,6 +94,9 @@ function Profile() {
                     break;
                 case 'email':
                     setEmailEdit(false);
+                    break;
+                case 'enrollment_number':
+                    setEnrollment_NumberEdit(false);
                     break;
                 case 'address':
                     setAddressEdit(false);
@@ -130,7 +141,7 @@ function Profile() {
     return (
         <Box p={4} maxW="800px" mx="auto">
             <Heading mb={6}>My Profile</Heading>
-            
+
             {updateError && !emailExistsError && (
                 <Alert status="error" mt={4}>
                     <AlertIcon />
@@ -178,6 +189,21 @@ function Profile() {
                 )}
             </Box>
             <Box p={6} mb={6} bg="white" borderRadius="md" boxShadow="md">
+                <Text fontSize="xl" mb={4}>Enrollment Number</Text>
+                <Flex align="center">
+                    <Input value={enrollment_number} onChange={(e) => setEnrollment_Number(e.target.value)} readOnly={!enrollment_numberedit} mr={2} />
+                    {!enrollment_numberedit ? (
+                        <Button onClick={() => setEnrollment_NumberEdit(true)} colorScheme="blue">
+                            Edit
+                        </Button>
+                    ) : (
+                        <Button onClick={() => handleProfileUpdate('enrollment_number')} isLoading={isUpdating} loadingText="Saving..." colorScheme="green">
+                            Save
+                        </Button>
+                    )}
+                </Flex>
+            </Box>
+            <Box p={6} mb={6} bg="white" borderRadius="md" boxShadow="md">
                 <Text fontSize="xl" mb={4}>Address</Text>
                 <Stack spacing={4}>
                     {['room', 'floor', 'hostel', 'contact_number'].map((field) => (
@@ -206,14 +232,14 @@ function Profile() {
 
             <Heading size="lg" mb={6}>Order History</Heading>
             <Stack spacing={6}>
-                {userResponse.data.orders.length==0 ? <Text mb={2}>No Order Found!</Text> : <></>}
+                {userResponse.data.orders.length == 0 ? <Text mb={2}>No Order Found!</Text> : <></>}
                 {userResponse.data.orders &&
                     userResponse.data.orders.map((order, index) => (
                         <Box key={index} p={6} bg="white" borderRadius="md" boxShadow="md">
                             <Text mb={2}><strong>Order Amount:</strong> {order.payment.amount} {order.payment.currency}</Text>
                             <Text mb={2}><strong>Order Placed:</strong> {new Date(order.__created).toLocaleDateString()}</Text>
                             <Text mb={2}><strong>Ship To:</strong> Room No. - {order.shipping.address.room} <br />
-                                {order.shipping.address.floor} floor, {order.shipping.address.hostel}</Text>
+                                {order.shipping.address.floor} floor, {order.shipping.address.hostel}, {order.shipping.address.contact_number}</Text>
                             <Text mb={2}><strong>Mode of Payment:</strong> {order.payment.payment_method}</Text>
                             <Box p={2} borderRadius="md" bg={getStatusColor(order.payment.status)} textAlign="center" mb={4}>
                                 <strong>Payment Status:</strong> {order.payment.status}
@@ -227,16 +253,20 @@ function Profile() {
                             <Flex wrap="wrap" gap={4}>
                                 {order.items &&
                                     order.items.map((item, index) => (
-                                        <Box key={index} p={4} bg="gray.50" borderRadius="md" boxShadow="sm">
-                                            <Image
-                                                boxSize="100px"
-                                                objectFit="cover"
-                                                src={item.item.images.length > 0 ? item.item.images[0].url : 'https://placehold.co/400'}
-                                                alt={item.item.images.length > 0 ? item.item.images[0].altText : 'No Image Available'}
-                                            />
-                                            <Text fontWeight="bold">{item.item.name}</Text>
-                                            <Text>Quantity: {item.quantity}</Text>
-                                            <Text>Price: {item.item.price.amount} {item.item.price.currency}</Text>
+
+                                        <Box key={index} bg="white" borderWidth="1px" borderRadius="lg" overflow="hidden" p={4} boxShadow="md" style={{width:'100%'}}>
+                                            <Flex gap="12" height="100%">
+                                                <Image boxSize="100px" objectFit="cover" src={item.item.images.length > 0 ? item.item.images[0].url : 'https://placehold.co/400'} alt={item.item.name} />
+                                                <VStack align="start" flex="1">
+                                                    <Text fontWeight="bold" fontSize="lg">{item.item.name}</Text>
+                                                    <Text>Price: Rs {(item.item.price.amount).toFixed(2)}</Text>
+                                                    <Flex gap="1rem" alignItems="center">
+                                                        <Text>Quantity:</Text>
+                                                        <Badge variant="subtle" fontSize="1rem" color="blue.500">{item.quantity}</Badge>
+                                                    </Flex>
+                                                    <Text>Total: Rs {(item.item.price.amount * item.quantity).toFixed(2)}</Text>
+                                                </VStack>
+                                            </Flex>
                                         </Box>
                                     ))}
                             </Flex>
@@ -244,8 +274,9 @@ function Profile() {
                                 {order.order_status !== 'Cancelled' && (order.payment.status === 'Paid' || order.payment.status === 'Pending') ? (
                                     new Date(order.shipping.estimated_delivery_date) < new Date() ? (
                                         `Delivered on ${new Date(order.shipping.estimated_delivery_date).toLocaleDateString()}`
-                                    ) : (
-                                        `Estimated Delivery Date: ${new Date(order.shipping.estimated_delivery_date).toLocaleDateString()}`
+                                    ) : (<>
+                                        {order.shipping.estimated_delivery_date ? `Estimated Delivery Date: ${new Date(order.shipping.estimated_delivery_date).toLocaleDateString()}` : null}
+                                    </>
                                     )
                                 ) : null}
                             </Text>
