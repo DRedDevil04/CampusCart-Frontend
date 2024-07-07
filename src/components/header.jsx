@@ -13,7 +13,6 @@ import {
   MenuItem,
   MenuDivider,
   useDisclosure,
-  Tooltip,
 } from "@chakra-ui/react";
 import LogoutModal from "./logout";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -31,16 +30,6 @@ const Header = ({ onOpen }) => {
   const userInfo = useSelector(selectUser);
   const isAdmin = userInfo?.role === "admin";
   const isShopPage = location.pathname === "/";
-
-  const handleLogin = () => {
-    navigate("/login");
-    onClose();
-  };
-
-  const handleRegister = () => {
-    navigate("/register");
-    onClose();
-  };
 
   return (
     <Box minW="320px" w="100%" className="Header" bg={"#3f72af"} p={4}>

@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux";
 import { selectUser } from "../slices/authSlice";
 const Cart = () => {
   const dispatch = useDispatch();
-  const carts = useSelector(selectCarts); // Select 'carts' from Redux state
+  const carts = useSelector(selectCarts);
   const userInfo = useSelector(selectUser);
   const email = userInfo.email;
 

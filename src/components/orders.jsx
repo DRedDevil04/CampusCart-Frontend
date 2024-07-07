@@ -18,7 +18,7 @@ import {
   useEditOrderStatusMutation,
   useEditPaymentStatusMutation,
   useEditShippingStatusMutation,
-} from '../slices/orderSlice'; // Adjust import paths as per your project structure
+} from '../slices/orderSlice';
 
 const OrderCard = ({ order, setReloadData }) => {
   const [editOrderStatus, setEditOrderStatus] = useState(false);
