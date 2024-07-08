@@ -244,6 +244,19 @@ const Product = forwardRef(function Product(props, ref) {
               )}
               {isInCart ? (
                 <div className="add-to-cart">
+                  {
+                    propsData.available ?
+                  <div
+                    className="add-to-cart-btn"
+                    onClick={()=>{
+                      navigate("/cart");
+                    }}
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    <IoCart size={25} />
+                    <span style={{ marginLeft: "5px" }}>View in cart</span>
+                  </div>
+                  :
                   <div
                     className="add-to-cart-btn"
                     onClick={goToCart}
@@ -252,9 +265,12 @@ const Product = forwardRef(function Product(props, ref) {
                     <IoCart size={25} />
                     <span style={{ marginLeft: "5px" }}>Go to Cart</span>
                   </div>
+                  }
                 </div>
               ) : (
                 <div className="add-to-cart">
+                  {
+                    propsData.available ?
                   <div
                     className="add-to-cart-btn"
                     onClick={handleAddToCart}
@@ -263,6 +279,15 @@ const Product = forwardRef(function Product(props, ref) {
                     <IoCart size={25} />
                     <span style={{ marginLeft: "5px" }}>Add to Cart</span>
                   </div>
+                  :
+                  <div
+                    className="add-to-cart-btn"
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    <IoCart size={25} />
+                    <span style={{ marginLeft: "5px" }}>Out of Stock</span>
+                  </div>
+                  }
                 </div>
               )}
             </div>

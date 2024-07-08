@@ -23,7 +23,6 @@ function Shop(props) {
   } = props;
   const userInfo = useSelector(selectUser);
   const email = userInfo?.email;
-
   const srcs = [
     "https://www.nykaa.com/beauty-blog/wp-content/uploads/images/issue283/8-Breakthrough-Products-That-Are-Selling-Faster-Than-You-Can-Cou_OI.jpg",
     "https://cdn.shopify.com/s/files/1/0070/7032/files/trending-products_c8d0d15c-9afc-47e3-9ba2-f7bad0505b9b.png?v=1614559651",
@@ -102,6 +101,7 @@ function Shop(props) {
                 title={product.name}
                 category={product.category.name}
                 price={product.price.amount}
+                available={product.available}
                 email={email}
               />
             ))

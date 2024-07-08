@@ -10,7 +10,7 @@ function Card(props) {
   const dispatch = useDispatch();
   const toast = useToast();
 
-  const { ID, img, title, category, price, email } = props;
+  const { ID, img, title, category, price, email, available } = props;
 
   const cartItems = useSelector(selectCarts);
 
@@ -64,13 +64,31 @@ function Card(props) {
       <div className="card-footer">
         <div className="price">₹{price}</div>
         {isInCart ? (
+          <>
+          {
+          available ?
           <button className="btn" onClick={() => navigate("/cart")}>
             <p>Go to Cart</p>
           </button>
-        ) : (
-          <button className="btn" onClick={handleAddToCart}>
-            <p>Add to Cart</p>
+          :
+          <button className="btn">
+            <p>Out of Stock</p>
           </button>
+          }
+          </>
+        ) : (
+          <>
+          {
+            available ?
+          <button className="btn" onClick={handleAddToCart}>
+            <p>Add to Cart</p> 
+          </button>
+          :
+          <button className="btn">
+            <p>Out of Stock</p> 
+          </button>
+          }
+          </>
         )}
       </div>
     </div>
