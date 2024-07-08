@@ -13,8 +13,6 @@ import { selectUser } from "../slices/authSlice";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
-import PropTypes from "prop-types";
-
 const Product = forwardRef(function Product(props, ref) {
   let propsData = props.product;
   const userInfo = useSelector(selectUser);
