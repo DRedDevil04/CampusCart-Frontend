@@ -6,9 +6,8 @@ import SlideShowModal from "../components/SlideShowModal";
 import Header from "../components/header";
 import Sidebar from "../components/sidebar";
 import { useToast } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart, selectCarts } from "../slices/cartSlice";
-import { useSelector } from "react-redux";
 import { selectUser } from "../slices/authSlice";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
@@ -42,6 +41,17 @@ const Product = forwardRef(function Product(props, ref) {
   const navigate = useNavigate();
 
   const handleAddToCart = () => {
+    if (!email) {
+      toast({
+        title: "Login Required",
+        description: "Please login to add items to your cart.",
+        status: "warning",
+        duration: 4000,
+        isClosable: true,
+      });
+      return;
+    }
+
     const quantity = parseInt(inputRef.current.value);
     for (let i = 0; i < quantity; i++) {
       dispatch(addItemToCart({ email, item }));

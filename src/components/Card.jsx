@@ -17,6 +17,17 @@ function Card(props) {
   const isInCart = cartItems.hasOwnProperty(email) && cartItems[email].some(item => item.ID === ID);
 
   const handleAddToCart = () => {
+    if (!email) {
+      toast({
+        title: "Login Required",
+        description: "Please login to add items to your cart.",
+        status: "warning",
+        duration: 4000,
+        isClosable: true,
+      });
+      return;
+    }
+
     const item = { ID, title, category, price, img };
     dispatch(addItemToCart({ email, item }));
     toast({

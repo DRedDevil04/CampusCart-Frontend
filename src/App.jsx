@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useDisclosure, Spinner, Alert, AlertIcon } from "@chakra-ui/react";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PrivateRoute from "./components/PrivateRoute";
@@ -60,22 +60,13 @@ function App() {
 
   const products = itemsData || [];
   const categories = categoriesData || [];
+
   return (
     <Router>
       <Routes>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route
-          path="/cart"
-          element={
-            <CartPage
-              onOpen={onOpen}
-              isOpen={isOpen}
-              onClose={onClose}
-              btnRef={btnRef}
-            />
-          }
-        />
+
         {/* Shop and Product Pages */}
         <Route
           path="/"
@@ -200,7 +191,20 @@ function App() {
               />
             }
           />
+          <Route
+            path="/cart"
+            element={
+              <CartPage
+                onOpen={onOpen}
+                isOpen={isOpen}
+                onClose={onClose}
+                btnRef={btnRef}
+              />
+            }
+          />
         </Route>
+
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   );
