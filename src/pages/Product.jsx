@@ -291,7 +291,9 @@ const Product = forwardRef(function Product(props, ref) {
                       style={{ display: "flex", alignItems: "center" }}
                     >
                       <IoCart size={25} />
-                      <span style={{ marginLeft: "5px" }}>Out of Stock</span>
+                      <span style={{ marginLeft: "5px", fontWeight: "800" }}>
+                        Out of Stock
+                      </span>
                     </div>
                   )}
                 </div>

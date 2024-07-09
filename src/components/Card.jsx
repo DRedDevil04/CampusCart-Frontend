@@ -64,9 +64,13 @@ function Card(props) {
         <p className="card-category">{category}</p>
       </div>
       <div className="card-footer">
-        <div className="price">
-          ₹{(price * (discount > 0 ? discount / 100 : 1)).toFixed(2)}
-        </div>
+        {available ? (
+          <div className="price">
+            ₹{(price * (discount > 0 ? discount / 100 : 1)).toFixed(2)}
+          </div>
+        ) : (
+          <div className="price"></div>
+        )}
         {isInCart ? (
           <>
             {available ? (
@@ -86,8 +90,13 @@ function Card(props) {
                 <p>Add to Cart</p>
               </button>
             ) : (
-              <button className="btn">
-                <p>Out of Stock</p>
+              <button
+                className="btn"
+                style={{ color: "#3f72af", backgroundColor: "#f9f7f7" }}
+              >
+                <p style={{ fontWeight: "700", fontSize: "1rem" }}>
+                  Out of Stock
+                </p>
               </button>
             )}
           </>
