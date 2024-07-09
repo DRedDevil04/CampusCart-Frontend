@@ -15,6 +15,8 @@ import {
   useDisclosure,
   Tooltip,
   Badge,
+  WrapItem,
+  Wrap
 } from "@chakra-ui/react";
 import LogoutModal from "./logout";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -23,7 +25,8 @@ import { IoMdCart, IoIosLogIn, IoMdPersonAdd } from "react-icons/io";
 import { selectUser } from "../slices/authSlice";
 import { useSelector } from "react-redux";
 import { selectCarts } from "../slices/cartSlice";
-
+import { useDispatch } from "react-redux";
+import { useLogoutMutation } from "../slices/userApiSlice";
 const Header = ({ onOpen }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -31,7 +34,7 @@ const Header = ({ onOpen }) => {
   const userInfo = useSelector(selectUser);
   const cartItems = useSelector(selectCarts);
   const isShopPage = location.pathname === "/" || location.pathname === "/cart" || location.pathname.startsWith("/category/") || location.pathname.startsWith("/product/");
-
+  const [isNonMobile]=useMediaQuery('(min-width:520px)');
   const totalItemsInCart = userInfo ? (cartItems[userInfo.email]?.reduce((acc, item) => acc + item.quantity, 0) || 0) : 0;
 
 
@@ -114,7 +117,8 @@ const Header = ({ onOpen }) => {
               >
                 {userInfo.name.substring(0, 5)}..
               </Text>
-              <Menu>
+              {isNonMobile ?(
+                <Menu>
                 <MenuButton
                   as={Avatar}
                   cursor={"pointer"}
@@ -130,6 +134,17 @@ const Header = ({ onOpen }) => {
                   <LogoutModal />
                 </MenuList>
               </Menu>
+              ):(
+                <Wrap>
+                  <WrapItem>
+                    <Avatar
+                        name="Admin"
+                        src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
+                    /> 
+                  </WrapItem>
+                </Wrap>
+              )}
+              
             </Flex>
           )}
         </Flex>

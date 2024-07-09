@@ -144,9 +144,9 @@ export function Login() {
             <CardBody>
               <Center>
                 <HStack fontSize='sm' spacing='1'>
-                  <Text>New to CampusCart?</Text>
-                  <Link color='#0969da' to='/register'>
-                    Create an account.
+                  <Text as="u">New to CampusCart?</Text>
+                  <Link to='/register'>
+                    <Text color="#0000EE">Create an account.</Text>
                   </Link>
                 </HStack>
               </Center>
