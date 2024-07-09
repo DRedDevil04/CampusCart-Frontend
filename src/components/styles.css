@@ -44,7 +44,6 @@ body::-webkit-scrollbar,
   align-items: center;
   width: 100%;
   background-color: var(--tertiary-color);
-  margin: auto;
 }
 
 .Header {
@@ -58,7 +57,7 @@ body::-webkit-scrollbar,
   font-size: 3rem;
   font-weight: 700;
   color: var(--primary-color);
-  margin: 20px 0;
+  margin-top: 20px;
 }
 
 /* Create a container for the cards */
@@ -114,6 +113,7 @@ body::-webkit-scrollbar,
   font-size: 1.7rem;
   font-weight: 700;
   color: var(--quaternary-color);
+  box-sizing: border-box;
   position: relative;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   transition: all 0.2s;
@@ -124,14 +124,18 @@ body::-webkit-scrollbar,
   color: var(--primary-color);
 }
 .category-card > img {
+  flex: auto;
   transition: all 0.2s;
-  height: 80%;
   border-radius: 10px;
   width: 100%;
+  height: auto;
+  overflow-y: hidden;
   object-fit: cover;
 }
 .category-card > div {
+  flex: 1;
   text-wrap: pretty;
+  text-align: center;
 }
 
 /* Styling for each card */
@@ -1009,9 +1013,9 @@ textarea::placeholder {
     gap: 10px;
   }
   .category-card {
-    width: 150px;
-    height: 150px;
-    font-size: 1.2rem;
+    width: 180px;
+    height: 180px;
+    font-size: 1rem;
     gap: 5px;
   }
   .card {
