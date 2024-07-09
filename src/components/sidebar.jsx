@@ -17,10 +17,12 @@ import { selectUser } from "../slices/authSlice.js";
 import { useSelector } from "react-redux";
 import { TiShoppingCart } from "react-icons/ti";
 import { FaCircleUser } from "react-icons/fa6";
+import { useDispatch } from "react-redux";
 
 const Sidebar = ({ isOpen, onClose, btnRef }) => {
   const navigate = useNavigate();
   const userInfo = useSelector(selectUser);
+  const [setIsOpen] = React.useState(false);
 
   if (!userInfo) {
     return (
@@ -153,14 +155,14 @@ const Sidebar = ({ isOpen, onClose, btnRef }) => {
                   onClose();
                 }}
               />
-                <NavItem
-                  icon={TiShoppingCart}
-                  title="My Cart"
-                  onClick={() => {
-                    navigate("/cart");
-                    onClose();
-                  }}
-                />
+              <NavItem
+                icon={TiShoppingCart}
+                title="My Cart"
+                onClick={() => {
+                  navigate("/cart");
+                  onClose();
+                }}
+              />
               <NavItem
                 icon={FaShopify}
                 title="Shop"

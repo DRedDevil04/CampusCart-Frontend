@@ -43,6 +43,8 @@ const Header = ({ onOpen }) => {
       ) || 0
     : 0;
 
+  const [isLargerThan500] = useMediaQuery("(max-width: 500px)");
+
   return (
     <Box
       minW="320px"
@@ -82,44 +84,50 @@ const Header = ({ onOpen }) => {
 
         <Flex alignItems="center" gap="1rem">
           {isShopPage && userInfo && (
-            <Box position="relative">
-              <IconButton
-                colorScheme="whiteAlpha"
-                aria-label="Open Cart"
-                icon={<IoMdCart size={35} />}
-                onClick={() => navigate("/cart")}
-              />
-              {totalItemsInCart > 0 && (
-                <Badge
-                  position="absolute"
-                  top="0"
-                  right="0"
-                  transform="translate(25%, -25%)"
-                  colorScheme="red"
-                  borderRadius="full"
-                  px={2}
-                >
-                  {totalItemsInCart}
-                </Badge>
-              )}
-            </Box>
+            <Tooltip label="Go to Cart">
+              <Box position="relative">
+                <IconButton
+                  colorScheme="whiteAlpha"
+                  aria-label="Open Cart"
+                  icon={<IoMdCart size={35} />}
+                  onClick={() => navigate("/cart")}
+                />
+                {totalItemsInCart > 0 && (
+                  <Badge
+                    position="absolute"
+                    top="0"
+                    right="0"
+                    transform="translate(25%, -25%)"
+                    colorScheme="red"
+                    borderRadius="full"
+                    px={2}
+                  >
+                    {totalItemsInCart}
+                  </Badge>
+                )}
+              </Box>
+            </Tooltip>
           )}
           {!userInfo ? (
             <Flex gap="1rem">
-              <IconButton
-                colorScheme="whiteAlpha"
-                aria-label="Open Login"
-                icon={<IoIosLogIn size={35} />}
-                onClick={() => navigate("/login")}
-              />
-              <IconButton
-                colorScheme="whiteAlpha"
-                aria-label="Open SignUp"
-                icon={<IoMdPersonAdd size={35} />}
-                onClick={() => navigate("/register")}
-              />
+              <Tooltip label="Login">
+                <IconButton
+                  colorScheme="whiteAlpha"
+                  aria-label="Open Login"
+                  icon={<IoIosLogIn size={35} />}
+                  onClick={() => navigate("/login")}
+                />
+              </Tooltip>
+              <Tooltip label="Sign Up">
+                <IconButton
+                  colorScheme="whiteAlpha"
+                  aria-label="Open SignUp"
+                  icon={<IoMdPersonAdd size={35} />}
+                  onClick={() => navigate("/register")}
+                />
+              </Tooltip>
             </Flex>
-          ) : (
+          ) : !isLargerThan500 ? (
             <Flex
               alignItems="center"
               flexDirection={{ base: "column-reverse", lg: "row" }}
@@ -150,6 +158,8 @@ const Header = ({ onOpen }) => {
                 </MenuList>
               </Menu>
             </Flex>
+          ) : (
+            <Flex></Flex>
           )}
         </Flex>
       </Flex>
