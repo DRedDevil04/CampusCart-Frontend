@@ -1041,9 +1041,9 @@ textarea::placeholder {
     gap: 5px;
   }
   .card {
-    height: 120px;
     border-radius: 10px;
     grid-template-rows: 10fr 1fr;
+    min-height: fit-content;
   }
   .add {
     font-size: 1.2rem;
