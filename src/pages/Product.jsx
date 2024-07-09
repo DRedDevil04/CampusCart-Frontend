@@ -14,6 +14,8 @@ import { useNavigate } from "react-router-dom";
 
 const Product = forwardRef(function Product(props, ref) {
   let propsData = props.product;
+  const discountedPrice =propsData.price.discount.percentage > 0 ? (propsData.price.amount * (1 - propsData.price.discount.percentage / 100)).toFixed(2) : propsData.price.amount.toFixed(2);
+
   const userInfo = useSelector(selectUser);
   const email = userInfo?.email;
   const { onOpen, isOpen, onClose, btnRef } = props;
@@ -21,7 +23,7 @@ const Product = forwardRef(function Product(props, ref) {
     ID: props.product._id,
     title: props.product.name,
     category: props.product.category.name,
-    price: props.product.price.amount,
+    price: discountedPrice,
     img:
       props.product.images.length > 0
         ? props.product.images[0].url
@@ -198,12 +200,7 @@ const Product = forwardRef(function Product(props, ref) {
                 <div className="price-top">
                   <h2 className="price-main">
                     ₹
-                    {propsData.price.amount -
-                      (
-                        (propsData.price.discount.percentage *
-                          propsData.price.amount) /
-                        100
-                      ).toFixed(2)}
+                    {discountedPrice}
                   </h2>
                   {propsData.price.discount.percentage > 0 ? (
                     <div className="price-disc">

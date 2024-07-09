@@ -3,7 +3,7 @@ import Image from "./Image";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart, selectCarts } from "../slices/cartSlice";
-import { useToast } from "@chakra-ui/react";
+import { useToast, Badge } from "@chakra-ui/react";
 
 function Card(props) {
   const navigate = useNavigate();
@@ -11,6 +11,7 @@ function Card(props) {
   const toast = useToast();
 
   const { ID, img, title, category, price, discount, email, available } = props;
+  const discountedPrice = discount > 0 ? (price * (1 - discount / 100)).toFixed(2) : price.toFixed(2);
 
   const cartItems = useSelector(selectCarts);
 
@@ -30,7 +31,7 @@ function Card(props) {
       return;
     }
 
-    const item = { ID, title, category, price, img };
+    const item = { ID, title, category, price: discountedPrice, img };
     dispatch(addItemToCart({ email, item }));
     toast({
       title: "Added to cart",
@@ -45,7 +46,7 @@ function Card(props) {
   };
 
   return (
-    <div className="card">
+    <div className="card" style={{ position: "relative" }}>
       <Image
         src={
           img !== null
@@ -54,7 +55,21 @@ function Card(props) {
         }
         alt="Product Image"
         id={ID}
+        style={{ width: "100%", height: "auto", position: "relative" }}
       />
+      {discount > 0 && (
+        <Badge
+          borderRadius="full"
+          px="2"
+          colorScheme="teal"
+          position="absolute"
+          top="8px"
+          right="8px"
+          zIndex="1"
+        >
+          {discount}% OFF
+        </Badge>
+      )}
       <div
         className="card-content"
         style={{ cursor: "pointer" }}
@@ -65,8 +80,21 @@ function Card(props) {
       </div>
       <div className="card-footer">
         {available ? (
-          <div className="price">
-            ₹{(price * (discount > 0 ? discount / 100 : 1)).toFixed(2)}
+          <div className="price" style={{ position: "relative" }}>
+            {discount > 0 && (
+              <span
+                style={{
+                  textDecoration: "line-through",
+                  color: "black",
+                  fontSize: "0.8rem",
+                  top: "-12px",
+                  position: "absolute",
+                }}
+              >
+                ₹{price.toFixed(2)}
+              </span>
+            )}
+            <span>₹{discountedPrice}</span>
           </div>
         ) : (
           <div className="price"></div>

@@ -79,7 +79,7 @@ const Checkout = ({ address }) => {
                     <Image boxSize="100px" objectFit="cover" src={item.img} alt={item.title} />
                     <VStack align="start" flex="1">
                       <Text fontWeight="bold" fontSize="lg">{item.title}</Text>
-                      <Text>Price: Rs {(item.price).toFixed(2)}</Text>
+                      <Text>Price: Rs {(item.price)}</Text>
                       <Flex gap="1rem" alignItems="center">
                         <Text>Quantity:</Text>
                         <Badge variant="subtle" fontSize="1rem" color="blue.500">{item.quantity}</Badge>
@@ -129,7 +129,7 @@ const Checkout = ({ address }) => {
                   <Image boxSize="100px" objectFit="cover" src={item.img} alt={item.title} />
                   <VStack align="start" flex="1">
                     <Text fontWeight="bold" fontSize="lg">{item.title}</Text>
-                    <Text>Price: Rs {(item.price).toFixed(2)}</Text>
+                    <Text>Price: Rs {(item.price)}</Text>
                     <Flex gap="1rem" alignItems="center">
                       <Text>Quantity:</Text>
                       <Badge variant="subtle" fontSize="1rem" color="blue.500">{item.quantity}</Badge>

@@ -10,7 +10,7 @@ import Checkout from './checkout.jsx';
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const carts = useSelector(selectCarts); // Select 'carts' from Redux state
+  const carts = useSelector(selectCarts);
   const userInfo = useSelector(selectUser);
   const email = userInfo.email;
   const { data: userResponse, error, isLoading, refetch } = useGetProfileQuery();

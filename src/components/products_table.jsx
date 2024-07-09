@@ -37,8 +37,8 @@ const ProductsTable = () => {
   const [priceAmount, setPriceAmount] = useState('');
   const [priceDiscount, setPriceDiscount] = useState({
     amount: '',
-    start: '',
-    end: '',
+    // start: '',
+    // end: '',
   });
   const [images, setImages] = useState([{ url: '', altText: '' }]);
   const [status, setStatus] = useState(false);
@@ -68,8 +68,8 @@ const ProductsTable = () => {
     const { discount } = selectedItem.price || {};
     setPriceDiscount({
       percentage: discount?.percentage || '',
-      start: discount?.start ? new Date(discount.start).toISOString().substr(0, 10) : '',
-      end: discount?.end ? new Date(discount.end).toISOString().substr(0, 10) : '',
+      // start: discount?.start ? new Date(discount.start).toISOString().substr(0, 10) : '',
+      // end: discount?.end ? new Date(discount.end).toISOString().substr(0, 10) : '',
     });
   
     setImages(selectedItem.images || [{ url: '', altText: '' }]);
@@ -86,8 +86,8 @@ const ProductsTable = () => {
     setPriceAmount('');
     setPriceDiscount({
       percentage: '',
-      start: '',
-      end: '',
+      // start: '',
+      // end: '',
     });
     setImages([{ url: '', altText: '' }]);
     setStatus(false);
@@ -107,8 +107,8 @@ const ProductsTable = () => {
           amount: priceAmount,
           discount: {
             percentage: priceDiscount.percentage,
-            start: priceDiscount.start,
-            end: priceDiscount.end,
+            // start: priceDiscount.start,
+            // end: priceDiscount.end,
           },
         },
         images: images.map(image => ({
@@ -118,7 +118,7 @@ const ProductsTable = () => {
         available: status,
       };
       await updateItem({ id: productId, updatedItem: updatedProduct }).unwrap();
-      setReloadData(true); // Trigger data reload
+      setReloadData(true); 
       handleCloseModal();
     } catch (err) {
       console.error(`Error updating product: ${err}`);
@@ -263,7 +263,7 @@ const ProductsTable = () => {
                 name="priceDiscountPercentage"
               />
 
-              <Text mb="0.5rem">Price Discount Start Date:</Text>
+              {/* <Text mb="0.5rem">Price Discount Start Date:</Text>
               <Input
                 mb="1rem"
                 type="date"
@@ -279,7 +279,7 @@ const ProductsTable = () => {
                 value={priceDiscount.end}
                 onChange={(e) => setPriceDiscount(prev => ({ ...prev, end: e.target.value }))}
                 name="priceDiscountEnd"
-              />
+              /> */}
 
               <Text mb="0.5rem">Images:</Text>
               {images.map((image, index) => (

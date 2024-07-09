@@ -95,6 +95,12 @@ const OrderCard = ({ order, setReloadData }) => {
           </Text>
           <Text>{order._id}</Text>
         </Flex>
+        <Flex justifyContent="space-between" alignItems="center">
+          <Text fontSize="lg" fontWeight="bold" color="black.400">
+            Order Amount : 
+          </Text>
+          <Text>{order.payment.amount}</Text>
+        </Flex>
 
         <Box>
           <Card bg="orange.50" p="1.5rem">
@@ -106,6 +112,7 @@ const OrderCard = ({ order, setReloadData }) => {
                 <Text>Name: {item.item.name}</Text>
                 <Text>Price: {item.price} {item.item.price.currency}</Text>
                 <Text>Quantity: {item.quantity}</Text>
+                <Text>Total: {item.price*item.quantity} {item.item.price.currency}</Text>
               </Box>
             ))}
           </Card>
