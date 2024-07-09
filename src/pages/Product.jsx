@@ -138,7 +138,7 @@ const Product = forwardRef(function Product(props, ref) {
             <IoArrowBackCircle /> <div>Go back</div>
           </div>
           {/* -----------------normal----------------- */}
-          <div className="prod-img-cont">
+          <div className="prod-img-cont" autoFocus={true}>
             <div className="img-cont">
               <div
                 className="prod-img"
@@ -193,30 +193,34 @@ const Product = forwardRef(function Product(props, ref) {
             <div className="prod-cat">{propsData.category.name}</div>
             <div className="prod-title">{propsData.name}</div>
             <div className="prod-desc">{propsData.description}</div>
-            <div className="prod-price">
-              <div className="price-top">
-                <h2 className="price-main">
-                  ₹
-                  {propsData.price.amount -
-                    (
-                      (propsData.price.discount.percentage *
-                        propsData.price.amount) /
-                      100
-                    ).toFixed(2)}
-                </h2>
+            {propsData.available ? (
+              <div className="prod-price">
+                <div className="price-top">
+                  <h2 className="price-main">
+                    ₹
+                    {propsData.price.amount -
+                      (
+                        (propsData.price.discount.percentage *
+                          propsData.price.amount) /
+                        100
+                      ).toFixed(2)}
+                  </h2>
+                  {propsData.price.discount.percentage > 0 ? (
+                    <div className="price-disc">
+                      {propsData.price.discount.percentage}%
+                    </div>
+                  ) : null}
+                </div>
+
                 {propsData.price.discount.percentage > 0 ? (
-                  <div className="price-disc">
-                    {propsData.price.discount.percentage}%
-                  </div>
+                  <div className="price-cut">₹{propsData.price.amount}</div>
                 ) : null}
               </div>
-
-              {propsData.price.discount.percentage > 0 ? (
-                <div className="price-cut">₹{propsData.price.amount}</div>
-              ) : null}
-            </div>
+            ) : (
+              <div className="prod-price"></div>
+            )}
             <div className="prod-buy-area">
-              {!isInCart && (
+              {!isInCart && propsData.available && (
                 <div className="quantity">
                   <button
                     className="minus"
@@ -228,6 +232,7 @@ const Product = forwardRef(function Product(props, ref) {
                       }
                       updateButtons();
                     }}
+                    autoFocus={false}
                   >
                     &minus;
                   </button>
@@ -237,6 +242,7 @@ const Product = forwardRef(function Product(props, ref) {
                     className="quantity-inp"
                     defaultValue={"1"}
                     min={"0"}
+                    autoFocus={false}
                   />
                   <button
                     className="plus"
@@ -245,6 +251,7 @@ const Product = forwardRef(function Product(props, ref) {
                         parseInt(inputRef.current.value) + 1;
                       updateButtons();
                     }}
+                    autoFocus={false}
                   >
                     &#43;
                   </button>
@@ -281,6 +288,7 @@ const Product = forwardRef(function Product(props, ref) {
                       className="add-to-cart-btn"
                       onClick={handleAddToCart}
                       style={{ display: "flex", alignItems: "center" }}
+                      autoFocus={false}
                     >
                       <IoCart size={25} />
                       <span style={{ marginLeft: "5px" }}>Add to Cart</span>
@@ -288,10 +296,18 @@ const Product = forwardRef(function Product(props, ref) {
                   ) : (
                     <div
                       className="add-to-cart-btn"
-                      style={{ display: "flex", alignItems: "center" }}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                      autoFocus={false}
                     >
-                      <IoCart size={25} />
-                      <span style={{ marginLeft: "5px", fontWeight: "800" }}>
+                      <span
+                        style={{
+                          marginLeft: "5px",
+                          fontWeight: "800",
+                        }}
+                      >
                         Out of Stock
                       </span>
                     </div>
