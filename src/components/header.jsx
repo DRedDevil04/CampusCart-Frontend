@@ -30,13 +30,28 @@ const Header = ({ onOpen }) => {
   const { isOpen, onOpen: onOpenModal, onClose } = useDisclosure();
   const userInfo = useSelector(selectUser);
   const cartItems = useSelector(selectCarts);
-  const isShopPage = location.pathname === "/" || location.pathname === "/cart" || location.pathname.startsWith("/category/") || location.pathname.startsWith("/product/");
+  const isShopPage =
+    location.pathname === "/" ||
+    location.pathname === "/cart" ||
+    location.pathname.startsWith("/category/") ||
+    location.pathname.startsWith("/product/");
 
-  const totalItemsInCart = userInfo ? (cartItems[userInfo.email]?.reduce((acc, item) => acc + item.quantity, 0) || 0) : 0;
-
+  const totalItemsInCart = userInfo
+    ? cartItems[userInfo.email]?.reduce(
+        (acc, item) => acc + item.quantity,
+        0
+      ) || 0
+    : 0;
 
   return (
-    <Box minW="320px" w="100%" className="Header" bg={"#3f72af"} p={4}>
+    <Box
+      minW="320px"
+      w="100%"
+      className="Header"
+      bg={"#3f72af"}
+      p={4}
+      position={"relative"}
+    >
       <Flex align="center" display={"flex"} justifyContent="space-between">
         <IconButton
           colorScheme="whiteAlpha"
@@ -47,14 +62,18 @@ const Header = ({ onOpen }) => {
         <Heading
           as="h1"
           size={["md", "lg", "xl", "2xl"]}
+          fontFamily={"'Poppins', sans-serif"}
           color="white"
           whiteSpace="nowrap"
           flexShrink={0}
-          position={"relative"}
-          right={0}
-          left={0}
+          position={"absolute"}
+          left={"0"}
+          right={"0"}
+          marginLeft={"auto"}
+          marginRight={"auto"}
+          width={"max-content"}
           onClick={() => {
-            navigate("/");
+            navigate("/shop");
             onClose();
           }}
         >

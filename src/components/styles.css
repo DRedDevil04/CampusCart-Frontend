@@ -182,6 +182,7 @@ body::-webkit-scrollbar,
   height: 100%;
   object-fit: contain;
   border-radius: 10px;
+  overflow: hidden;
 }
 
 /* Styling for the card content */
@@ -910,6 +911,20 @@ textarea::placeholder {
   .right-arrow {
     right: 10px;
   }
+  /* carousle arrows */
+
+  .slick-arrow {
+    font-size: 0.5rem !important;
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  .slick-prev::before,
+  .slick-next::before {
+    font-size: 1.1rem !important;
+    margin: auto;
+  }
+
   .prod-img > img {
     width: 100%;
     height: calc(100vw * 0.8);
