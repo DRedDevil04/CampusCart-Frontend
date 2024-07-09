@@ -148,6 +148,7 @@ body::-webkit-scrollbar,
   flex-direction: column;
   justify-content: center;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  overflow: hidden;
 }
 
 .add {
@@ -243,33 +244,39 @@ body::-webkit-scrollbar,
 }
 
 /* ---------------------------Product Page----------------------------------- */
-.customCursor {
-  position: fixed;
-  transition: all 0.2s;
-  height: 80px;
-  width: 80px;
-  z-index: 1001;
-  pointer-events: none;
-  background-color: var(--primary-color);
-  color: white;
-  border-radius: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1rem;
-  text-align: center;
-  font-weight: 700;
-  opacity: 0;
-  top: -120px;
+@media (hover: hover) {
+  .customCursor {
+    position: fixed;
+    transition: all 0.2s;
+    height: 80px;
+    width: 80px;
+    z-index: 1001;
+    pointer-events: none;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    text-align: center;
+    font-weight: 700;
+    opacity: 0;
+    top: -120px;
+  }
+  .customCursorCont {
+    position: fixed;
+    z-index: 1001;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
 }
+
 .customCursorCont {
-  position: fixed;
-  z-index: 1001;
-  pointer-events: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  display: none;
 }
 
 .back-shop {
@@ -759,8 +766,8 @@ textarea::placeholder {
 
   .slick-arrow {
     font-size: 0.8rem !important;
-    width: 30px !important;
-    height: 30px !important;
+    width: 40px !important;
+    height: 40px !important;
   }
 }
 .img-car > img {
@@ -897,8 +904,8 @@ textarea::placeholder {
     justify-content: center;
     align-items: center;
     position: absolute;
-    width: 25px;
-    height: 25px;
+    width: 40px;
+    height: 40px;
     top: 50%;
     text-align: center;
     border-radius: 100%;
@@ -1047,6 +1054,10 @@ textarea::placeholder {
   .card-image {
     padding: 5px;
     border-radius: 5px;
+    overflow: hidden;
+  }
+  .card-image > img {
+    border-radius: 5px;
   }
   .card-content {
     padding: 5px;
@@ -1101,8 +1112,8 @@ textarea::placeholder {
     justify-content: center;
     align-items: center;
     position: absolute;
-    width: 25px;
-    height: 25px;
+    width: 35px;
+    height: 35px;
     top: 50%;
     text-align: center;
     border-radius: 100%;

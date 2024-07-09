@@ -90,7 +90,7 @@ const Product = forwardRef(function Product(props, ref) {
   function prevImg() {
     setCurrentImg(
       (currentImg - 1 < 0 ? currentImg - 1 + srcs.length : currentImg - 1) %
-      srcs.length
+        srcs.length
     );
   }
 
@@ -195,17 +195,25 @@ const Product = forwardRef(function Product(props, ref) {
             <div className="prod-desc">{propsData.description}</div>
             <div className="prod-price">
               <div className="price-top">
-                <h2 className="price-main">₹{propsData.price.amount}</h2>
-                <div className="price-disc">
-                  {propsData.price.discount.percentage}%
-                </div>
+                <h2 className="price-main">
+                  ₹
+                  {propsData.price.amount -
+                    (
+                      (propsData.price.discount.percentage *
+                        propsData.price.amount) /
+                      100
+                    ).toFixed(2)}
+                </h2>
+                {propsData.price.discount.percentage > 0 ? (
+                  <div className="price-disc">
+                    {propsData.price.discount.percentage}%
+                  </div>
+                ) : null}
               </div>
-              <div className="price-cut">
-                {(
-                  propsData.price.amount /
-                  (1 - propsData.price.discount.percentage / 100)
-                ).toFixed(2)}
-              </div>
+
+              {propsData.price.discount.percentage > 0 ? (
+                <div className="price-cut">₹{propsData.price.amount}</div>
+              ) : null}
             </div>
             <div className="prod-buy-area">
               {!isInCart && (
@@ -244,50 +252,48 @@ const Product = forwardRef(function Product(props, ref) {
               )}
               {isInCart ? (
                 <div className="add-to-cart">
-                  {
-                    propsData.available ?
-                  <div
-                    className="add-to-cart-btn"
-                    onClick={()=>{
-                      navigate("/cart");
-                    }}
-                    style={{ display: "flex", alignItems: "center" }}
-                  >
-                    <IoCart size={25} />
-                    <span style={{ marginLeft: "5px" }}>View in cart</span>
-                  </div>
-                  :
-                  <div
-                    className="add-to-cart-btn"
-                    onClick={goToCart}
-                    style={{ display: "flex", alignItems: "center" }}
-                  >
-                    <IoCart size={25} />
-                    <span style={{ marginLeft: "5px" }}>Go to Cart</span>
-                  </div>
-                  }
+                  {propsData.available ? (
+                    <div
+                      className="add-to-cart-btn"
+                      onClick={() => {
+                        navigate("/cart");
+                      }}
+                      style={{ display: "flex", alignItems: "center" }}
+                    >
+                      <IoCart size={25} />
+                      <span style={{ marginLeft: "5px" }}>View in cart</span>
+                    </div>
+                  ) : (
+                    <div
+                      className="add-to-cart-btn"
+                      onClick={goToCart}
+                      style={{ display: "flex", alignItems: "center" }}
+                    >
+                      <IoCart size={25} />
+                      <span style={{ marginLeft: "5px" }}>Go to Cart</span>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div className="add-to-cart">
-                  {
-                    propsData.available ?
-                  <div
-                    className="add-to-cart-btn"
-                    onClick={handleAddToCart}
-                    style={{ display: "flex", alignItems: "center" }}
-                  >
-                    <IoCart size={25} />
-                    <span style={{ marginLeft: "5px" }}>Add to Cart</span>
-                  </div>
-                  :
-                  <div
-                    className="add-to-cart-btn"
-                    style={{ display: "flex", alignItems: "center" }}
-                  >
-                    <IoCart size={25} />
-                    <span style={{ marginLeft: "5px" }}>Out of Stock</span>
-                  </div>
-                  }
+                  {propsData.available ? (
+                    <div
+                      className="add-to-cart-btn"
+                      onClick={handleAddToCart}
+                      style={{ display: "flex", alignItems: "center" }}
+                    >
+                      <IoCart size={25} />
+                      <span style={{ marginLeft: "5px" }}>Add to Cart</span>
+                    </div>
+                  ) : (
+                    <div
+                      className="add-to-cart-btn"
+                      style={{ display: "flex", alignItems: "center" }}
+                    >
+                      <IoCart size={25} />
+                      <span style={{ marginLeft: "5px" }}>Out of Stock</span>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

@@ -101,6 +101,7 @@ function Shop(props) {
                 title={product.name}
                 category={product.category.name}
                 price={product.price.amount}
+                discount={product.price.discount.percentage}
                 available={product.available}
                 email={email}
               />

@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { useDisclosure, Spinner, Alert, AlertIcon } from "@chakra-ui/react";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PrivateRoute from "./components/PrivateRoute";
@@ -28,7 +33,7 @@ function App() {
     error: errorItems,
     refetch: refetchItems,
   } = useGetAllItemsQuery();
-  
+
   // Fetching categories
   const {
     data: categoriesData,
@@ -106,7 +111,8 @@ function App() {
               <Shop
                 products={products.filter(
                   (product) =>
-                    product.category.name.toLowerCase() === cat.name.toLowerCase()
+                    product.category.name.toLowerCase() ===
+                    cat.name.toLowerCase()
                 )}
                 isCategory={true}
                 isSearched={false}
