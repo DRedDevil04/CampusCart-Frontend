@@ -13,7 +13,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../slices/authSlice";
-import { useLogoutMutation } from "../slices/userApiSlice";
 
 const LogoutModal = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -24,11 +23,9 @@ const LogoutModal = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [logoutApiCall] = useLogoutMutation();
 
   const handleLogout = async () => {
     try {
-      await logoutApiCall().unwrap();
       dispatch(logout());
       navigate("/login");
 

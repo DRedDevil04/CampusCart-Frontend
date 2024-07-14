@@ -64,13 +64,6 @@ export function Login() {
     try {
       const res = await login({ email, password }).unwrap();
       dispatch(setCredentials({ ...res.data }));
-      // const { role } = res.data;
-      // if (role === 'admin') {
-      //   navigate('/dashboard');
-      // }
-      //  else {
-      //   navigate('/');
-      // }
 
       setEmail('');
       setPassword('');
