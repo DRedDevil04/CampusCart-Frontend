@@ -1,5 +1,5 @@
-import React, { useState,useEffect} from 'react';
-import { Box, Stack, Text, Button } from '@chakra-ui/react';
+import React, { useState, useEffect } from 'react';
+import { Box, Stack, Text, Button, useToast } from '@chakra-ui/react';
 import CartItem from './cartItemsCard';
 import { useSelector, useDispatch } from 'react-redux';
 import { addItemToCart, selectCarts, decreaseItemFromCart, removeItemFromCart } from '../slices/cartSlice';
@@ -13,15 +13,16 @@ const Cart = () => {
   const carts = useSelector(selectCarts);
   const userInfo = useSelector(selectUser);
   const email = userInfo.email;
+  const toast = useToast();
   const { data: userResponse, error, isLoading, refetch } = useGetProfileQuery();
   
   const userProfile = userResponse ? userResponse.data : null;
 
   const [address, setAddress] = useState({
-    room:'',
-    floor:'',
-    hostel:'',
-    contact_number:'',
+    room: '',
+    floor: '',
+    hostel: '',
+    contact_number: '',
   });
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const Cart = () => {
       });
     }
   }, [userProfile]);
-  
+
   const [checkout, setCheckout] = useState(false);
   const [clicked, setClicked] = useState(false);
 
@@ -50,8 +51,23 @@ const Cart = () => {
     dispatch(removeItemFromCart({ email, itemId }));
   };
 
+  const handleContinue = () => {
+    const { room, floor, hostel, contact_number } = address;
+    if (!room || !floor || !hostel || !contact_number) {
+      toast({
+        title: "Incomplete Address",
+        description: "Please fill in all the address fields before continuing.",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+      });
+    } else {
+      setCheckout(true);
+    }
+  };
+
   if (checkout) {
-    return <Checkout address={address}/>;
+    return <Checkout address={address} />;
   }
 
   return (
@@ -84,7 +100,7 @@ const Cart = () => {
           {clicked && (
             <Box>
               <Shipping address={address} setAddress={setAddress} />
-              <Button mt={4} colorScheme="blue" onClick={() => setCheckout(true)}>Continue</Button>
+              <Button mt={4} colorScheme="blue" onClick={handleContinue}>Continue</Button>
             </Box>
           )}
         </>

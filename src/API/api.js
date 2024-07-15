@@ -1,9 +1,12 @@
 import axios from 'axios';
+import store from '../app/store';
 import { logout } from '../slices/authSlice';
-import { useDispatch } from 'react-redux';
+import { createStandaloneToast } from '@chakra-ui/react';
+
+const { toast } = createStandaloneToast();
 
 const api = axios.create({
-    baseURL: 'http://localhost:5000',
+    baseURL: 'https://campuscart-backend.onrender.com/',
     headers: {
         'Content-Type': 'application/json',
     },
@@ -24,8 +27,14 @@ api.interceptors.response.use((response) => {
     return response;
 }, (error) => {
     if (error.response && (error.response.status === 400 || error.response.status === 500)) {
-        const dispatch = useDispatch();
-        dispatch(logout());
+        store.dispatch(logout());
+        toast({
+            title: "Session Timeout",
+            description: "Your session has expired. Please log in again.",
+            status: "error",
+            duration: 4000,
+            isClosable: true,
+        });
     }
     return Promise.reject(error);
 });

@@ -50,7 +50,7 @@ const Stats = () => {
         });
         setUserCount(Array.isArray(res.data.data) ? res.data.data.length : 0);
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     };
     getUserCount();
@@ -59,7 +59,7 @@ const Stats = () => {
         const res = await api.get("/item");
         setProductCount(Array.isArray(res.data) ? res.data.length : 0);
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     };
     getProductCount();
@@ -70,7 +70,7 @@ const Stats = () => {
           Array.isArray(res.data.orders) ? res.data.orders.length : 0
         );
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     };
     getOrdersCount();
