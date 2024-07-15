@@ -26,15 +26,25 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use((response) => {
     return response;
 }, (error) => {
-    if (error.response && (error.response.status === 400 || error.response.status === 500)) {
-        store.dispatch(logout());
-        toast({
-            title: "Session Timeout",
-            description: "Your session has expired. Please log in again.",
-            status: "error",
-            duration: 4000,
-            isClosable: true,
-        });
+    if (error.response) {
+        if (error.response.status === 401) {
+            store.dispatch(logout());
+            toast({
+                title: "Session Timeout",
+                description: "Your session has expired. Please log in again.",
+                status: "error",
+                duration: 4000,
+                isClosable: true,
+            });
+        } else if (error.response.status === 403) {
+            toast({
+                title: "Access Denied",
+                description: "You do not have permission to access this resource.",
+                status: "error",
+                duration: 4000,
+                isClosable: true,
+            });
+        }
     }
     return Promise.reject(error);
 });

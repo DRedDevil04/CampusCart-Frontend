@@ -1,6 +1,7 @@
-import { fetchBaseQuery,createApi } from '@reduxjs/toolkit/query/react';
+import { fetchBaseQuery, createApi } from '@reduxjs/toolkit/query/react';
 import { logout } from "../slices/authSlice";
-import { showToast } from '../components/sessionToast';
+import { createStandaloneToast } from '@chakra-ui/react';
+const { toast } = createStandaloneToast();
 
 const baseQuery = fetchBaseQuery({
   baseUrl: 'https://campuscart-backend.onrender.com/',
@@ -15,9 +16,25 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
-  if (result.error && (result.error.status === 400 || result.error.status === 500)) {
-    api.dispatch(logout());
-    showToast();
+  if (result.error) {
+    if (result.error.status === 401) {
+      api.dispatch(logout());
+      toast({
+        title: "Session Timeout",
+        description: "Your session has expired. Please log in again.",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+      });
+    } else if (result.error.status === 403) {
+      toast({
+        title: "Access Denied",
+        description: "You do not have permission to access this resource.",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+      });
+    }
   }
   return result;
 };
