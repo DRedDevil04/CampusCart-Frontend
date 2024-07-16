@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Spinner } from "@chakra-ui/react";
+import { Spinner,Badge } from "@chakra-ui/react";
 
 function CardImage(props) {
   const navigate = useNavigate();
   const [imageLoading, setImageLoading] = useState(true);
   const [imageAvailable, setImageAvailable] = useState(true);
-  const { id, src, alt } = props;
+  const { id, src, alt, discount } = props;
 
   const handleImageClick = () => {
     navigate(`/product/${id}`);
@@ -49,6 +49,19 @@ function CardImage(props) {
           src="https://placehold.co/400/dbe2ef/3f72af?text=Image+not+available"
           alt="Image not available"
         />
+      )}
+      {discount > 0 && (
+        <Badge
+          borderRadius="full"
+          px="2"
+          colorScheme="teal"
+          position="absolute"
+          top="8px"
+          right="8px"
+          zIndex="1"
+        >
+          {discount}% OFF
+        </Badge>
       )}
     </div>
   );

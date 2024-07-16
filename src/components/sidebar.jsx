@@ -7,22 +7,48 @@ import {
   Text,
   Flex,
   IconButton,
+  Button,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogBody,
+  AlertDialogFooter,
 } from "@chakra-ui/react";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
 import { FaStore, FaUser, FaShopify } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import NavItem from "../helpers/navitems";
-import { selectUser } from "../slices/authSlice.js";
-import { useSelector } from "react-redux";
+import { selectUser, logout } from "../slices/authSlice.js";
+import { useSelector, useDispatch } from "react-redux";
 import { TiShoppingCart } from "react-icons/ti";
 import { FaCircleUser } from "react-icons/fa6";
-import { useDispatch } from "react-redux";
+import { useToast } from "@chakra-ui/react";
 
 const Sidebar = ({ isOpen, onClose, btnRef }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const userInfo = useSelector(selectUser);
-  const [setIsOpen] = React.useState(false);
+  const toast = useToast();
+  const [isOpenLogoutDialog, setIsOpenLogoutDialog] = React.useState(false);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    toast({
+      title: "Logged Out",
+      description: "You have been successfully logged out.",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+    navigate("/login");
+    onClose();
+  };
+
+  const cancelLogout = () => {
+    setIsOpenLogoutDialog(false);
+  };
 
   if (!userInfo) {
     return (
@@ -78,6 +104,7 @@ const Sidebar = ({ isOpen, onClose, btnRef }) => {
       </Drawer>
     );
   }
+
   const isAdmin = userInfo?.role === "admin";
 
   return (
@@ -144,6 +171,14 @@ const Sidebar = ({ isOpen, onClose, btnRef }) => {
                   onClose();
                 }}
               />
+              <Button
+                mt={4}
+                colorScheme="red"
+                variant="outline"
+                onClick={() => setIsOpenLogoutDialog(true)}
+              >
+                Logout
+              </Button>
             </Flex>
           ) : (
             <Flex p="5%" flexDir="column" width="100%" as="nav">
@@ -171,10 +206,45 @@ const Sidebar = ({ isOpen, onClose, btnRef }) => {
                   onClose();
                 }}
               />
+              <Button
+                mt={4}
+                colorScheme="red"
+                variant="outline"
+                onClick={() => setIsOpenLogoutDialog(true)}
+              >
+                Logout
+              </Button>
             </Flex>
           )}
         </DrawerBody>
       </DrawerContent>
+
+      {/* Logout Confirmation Dialog */}
+      <AlertDialog
+        isOpen={isOpenLogoutDialog}
+        leastDestructiveRef={btnRef}
+        onClose={() => setIsOpenLogoutDialog(false)}
+        isCentered // Center the dialog
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Logout
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure you want to log out?
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button onClick={cancelLogout}>Cancel</Button>
+              <Button colorScheme="red" ml={3} onClick={handleLogout}>
+                Logout
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </Drawer>
   );
 };

@@ -111,6 +111,7 @@ export function Register() {
                             Register to CampusCart
                         </Heading>
                     </VStack>
+                    <Center>
                     <Card variant='outline' borderColor='#d8dee4' w={{ base: '90%', md: '308px' }}>
                         <CardBody>
                             <form onSubmit={handleSubmit}>
@@ -176,6 +177,7 @@ export function Register() {
                             </form>
                         </CardBody>
                     </Card>
+                    </Center>
                     <Card variant='outline' borderColor='#d0d7de'>
                         <CardBody>
                             <Center>

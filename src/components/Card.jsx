@@ -53,23 +53,13 @@ function Card(props) {
             ? img
             : "https://placehold.co/400/dbe2ef/3f72af?text=Image+not+available"
         }
+        discount={
+          discount
+        }
         alt="Product Image"
         id={ID}
         style={{ width: "100%", height: "auto", position: "relative" }}
       />
-      {discount > 0 && (
-        <Badge
-          borderRadius="full"
-          px="2"
-          colorScheme="teal"
-          position="absolute"
-          top="8px"
-          right="8px"
-          zIndex="1"
-        >
-          {discount}% OFF
-        </Badge>
-      )}
       <div
         className="card-content"
         style={{ cursor: "pointer" }}

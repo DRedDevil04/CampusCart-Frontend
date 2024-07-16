@@ -11,6 +11,7 @@ import {
   Heading,
   HStack,
   Input,
+  Link as ChakraLink,
   Stack,
   Text,
   VStack,
@@ -89,6 +90,7 @@ export function Login() {
               Sign in to CampusCart
             </Heading>
           </VStack>
+          <Center>
           <Card variant='outline' borderColor='#d8dee4' w={{ base: '90%', md: '308px' }}>
             <CardBody>
               <form onSubmit={handleSubmit}>
@@ -133,14 +135,15 @@ export function Login() {
               </form>
             </CardBody>
           </Card>
+          </Center>
           <Card variant='outline' borderColor='#d0d7de'>
             <CardBody>
               <Center>
                 <HStack fontSize='sm' spacing='1'>
                   <Text>New to CampusCart?</Text>
-                  <Link color='#0969da' to='/register'>
-                    Create an account.
-                  </Link>
+                  <ChakraLink as={Link} to='/register' color='#0969da'>
+                      Create an account.
+                  </ChakraLink>
                 </HStack>
               </Center>
             </CardBody>

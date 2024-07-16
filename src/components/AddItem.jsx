@@ -21,8 +21,6 @@ const AddItem = () => {
     const [priceAmount, setPriceAmount] = useState('');
     const [images, setImages] = useState([{ url: '', altText: '' }]);
     const [discountPercentage, setDiscountPercentage] = useState('');
-    const [discountStartDate, setDiscountStartDate] = useState(null); 
-    const [discountEndDate, setDiscountEndDate] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const toast = useToast();
 
@@ -52,8 +50,6 @@ const AddItem = () => {
                     amount: parseFloat(priceAmount),
                     discount: {
                         percentage: discountPercentage !== '' ? parseFloat(discountPercentage) : null,
-                        start: discountStartDate,
-                        end: discountEndDate,
                     },
                 },
                 images: images.filter(image => image.url !== ''),
@@ -91,8 +87,6 @@ const AddItem = () => {
         setPriceAmount('');
         setImages([{ url: '', altText: '' }]);
         setDiscountPercentage('');
-        setDiscountStartDate('');
-        setDiscountEndDate('');
     };
 
     const handleAddImage = () => {
@@ -182,24 +176,6 @@ const AddItem = () => {
                     value={discountPercentage}
                     onChange={(e) => setDiscountPercentage(e.target.value)}
                     name="discountPercentage"
-                />
-
-                <Text mb="0.5rem">Discount Start Date:</Text>
-                <Input
-                    mb="1rem"
-                    type="date"
-                    value={discountStartDate ? discountStartDate : ''}
-                    onChange={(e) => setDiscountStartDate(e.target.value)}
-                    name="discountStartDate"
-                />
-
-                <Text mb="0.5rem">Discount End Date:</Text>
-                <Input
-                    mb="1rem"
-                    type="date"
-                    value={discountEndDate ? discountEndDate : ''}
-                    onChange={(e) => setDiscountEndDate(e.target.value)}
-                    name="discountEndDate"
                 />
 
                 <Text mb="0.5rem">Images:</Text>
