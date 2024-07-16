@@ -5,22 +5,44 @@ const CartItem = ({ product, onIncrease, onDecrease, onRemove }) => {
   const { title, img, price, quantity } = product;
 
   return (
-    <Box bg="white" borderWidth="1px" borderRadius="lg" overflow="hidden" p={4} boxShadow="md">
-      <Flex gap="12" height="100%">
-        <Image boxSize="100px" objectFit="cover" src={img} alt={title} />
+    <Box
+      bg="white"
+      borderWidth="1px"
+      borderRadius="lg"
+      overflow="hidden"
+      p={4}
+      boxShadow="md"
+      mb={4} // Add margin bottom for spacing between items
+    >
+      <Flex flexDir={{ base: 'column', md: 'row' }} alignItems="center">
+        {/* Image Section */}
+        <Box mb={{ base: 4, md: 0 }} mr={{ base: 0, md: 4 }}>
+          <Image boxSize={{ base: '100%', md: '100px' }} objectFit="cover" src={img} alt={title} />
+        </Box>
 
-        <VStack align="start" flex="1">
-          <Text fontWeight="bold" fontSize="lg">{title}</Text>
-          <Text>Price: Rs {price}</Text>
-          <Flex gap="1rem" alignItems="center"> 
-            <Text>Quantity:</Text>
-            <Button size="sm" onClick={onDecrease} disabled={quantity <= 1}>-</Button>
-            <Badge variant="subtle" fontSize="1rem" color="blue.500">{quantity}</Badge>
-            <Button size="sm" onClick={onIncrease}>+</Button>
+        {/* Details Section */}
+        <VStack align="start" flex="1" spacing={2}>
+          <Text fontWeight="bold" fontSize={{ base: 'xl', md: 'lg' }}>{title}</Text>
+          <Text fontSize={{ base: 'sm', md: 'md' }}>Price: Rs {price}</Text>
+          <Flex alignItems="center">
+            <Text fontSize={{ base: 'sm', md: 'md' }}>Quantity:</Text>
+            <Button size="sm" onClick={onDecrease} disabled={quantity <= 1} mr={2} m={2}>
+              -
+            </Button>
+            <Badge variant="subtle" fontSize={{ base: 'sm', md: 'md' }} color="blue.500">
+              {quantity}
+            </Badge>
+            <Button size="sm" onClick={onIncrease} ml={2}>
+              +
+            </Button>
           </Flex>
-          <Text>Total: Rs {(price * quantity).toFixed(2)}</Text>
+          <Text fontSize={{ base: 'sm', md: 'md' }}>Total: Rs {(price * quantity).toFixed(2)}</Text>
         </VStack>
-        <Button onClick={onRemove}>Remove Item</Button>
+
+        {/* Remove Button Section */}
+        <Button mt={{ base: 4, md: 0 }} onClick={onRemove}>
+          Remove Item
+        </Button>
       </Flex>
     </Box>
   );

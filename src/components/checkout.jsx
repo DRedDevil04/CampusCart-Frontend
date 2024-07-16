@@ -1,5 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Card, CardHeader, CardBody, Text, Button, HStack, VStack, Stack, Flex, Badge, Image, Radio, RadioGroup } from '@chakra-ui/react';
+import {
+  Box,
+  Card,
+  CardHeader,
+  CardBody,
+  Text,
+  Button,
+  HStack,
+  VStack,
+  Stack,
+  Flex,
+  Badge,
+  Image,
+  Radio,
+  RadioGroup,
+} from '@chakra-ui/react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCarts, clearCart } from '../slices/cartSlice';
 import { selectUser } from '../slices/authSlice';
@@ -27,7 +42,6 @@ const Checkout = ({ address }) => {
     });
     setTotalAmount(total);
   }, [carts, email]);
-
 
   const [placeOrder] = useAddNewOrderMutation();
 
@@ -67,22 +81,51 @@ const Checkout = ({ address }) => {
     return (
       <Flex justify="center" height="100vh" alignItems="center" direction="column">
         <IoMdCheckmarkCircleOutline color="green" size="70px" />
-        <Card m="1rem" maxWidth="800px">
-          <CardHeader fontSize="xl" fontWeight="bold" textAlign="center">Order Placed Successfully</CardHeader>
+        <Card m="1rem" maxWidth={{ base: '100%', md: '800px' }}>
+          <CardHeader fontSize="xl" fontWeight="bold" textAlign="center">
+            Order Placed Successfully
+          </CardHeader>
           <CardBody>
-            <Text fontSize="lg" fontWeight="bold">Order ID: {orderId}</Text>
+            <Text fontSize="lg" fontWeight="bold">
+              Order ID: {orderId}
+            </Text>
             <Stack spacing="3">
-              <Text fontSize="lg" fontWeight="bold">Order Details</Text>
+              <Text fontSize="lg" fontWeight="bold">
+                Order Details
+              </Text>
               {orderItems.map((item) => (
-                <Box key={item.item} bg="white" borderWidth="1px" borderRadius="lg" overflow="hidden" p={4} boxShadow="md">
-                  <Flex gap="12" height="100%">
-                    <Image boxSize="100px" objectFit="cover" src={item.img} alt={item.title} />
-                    <VStack align="start" flex="1">
-                      <Text fontWeight="bold" fontSize="lg">{item.title}</Text>
-                      <Text>Price: Rs {(item.price)}</Text>
-                      <Flex gap="1rem" alignItems="center">
+                <Box
+                  key={item.item}
+                  bg="white"
+                  borderWidth="1px"
+                  borderRadius="lg"
+                  overflow="hidden"
+                  p={4}
+                  boxShadow="md"
+                >
+                  <Flex
+                    flexDir={{ base: 'column', md: 'row' }}
+                    align="center"
+                    justify="space-between"
+                  >
+                    <Box mb={{ base: 4, md: 0 }} mr={{ base: 0, md: 4 }}>
+                      <Image
+                        boxSize={{ base: '100%', md: '100px' }}
+                        objectFit="cover"
+                        src={item.img}
+                        alt={item.title}
+                      />
+                    </Box>
+                    <VStack align="start" flex="1" spacing={2}>
+                      <Text fontWeight="bold" fontSize={{ base: 'xl', md: 'lg' }}>
+                        {item.title}
+                      </Text>
+                      <Text>Price: Rs {item.price}</Text>
+                      <Flex alignItems="center">
                         <Text>Quantity:</Text>
-                        <Badge variant="subtle" fontSize="1rem" color="blue.500">{item.quantity}</Badge>
+                        <Badge variant="subtle" color="blue.500" fontSize={{ base: 'sm', md: 'md' }}>
+                          {item.quantity}
+                        </Badge>
                       </Flex>
                       <Text>Total: Rs {(item.price * item.quantity).toFixed(2)}</Text>
                     </VStack>
@@ -90,21 +133,26 @@ const Checkout = ({ address }) => {
                 </Box>
               ))}
               <Flex justify="flex-end">
-                <Text fontSize="20px">Total: <span><Text as="b">{totalCost.toFixed(2)}</Text></span></Text>
+                <Text fontSize="20px">
+                  Total: <Text as="b">{totalCost.toFixed(2)}</Text>
+                </Text>
               </Flex>
               {/* Shipping Address */}
-              <HStack spacing="4" mt="1rem">
+              <Stack spacing="4" mt="1rem">
                 <Text as="u">Shipping To :</Text>
                 <Box>
-                  <Text as="b">{address.hostel.toUpperCase()} , Floor {address.floor} , Room No- {address.room}, Contact Number - {address.contact_number} </Text>
+                  <Text as="b">
+                    {address.hostel.toUpperCase()} , Floor {address.floor} , Room No- {address.room}, Contact Number -{' '}
+                    {address.contact_number}
+                  </Text>
                 </Box>
-              </HStack>
+              </Stack>
               {/* Navigation Buttons */}
               <Flex justify="space-between" mt="2rem" width="100%">
-                <Button onClick={()=> navigate('/profile')} to="/profile" colorScheme="blue" variant="outline">
+                <Button onClick={() => navigate('/profile')} to="/profile" colorScheme="blue" variant="outline">
                   Go to Profile
                 </Button>
-                <Button onClick={()=> navigate('/')} to="/" colorScheme="blue">
+                <Button onClick={() => navigate('/')} to="/" colorScheme="blue">
                   Continue Shopping
                 </Button>
               </Flex>
@@ -119,46 +167,88 @@ const Checkout = ({ address }) => {
     <Box>
       <Card m="1rem">
         <Flex alignItems="center" justify="center">
-          <Text fontSize="30px" as="u">Order Details</Text>
+          <Text fontSize="30px" as="u">
+            Order Details
+          </Text>
         </Flex>
         <CardBody>
           <Stack spacing="3">
             {carts[email]?.map((item) => (
-              <Box key={item.ID} bg="white" borderWidth="1px" borderRadius="lg" overflow="hidden" p={4} boxShadow="md">
-                <Flex gap="12" height="100%">
-                  <Image boxSize="100px" objectFit="cover" src={item.img} alt={item.title} />
-                  <VStack align="start" flex="1">
-                    <Text fontWeight="bold" fontSize="lg">{item.title}</Text>
-                    <Text>Price: Rs {(item.price)}</Text>
-                    <Flex gap="1rem" alignItems="center">
+              <Box
+                key={item.ID}
+                bg="white"
+                borderWidth="1px"
+                borderRadius="lg"
+                overflow="hidden"
+                p={4}
+                boxShadow="md"
+              >
+                <Flex flexDir={{ base: 'column', md: 'row' }} alignItems="center">
+                  {/* Image Section */}
+                  <Box mb={{ base: 4, md: 0 }} mr={{ base: 0, md: 4 }}>
+                    <Image
+                      boxSize={{ base: '100%', md: '100px' }}
+                      objectFit="cover"
+                      src={item.img}
+                      alt={item.title}
+                    />
+                  </Box>
+
+                  {/* Details Section */}
+                  <VStack align="start" flex="1" spacing={2}>
+                    <Text fontWeight="bold" fontSize={{ base: 'xl', md: 'lg' }}>
+                      {item.title}
+                    </Text>
+                    <Text>Price: Rs {item.price}</Text>
+                    <Flex alignItems="center">
                       <Text>Quantity:</Text>
-                      <Badge variant="subtle" fontSize="1rem" color="blue.500">{item.quantity}</Badge>
+                      <Button size="sm" onClick={() => onDecrease(item)} ml={2} mr={2}>
+                        -
+                      </Button>
+                      <Badge variant="subtle" color="blue.500" fontSize={{ base: 'sm', md: 'md' }}>
+                        {item.quantity}
+                      </Badge>
+                      <Button size="sm" onClick={() => onIncrease(item)} ml={2}>
+                        +
+                      </Button>
                     </Flex>
                     <Text>Total: Rs {(item.price * item.quantity).toFixed(2)}</Text>
                   </VStack>
+
+                  {/* Remove Button Section */}
+                  <Button mt={{ base: 4, md: 0 }} onClick={() => onRemove(item)}>
+                    Remove Item
+                  </Button>
                 </Flex>
               </Box>
             ))}
             <Flex justify="flex-end">
-              <Text fontSize="20px">Total: <span><Text as="b">{totalAmount.toFixed(2)}</Text></span></Text>
+              <Text fontSize="20px">
+                Total: <Text as="b">{totalAmount.toFixed(2)}</Text>
+              </Text>
             </Flex>
             {/* Shipping Address */}
-            <HStack spacing="4" mt="1rem">
+            <Stack spacing="4" mt="1rem">
               <Text as="u">Shipping To :</Text>
               <Box>
-                <Text as="b">{address.hostel.toUpperCase()} , Floor {address.floor} , Room No- {address.room}, Contact Number - {address.contact_number} </Text>
+                <Text as="b">
+                  {address.hostel.toUpperCase()} , Floor {address.floor} , Room No- {address.room}, Contact Number -{' '}
+                  {address.contact_number}
+                </Text>
               </Box>
-            </HStack>
+            </Stack>
             {/* Payment Options */}
-            <Flex justify="space-between" mt="1rem" alignItems="center">
-              <Text as="b" fontSize="20px">Payment Options</Text>
-              <RadioGroup onChange={(value) => setPayment(value)} value={payment}>
-                <VStack alignItems="flex-start">
+            <Flex direction={{ base: 'column', md: 'row' }} justify="space-between" mt="1rem" alignItems="center">
+              <Text as="b" fontSize={{ base: 'xl', md: '2xl' }}>
+                Payment Options
+              </Text>
+              <RadioGroup onChange={(value) => setPayment(value)} value={payment} mt={{ base: 4, md: 0 }}>
+                <VStack alignItems={{ base: 'flex-start', md: 'center' }} spacing={2}>
                   <Radio value="Google Form">Pay Now</Radio>
                   <Radio value="COD">Cash on Delivery</Radio>
                 </VStack>
               </RadioGroup>
-              <Button onClick={() => handleOrder(payment)} mt="1rem" colorScheme="blue">
+              <Button onClick={() => handleOrder(payment)} mt={{ base: 4, md: 0 }} colorScheme="blue">
                 Confirm Order
               </Button>
             </Flex>

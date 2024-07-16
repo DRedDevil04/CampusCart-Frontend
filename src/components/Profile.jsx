@@ -229,10 +229,9 @@ function Profile() {
                 </Stack>
             </Box>
 
-
             <Heading size="lg" mb={6}>Order History</Heading>
             <Stack spacing={6}>
-                {userResponse.data.orders.length == 0 ? <Text mb={2}>No Order Found!</Text> : <></>}
+                {userResponse.data.orders.length === 0 ? <Text mb={2}>No Order Found!</Text> : null}
                 {userResponse.data.orders &&
                     userResponse.data.orders.map((order, index) => (
                         <Box key={index} p={6} bg="white" borderRadius="md" boxShadow="md">
@@ -250,37 +249,20 @@ function Profile() {
                                 </Box>
                             )}
                             <Divider mb={4} />
-                            <Flex wrap="wrap" gap={4}>
+                            <Flex flexWrap="wrap" gap={4}>
                                 {order.items &&
-                                    order.items.map((item, index) => (
-
-                                        <Box key={index} bg="white" borderWidth="1px" borderRadius="lg" overflow="hidden" p={4} boxShadow="md" style={{width:'100%'}}>
-                                            <Flex gap="12" height="100%">
-                                                <Image boxSize="100px" objectFit="cover" src={item.item.images.length > 0 ? item.item.images[0].url : 'https://placehold.co/400'} alt={item.item.name} />
-                                                <VStack align="start" flex="1">
-                                                    <Text fontWeight="bold" fontSize="lg">{item.item.name}</Text>
-                                                    <Text>Price: Rs {(item.item.price.amount).toFixed(2)}</Text>
-                                                    <Flex gap="1rem" alignItems="center">
-                                                        <Text>Quantity:</Text>
-                                                        <Badge variant="subtle" fontSize="1rem" color="blue.500">{item.quantity}</Badge>
-                                                    </Flex>
-                                                    <Text>Total: Rs {(item.item.price.amount * item.quantity).toFixed(2)}</Text>
-                                                </VStack>
-                                            </Flex>
-                                        </Box>
+                                    order.items.map((item, i) => (
+                                        <VStack key={i} align="flex-start">                                            
+                                            <Image src={item.item.images.length > 0 ? item.item.images[0].url : 'https://placehold.co/400'} alt={item.item.name} boxSize="80px" objectFit="cover" />
+                                            <Text>{item.name}</Text>
+                                            <Text fontSize="sm">
+                                                Quantity: {item.quantity}
+                                                <br />
+                                                Price: {item.price} {order.payment.currency}
+                                            </Text>
+                                        </VStack>
                                     ))}
                             </Flex>
-                            <Text mt={2}>
-                                {order.order_status !== 'Cancelled' && (order.payment.status === 'Paid' || order.payment.status === 'Pending') ? (
-                                    new Date(order.shipping.estimated_delivery_date) < new Date() ? (
-                                        `Delivered on ${new Date(order.shipping.estimated_delivery_date).toLocaleDateString()}`
-                                    ) : (<>
-                                        {order.shipping.estimated_delivery_date ? `Estimated Delivery Date: ${new Date(order.shipping.estimated_delivery_date).toLocaleDateString()}` : null}
-                                    </>
-                                    )
-                                ) : null}
-                            </Text>
-
                         </Box>
                     ))}
             </Stack>
@@ -289,3 +271,4 @@ function Profile() {
 }
 
 export default Profile;
+
