@@ -6,7 +6,6 @@ import {
   CardBody,
   Text,
   Button,
-  HStack,
   VStack,
   Stack,
   Flex,
@@ -79,7 +78,7 @@ const Checkout = ({ address }) => {
 
   if (orderSuccess) {
     return (
-      <Flex justify="center" height="100vh" alignItems="center" direction="column">
+      <Flex justify="center" alignItems="center" direction="column">
         <IoMdCheckmarkCircleOutline color="green" size="70px" />
         <Card m="1rem" maxWidth={{ base: '100%', md: '800px' }}>
           <CardHeader fontSize="xl" fontWeight="bold" textAlign="center">
@@ -108,9 +107,9 @@ const Checkout = ({ address }) => {
                     align="center"
                     justify="space-between"
                   >
-                    <Box mb={{ base: 4, md: 0 }} mr={{ base: 0, md: 4 }}>
+                    <Box mb={{ base: 4, md: 0 }} mr={{ base: 0, md: 4 }} maxW={{ base: '100%', md: '100px' }}>
                       <Image
-                        boxSize={{ base: '100%', md: '100px' }}
+                        boxSize="100%"
                         objectFit="cover"
                         src={item.img}
                         alt={item.title}
@@ -148,7 +147,7 @@ const Checkout = ({ address }) => {
                 </Box>
               </Stack>
               {/* Navigation Buttons */}
-              <Flex justify="space-between" mt="2rem" width="100%">
+              <Flex direction={{ base: 'column', md: 'row' }} justify="space-between" mt="1rem" alignItems="center" gap='5px'>
                 <Button onClick={() => navigate('/profile')} to="/profile" colorScheme="blue" variant="outline">
                   Go to Profile
                 </Button>
@@ -185,9 +184,9 @@ const Checkout = ({ address }) => {
               >
                 <Flex flexDir={{ base: 'column', md: 'row' }} alignItems="center">
                   {/* Image Section */}
-                  <Box mb={{ base: 4, md: 0 }} mr={{ base: 0, md: 4 }}>
+                  <Box mb={{ base: 4, md: 0 }} mr={{ base: 0, md: 4 }} maxW={{ base: '100%', md: '100px' }}>
                     <Image
-                      boxSize={{ base: '100%', md: '100px' }}
+                      boxSize="100%"
                       objectFit="cover"
                       src={item.img}
                       alt={item.title}
@@ -202,23 +201,12 @@ const Checkout = ({ address }) => {
                     <Text>Price: Rs {item.price}</Text>
                     <Flex alignItems="center">
                       <Text>Quantity:</Text>
-                      <Button size="sm" onClick={() => onDecrease(item)} ml={2} mr={2}>
-                        -
-                      </Button>
                       <Badge variant="subtle" color="blue.500" fontSize={{ base: 'sm', md: 'md' }}>
                         {item.quantity}
                       </Badge>
-                      <Button size="sm" onClick={() => onIncrease(item)} ml={2}>
-                        +
-                      </Button>
                     </Flex>
                     <Text>Total: Rs {(item.price * item.quantity).toFixed(2)}</Text>
                   </VStack>
-
-                  {/* Remove Button Section */}
-                  <Button mt={{ base: 4, md: 0 }} onClick={() => onRemove(item)}>
-                    Remove Item
-                  </Button>
                 </Flex>
               </Box>
             ))}
