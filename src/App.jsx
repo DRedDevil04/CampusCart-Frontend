@@ -5,7 +5,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { useDisclosure, Spinner, Alert, AlertIcon } from "@chakra-ui/react";
+import { useDisclosure, Spinner, Alert, AlertIcon, Center } from "@chakra-ui/react";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PrivateRoute from "./components/PrivateRoute";
 import { Login } from "./pages/Login";
@@ -40,17 +40,19 @@ function App() {
     isLoading: isLoadingCategories,
     error: errorCategories,
   } = useGetAllCategoriesQuery();
-
   if (isLoadingItems || isLoadingCategories) {
     return (
-      <Spinner
-        thickness="4px"
-        speed="0.65s"
-        emptyColor="gray.200"
-        color="blue.500"
-        size="xl"
-        mt="20%"
-      />
+      <Center>
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="xl"
+          mt="20%"
+          min-height='100vh'
+        />
+      </Center>
     );
   }
 

@@ -14,7 +14,7 @@ import {
     Alert,
     AlertIcon,
     VStack,
-    Badge
+    Center
 } from '@chakra-ui/react';
 import { useGetProfileQuery, useUpdateProfileMutation } from '../slices/userApiSlice';
 
@@ -114,9 +114,17 @@ function Profile() {
 
     if (isLoading || isUpdating) {
         return (
-            <Flex justify="center" align="center" height="100vh">
-                <Spinner size="xl" />
-            </Flex>
+            <Center>
+                <Spinner
+                    thickness="4px"
+                    speed="0.65s"
+                    emptyColor="gray.200"
+                    color="blue.500"
+                    size="xl"
+                    mt="20%"
+                    min-height='100vh'
+                />
+            </Center>
         );
     }
 
@@ -252,7 +260,7 @@ function Profile() {
                             <Flex flexWrap="wrap" gap={4}>
                                 {order.items &&
                                     order.items.map((item, i) => (
-                                        <VStack key={i} align="flex-start">                                            
+                                        <VStack key={i} align="flex-start">
                                             <Image src={item.item.images.length > 0 ? item.item.images[0].url : 'https://placehold.co/400'} alt={item.item.name} boxSize="80px" objectFit="cover" />
                                             <Text>{item.name}</Text>
                                             <Text fontSize="sm">

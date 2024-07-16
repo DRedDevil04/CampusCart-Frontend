@@ -12,18 +12,20 @@ import {
     useToast,
     Input,
     InputGroup,
-    InputLeftElement
+    InputLeftElement,
+    Center,
+    Spinner
 } from '@chakra-ui/react';
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { SearchIcon } from '@chakra-ui/icons';
 import UserListRow from '../helpers/userlist_row';
 import api from '../API/api';
 
-
 const UserList = () => {
     const [tableData, setTableData] = useState([]);
     const [search, setSearch] = useState('');
-    const [openPopovers, setOpenPopovers] = useState({}); // Initialize an empty object to store popover states
+    const [loading, setLoading] = useState(true);
+    const [openPopovers, setOpenPopovers] = useState({});
     const toast = useToast();
 
     const textColor = useColorModeValue("gray.700", "white");
@@ -36,36 +38,31 @@ const UserList = () => {
 
     const handleOpenPopover = (userId) => {
         setOpenPopovers((prevOpenPopovers) => {
-            // Create a new object with all values set to false using Object.entries and Object.fromEntries
             const resetPopovers = Object.fromEntries(
                 Object.entries(prevOpenPopovers).map(([key, value]) => [key, false])
             );
-    
-            // Set the specific popover to true
             return {
                 ...resetPopovers,
                 [userId]: true,
             };
         });
     };
-      
-      const handleClosePopover = (userId) => {
-        setOpenPopovers((prevOpenPopovers) => ({
-          ...prevOpenPopovers,
-          [userId]: false,
-        }));
-      };
 
-    const handleChangeRole = async (userId,email, newrole) => {
+    const handleClosePopover = (userId) => {
+        setOpenPopovers((prevOpenPopovers) => ({
+            ...prevOpenPopovers,
+            [userId]: false,
+        }));
+    };
+
+    const handleChangeRole = async (userId, email, newrole) => {
         try {
-            await api.put("/user/updaterole",{email,newrole})
+            await api.put("/user/updaterole", { email, newrole });
             setTableData(prevData =>
                 prevData.map(user =>
                     user.email === email ? { ...user, role: newrole } : user
                 )
             );
-
-            // success toast notification
             toast({
                 title: "Role changed.",
                 description: `User's role has been changed to ${newrole}.`,
@@ -74,8 +71,7 @@ const UserList = () => {
                 isClosable: true,
             });
         } catch (error) {
-            // Show error toast notification
-            console.error('Error:', error.response ? error.response.data : error.message);  // Log the error details
+            console.error('Error:', error.response ? error.response.data : error.message);
             toast({
                 title: "An error occurred.",
                 description: "Unable to change role.",
@@ -83,24 +79,41 @@ const UserList = () => {
                 duration: 3000,
                 isClosable: true,
             });
-        }  finally {
-                handleClosePopover(userId);
+        } finally {
+            handleClosePopover(userId);
         }
     };
 
-    useEffect(()=>{
-        const getAllusers=async()=>{
-            try{
-            const res=await api.get("/user/getallusers",{withCredentials:true});
-            setTableData(res.data.data);
+    useEffect(() => {
+        const getAllUsers = async () => {
+            try {
+                const res = await api.get("/user/getallusers", { withCredentials: true });
+                setTableData(res.data.data);
+            } catch (err) {
+                console.error(`Error: ${err}`);
+            } finally {
+                setLoading(false);
             }
-            catch(err)
-            {
-                console.error(`Error:${err}`);
-            }
-        }
-        getAllusers();
-    },[])
+        };
+        getAllUsers();
+    }, []);
+
+    if (loading) {
+        return (
+            <Center>
+                <Spinner
+                    thickness="4px"
+                    speed="0.65s"
+                    emptyColor="gray.200"
+                    color="blue.500"
+                    size="xl"
+                    mt="20%"
+                    min-height='100vh'
+                />
+            </Center>
+        );
+    }
+
     return (
         <>
             <Card mt="1rem" pl={{ base: "0rem", md: "3rem" }} pb="0px">
@@ -114,9 +127,8 @@ const UserList = () => {
                         Users
                     </Text>
                 </CardHeader>
-
                 <CardBody overflowX="auto">
-                    <InputGroup 
+                    <InputGroup
                         mb="2rem"
                         width={{ base: "80%", sm: "50%" }}>
                         <InputLeftElement
@@ -130,7 +142,6 @@ const UserList = () => {
                             onChange={(e) => setSearch(e.target.value)}
                         />
                     </InputGroup>
-
                     <Table variant="simple" color={textColor}>
                         <Thead>
                             <Tr my="0.8rem" pl="0px" color="gray.400">
@@ -154,7 +165,6 @@ const UserList = () => {
                                 </Th>
                             </Tr>
                         </Thead>
-
                         <Tbody>
                             {filteredData.map((user, index) => (
                                 <UserListRow

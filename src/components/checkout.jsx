@@ -13,6 +13,7 @@ import {
   Image,
   Radio,
   RadioGroup,
+  Spinner,
 } from '@chakra-ui/react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCarts, clearCart } from '../slices/cartSlice';
@@ -31,6 +32,7 @@ const Checkout = ({ address }) => {
   const [orderItems, setOrderItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const email = userInfo.email;
 
@@ -45,6 +47,7 @@ const Checkout = ({ address }) => {
   const [placeOrder] = useAddNewOrderMutation();
 
   const handleOrder = async (paymentMethod) => {
+    setIsLoading(true);
     const items = carts[email]?.map((item) => ({
       item: item.ID,
       title: item.title,
@@ -73,6 +76,8 @@ const Checkout = ({ address }) => {
     } catch (error) {
       console.error('Error placing order:', error.message);
       alert('Error placing order. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -236,7 +241,14 @@ const Checkout = ({ address }) => {
                   <Radio value="COD">Cash on Delivery</Radio>
                 </VStack>
               </RadioGroup>
-              <Button onClick={() => handleOrder(payment)} mt={{ base: 4, md: 0 }} colorScheme="blue">
+              <Button
+                onClick={() => handleOrder(payment)}
+                mt={{ base: 4, md: 0 }}
+                colorScheme="blue"
+                isLoading={isLoading}
+                loadingText="Processing..."
+                isDisabled={isLoading}
+              >
                 Confirm Order
               </Button>
             </Flex>

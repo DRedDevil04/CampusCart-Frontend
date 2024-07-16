@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Box, SimpleGrid, Spinner } from '@chakra-ui/react';
+import { Box, SimpleGrid, Spinner, Center } from '@chakra-ui/react';
 import OrderCard from '../components/orders';
 import Header from '../components/header';
 import Sidebar from '../components/sidebar';
@@ -27,9 +27,17 @@ const OrdersPage = ({ onOpen, isOpen, onClose, btnRef }) => {
 
   if (isLoadingOrders) {
     return (
-      <Box p={4}>
-        <Spinner size="xl" />
-      </Box>
+      <Center>
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="xl"
+          mt="20%"
+          min-height='100vh'
+        />
+      </Center>
     );
   }
 
