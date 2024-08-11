@@ -23,51 +23,7 @@ function SlideShowModal(props) {
           <div className="close" onClick={props.escaping}>
             <IoIosCloseCircle />
           </div>
-          <div
-            className="prod-img-mod"
-            ref={slideshowImgRef}
-            onMouseMove={(e) => {
-              const mouseX = e.clientX;
-              const mouseY = e.clientY;
-
-              cursorRef.current.style.transform = "scale(1)";
-              cursorRef.current.style.opacity = "1";
-              cursorRef.current.style.fontSize = "2rem";
-              cursorContRef.current.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
-
-              if (
-                mouseX <
-                slideshowImgRef.current.getBoundingClientRect().x +
-                  slideshowImgRef.current.offsetWidth / 2
-              ) {
-                cursorRef.current.innerHTML = "❮";
-              } else {
-                cursorRef.current.innerHTML = "❯";
-              }
-            }}
-            onMouseLeave={() => {
-              cursorRef.current.style.transform = "scale(0)";
-              cursorRef.current.style.opacity = "0";
-            }}
-            onClick={(e) => {
-              cursorRef.current.style.transform = "scale(0)";
-              cursorRef.current.style.opacity = "0";
-              const mouseX = e.clientX;
-              if (
-                mouseX <
-                slideshowImgRef.current.getBoundingClientRect().x +
-                  slideshowImgRef.current.offsetWidth / 2
-              ) {
-                props.setCurrentImg(
-                  (props.currentImg - 1 < 0
-                    ? props.currentImg - 1 + props.srcs.length
-                    : props.currentImg - 1) % props.srcs.length
-                );
-              } else {
-                props.setCurrentImg((props.currentImg + 1) % props.srcs.length);
-              }
-            }}
-          >
+          <div className="prod-img-mod" ref={slideshowImgRef}>
             <img
               src={props.srcs[props.currentImg].url}
               alt="this"
