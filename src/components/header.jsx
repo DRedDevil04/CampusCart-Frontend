@@ -76,6 +76,7 @@ const Header = ({ onOpen }) => {
           marginRight={"auto"}
           marginBottom={"10px"}
           width={"max-content"}
+          cursor={"pointer"}
           onClick={() => {
             navigate("/shop");
             onClose();
