@@ -1,16 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { Box, SimpleGrid, Spinner, Center, Input, Select, Flex } from '@chakra-ui/react';
-import OrderCard from '../components/orders';
-import Header from '../components/header';
-import Sidebar from '../components/sidebar';
-import { useGetAllOrdersQuery } from '../slices/orderSlice';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import {
+  Box,
+  SimpleGrid,
+  Spinner,
+  Center,
+  Input,
+  Select,
+  Flex,
+} from "@chakra-ui/react";
+import OrderCard from "../components/orders";
+import Header from "../components/header";
+import Sidebar from "../components/sidebar";
+import { useGetAllOrdersQuery } from "../slices/orderSlice";
 
 const OrdersPage = ({ onOpen, isOpen, onClose, btnRef }) => {
   const [reloadData, setReloadData] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchFilter, setSearchFilter] = useState('item'); // 'item' or 'buyer'
-  const [statusFilter, setStatusFilter] = useState(''); // Empty string means no filter
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchFilter, setSearchFilter] = useState("item"); // 'item' or 'buyer'
+  const [statusFilter, setStatusFilter] = useState(""); // Empty string means no filter
 
   const {
     data = {},
@@ -33,13 +41,15 @@ const OrdersPage = ({ onOpen, isOpen, onClose, btnRef }) => {
   };
 
   const filteredOrders = orders.filter((order) => {
-    const matchesSearchQuery = (searchFilter === 'item')
-      ? order.items.some((item) =>
-          item.item.name.toLowerCase().includes(searchQuery)
-        )
-      : order.customer.name.toLowerCase().includes(searchQuery);
+    const matchesSearchQuery =
+      searchFilter === "item"
+        ? order.items.some((item) =>
+            item.item.name.toLowerCase().includes(searchQuery)
+          )
+        : order.customer.name.toLowerCase().includes(searchQuery);
 
-    const matchesStatus = statusFilter === '' || order.order_status === statusFilter;
+    const matchesStatus =
+      statusFilter === "" || order.order_status === statusFilter;
 
     return matchesSearchQuery && matchesStatus;
   });
@@ -54,7 +64,7 @@ const OrdersPage = ({ onOpen, isOpen, onClose, btnRef }) => {
           color="blue.500"
           size="xl"
           mt="20%"
-          min-height='100vh'
+          min-height="100vh"
         />
       </Center>
     );
@@ -85,17 +95,29 @@ const OrdersPage = ({ onOpen, isOpen, onClose, btnRef }) => {
         {/* Search Bar and Filters */}
         <Flex mb={4} justify="space-between" align="center">
           <Input
-            placeholder={Search by ${searchFilter === 'item' ? 'item name' : 'buyer name'}}
+            placeholder={`Search by ${
+              searchFilter === "item" ? "item name" : "buyer name"
+            }`}
             value={searchQuery}
             onChange={handleSearch}
             width="45%"
             borderColor="blue.400"
           />
-          <Select value={searchFilter} onChange={(e) => setSearchFilter(e.target.value)} width="25%" borderColor="blue.400">
+          <Select
+            value={searchFilter}
+            onChange={(e) => setSearchFilter(e.target.value)}
+            width="25%"
+            borderColor="blue.400"
+          >
             <option value="item">Item Name</option>
             <option value="buyer">Buyer Name</option>
           </Select>
-          <Select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} width="27%" borderColor="blue.400">
+          <Select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            width="27%"
+            borderColor="blue.400"
+          >
             <option value="">Sort By Status</option>
             <option value="Confirmation Awaited">Confirmation Awaited</option>
             <option value="Confirmed">Confirmed</option>
@@ -109,7 +131,11 @@ const OrdersPage = ({ onOpen, isOpen, onClose, btnRef }) => {
 
         <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={5}>
           {filteredOrders.map((order, index) => (
-            <OrderCard key={index} order={order} setReloadData={setReloadData} />
+            <OrderCard
+              key={index}
+              order={order}
+              setReloadData={setReloadData}
+            />
           ))}
         </SimpleGrid>
       </Box>
