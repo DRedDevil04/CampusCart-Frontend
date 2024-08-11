@@ -58,7 +58,7 @@ function Shop(props) {
         )}
 
         {!isCategory && !isSearched && (
-          <h1 className="text-hover">Explore by top categories</h1>
+          <h1 className="text-hover">Explore by kits</h1>
         )}
         <div className="cat-cont container">
           {categories?.map((category) => (

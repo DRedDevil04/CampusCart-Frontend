@@ -64,7 +64,7 @@ const Header = ({ onOpen }) => {
         <Heading
           as="h1"
           size={["md", "lg", "xl", "2xl"]}
-          fontFamily={"'Poppins', sans-serif"}
+          fontFamily={"'Pacifico', cursive"}
           color="white"
           whiteSpace="nowrap"
           flexShrink={0}
