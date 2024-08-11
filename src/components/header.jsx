@@ -79,7 +79,7 @@ const Header = ({ onOpen }) => {
             onClose();
           }}
         >
-          CampusCart
+          TakeitEasy
         </Heading>
 
         <Flex alignItems="center" gap="1rem">
