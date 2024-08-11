@@ -40,19 +40,22 @@ const OrdersPage = ({ onOpen, isOpen, onClose, btnRef }) => {
     setSearchQuery(e.target.value.toLowerCase());
   };
 
-  const filteredOrders = orders.filter((order) => {
-    const matchesSearchQuery =
-      searchFilter === "item"
-        ? order.items.some((item) =>
-            item.item.name.toLowerCase().includes(searchQuery)
-          )
-        : order.customer.name.toLowerCase().includes(searchQuery);
+  const filteredOrders =
+    orders.length === 0
+      ? []
+      : orders.filter((order) => {
+          const matchesSearchQuery =
+            searchFilter === "item"
+              ? order.items.some((item) =>
+                  item.item.name.toLowerCase().includes(searchQuery)
+                )
+              : order.customer.name.toLowerCase().includes(searchQuery);
 
-    const matchesStatus =
-      statusFilter === "" || order.order_status === statusFilter;
+          const matchesStatus =
+            statusFilter === "" || order.order_status === statusFilter;
 
-    return matchesSearchQuery && matchesStatus;
-  });
+          return matchesSearchQuery && matchesStatus;
+        });
 
   if (isLoadingOrders) {
     return (

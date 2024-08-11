@@ -66,7 +66,6 @@ const Header = ({ onOpen }) => {
           size={["md", "lg", "xl", "2xl"]}
           fontFamily={"'Pacifico', cursive"}
           fontWeight={"400"}
-          padding={"5px 0"}
           color="white"
           whiteSpace="nowrap"
           flexShrink={0}
@@ -75,6 +74,7 @@ const Header = ({ onOpen }) => {
           right={"0"}
           marginLeft={"auto"}
           marginRight={"auto"}
+          marginBottom={"10px"}
           width={"max-content"}
           onClick={() => {
             navigate("/shop");
