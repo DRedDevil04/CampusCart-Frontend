@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Stack, Text, Button, useToast } from '@chakra-ui/react';
-import CartItem from './cartItemsCard';
-import { useSelector, useDispatch } from 'react-redux';
-import { addItemToCart, selectCarts, decreaseItemFromCart, removeItemFromCart } from '../slices/cartSlice';
-import { useGetProfileQuery } from '../slices/userApiSlice.js';
-import { selectUser } from '../slices/authSlice';
-import Shipping from './shipping.jsx';
-import Checkout from './checkout.jsx';
+import React, { useState, useEffect, useRef } from "react";
+import { Box, Stack, Text, Button, useToast } from "@chakra-ui/react";
+import CartItem from "./cartItemsCard";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  addItemToCart,
+  selectCarts,
+  decreaseItemFromCart,
+  removeItemFromCart,
+} from "../slices/cartSlice";
+import { useGetProfileQuery } from "../slices/userApiSlice.js";
+import { selectUser } from "../slices/authSlice";
+import Shipping from "./shipping.jsx";
+import Checkout from "./checkout.jsx";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -14,30 +19,43 @@ const Cart = () => {
   const userInfo = useSelector(selectUser);
   const email = userInfo.email;
   const toast = useToast();
-  const { data: userResponse, error, isLoading, refetch } = useGetProfileQuery();
-  
+  const {
+    data: userResponse,
+    error,
+    isLoading,
+    refetch,
+  } = useGetProfileQuery();
+
   const userProfile = userResponse ? userResponse.data : null;
 
   const [address, setAddress] = useState({
-    room: '',
-    floor: '',
-    hostel: '',
-    contact_number: '',
+    room: "",
+    floor: "",
+    hostel: "",
+    contact_number: "",
   });
 
   useEffect(() => {
     if (userProfile) {
       setAddress({
-        room: userProfile?.address?.room || '',
-        floor: userProfile?.address?.floor || '',
-        hostel: userProfile?.address?.hostel || '',
-        contact_number: userProfile?.address?.contact_number || '',
+        room: userProfile?.address?.room || "",
+        floor: userProfile?.address?.floor || "",
+        hostel: userProfile?.address?.hostel || "",
+        contact_number: userProfile?.address?.contact_number || "",
       });
     }
   }, [userProfile]);
 
   const [checkout, setCheckout] = useState(false);
   const [clicked, setClicked] = useState(false);
+
+  const shippingRef = useRef(null);
+
+  useEffect(() => {
+    if (clicked && shippingRef.current) {
+      shippingRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [clicked]);
 
   const handleIncrease = (item) => {
     dispatch(addItemToCart({ email, item }));
@@ -98,9 +116,11 @@ const Cart = () => {
             </Button>
           </Stack>
           {clicked && (
-            <Box>
+            <Box ref={shippingRef}>
               <Shipping address={address} setAddress={setAddress} />
-              <Button mt={4} colorScheme="blue" onClick={handleContinue}>Continue</Button>
+              <Button mt={4} colorScheme="blue" onClick={handleContinue}>
+                Continue
+              </Button>
             </Box>
           )}
         </>
