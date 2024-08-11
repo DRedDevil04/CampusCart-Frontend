@@ -43,13 +43,13 @@ const OrdersPage = ({ onOpen, isOpen, onClose, btnRef }) => {
   const filteredOrders = orders.filter((order) => {
     const matchesSearchQuery =
       searchFilter === "item"
-        ? order.items?.some((item) =>
+        ? order?.items?.some((item) =>
             item?.item?.name?.toLowerCase().includes(searchQuery)
           )
-        : order.customer?.name?.toLowerCase().includes(searchQuery);
+        : order?.customer?.name?.toLowerCase().includes(searchQuery);
 
     const matchesStatus =
-      statusFilter === "" || order.order_status === statusFilter;
+      statusFilter === "" || order?.order_status === statusFilter;
 
     return matchesSearchQuery && matchesStatus;
   });
@@ -91,6 +91,7 @@ const OrdersPage = ({ onOpen, isOpen, onClose, btnRef }) => {
         <Header onOpen={onOpen} />
       </HeaderWrapper>
       <Sidebar isOpen={isOpen} onClose={onClose} btnRef={btnRef} />
+      {console.log(orders)}
       <Box p={4}>
         {/* Search Bar and Filters */}
         <Flex mb={4} justify="space-between" align="center">
