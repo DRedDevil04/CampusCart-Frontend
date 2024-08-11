@@ -65,6 +65,8 @@ const Header = ({ onOpen }) => {
           as="h1"
           size={["md", "lg", "xl", "2xl"]}
           fontFamily={"'Pacifico', cursive"}
+          fontWeight={"400"}
+          padding={"5px 0"}
           color="white"
           whiteSpace="nowrap"
           flexShrink={0}
