@@ -53,8 +53,17 @@ function CardImage(props) {
       {id == "66b9f18482b36d46c6108c29" ? (
         <Badge
           borderRadius="full"
-          px="2"
-          py="1"
+          px={{
+            base: 1.1,
+            sm: 2,
+          }}
+          py={{
+            base: 0.5,
+            sm: 1,
+          }}
+          fontSize={{
+            base: "10px",
+          }}
           colorScheme="orange"
           position="absolute"
           top="8px"
@@ -67,8 +76,17 @@ function CardImage(props) {
       {discount > 0 && (
         <Badge
           borderRadius="full"
-          px="2"
-          py="1"
+          px={{
+            base: 0.5,
+            sm: 2,
+          }}
+          py={{
+            base: 0.5,
+            sm: 1,
+          }}
+          fontSize={{
+            base: "10px",
+          }}
           colorScheme="teal"
           position="absolute"
           top="8px"

@@ -553,7 +553,7 @@ textarea::placeholder {
   border-radius: 15px;
 }
 
-footer {
+.footer {
   width: 100vw;
   height: 80px;
   display: flex;
