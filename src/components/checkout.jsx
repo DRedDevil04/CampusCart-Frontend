@@ -56,6 +56,7 @@ const Checkout = ({ address }) => {
       img: item.img,
     }));
     setOrderItems(items);
+    setPayment(paymentMethod);
     const paymentObj = { payment_method: paymentMethod, amount: totalAmount };
     const orderDetails = {
       items,
@@ -90,14 +91,19 @@ const Checkout = ({ address }) => {
         <IoMdCheckmarkCircleOutline color="green" size="70px" />
         <Card m="1rem" maxWidth={{ base: "100%", md: "800px" }}>
           <CardHeader fontSize="xl" fontWeight="bold" textAlign="center">
-            Order Placed Successfully, if Pay now selected please pay using the
-            <a
-              href="https://docs.google.com/forms/d/15HACDsdx7p42BM6Fk3TgTm-1uAnwyZHRhXhZxaWiOi8/edit"
-              target="_blank"
-            >
-              Google Form
-            </a>{" "}
-            redirected or link below.
+            Order Placed Successfully
+            {payment == "Google form" ? (
+              <span>
+                , please pay using the redirected google form or
+                <a
+                  href="https://docs.google.com/forms/d/15HACDsdx7p42BM6Fk3TgTm-1uAnwyZHRhXhZxaWiOi8/edit"
+                  target="_blank"
+                  style={{ textDecoration: "underline", color: "blue" }}
+                >
+                  click here.
+                </a>
+              </span>
+            ) : null}
           </CardHeader>
           <CardBody>
             <Text fontSize="lg" fontWeight="bold">
