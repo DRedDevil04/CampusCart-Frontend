@@ -54,6 +54,7 @@ function CardImage(props) {
         <Badge
           borderRadius="full"
           px="2"
+          py="1"
           colorScheme="orange"
           position="absolute"
           top="8px"
@@ -67,6 +68,7 @@ function CardImage(props) {
         <Badge
           borderRadius="full"
           px="2"
+          py="1"
           colorScheme="teal"
           position="absolute"
           top="8px"
