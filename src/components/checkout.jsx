@@ -90,7 +90,14 @@ const Checkout = ({ address }) => {
         <IoMdCheckmarkCircleOutline color="green" size="70px" />
         <Card m="1rem" maxWidth={{ base: "100%", md: "800px" }}>
           <CardHeader fontSize="xl" fontWeight="bold" textAlign="center">
-            Order Placed Successfully
+            Order Placed Successfully, if Pay now selected please pay using the
+            <a
+              href="https://docs.google.com/forms/d/15HACDsdx7p42BM6Fk3TgTm-1uAnwyZHRhXhZxaWiOi8/edit"
+              target="_blank"
+            >
+              Google Form
+            </a>{" "}
+            redirected or link below.
           </CardHeader>
           <CardBody>
             <Text fontSize="lg" fontWeight="bold">
