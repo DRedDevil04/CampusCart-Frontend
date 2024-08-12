@@ -96,6 +96,7 @@ function Shop(props) {
           )}
         </div>
       </section>
+      <footer className="footer">Contact us: +91XXXXXXXXXX</footer>
     </>
   );
 }
