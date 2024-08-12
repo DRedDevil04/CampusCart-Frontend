@@ -14,7 +14,13 @@ import { useNavigate } from "react-router-dom";
 
 const Product = forwardRef(function Product(props, ref) {
   let propsData = props.product;
-  const discountedPrice =propsData.price.discount.percentage > 0 ? (propsData.price.amount * (1 - propsData.price.discount.percentage / 100)).toFixed(2) : propsData.price.amount.toFixed(2);
+  const discountedPrice =
+    propsData.price.discount.percentage > 0
+      ? (
+          propsData.price.amount *
+          (1 - propsData.price.discount.percentage / 100)
+        ).toFixed(2)
+      : propsData.price.amount.toFixed(2);
 
   const userInfo = useSelector(selectUser);
   const email = userInfo?.email;
@@ -119,12 +125,12 @@ const Product = forwardRef(function Product(props, ref) {
           right: "0",
         }}
       >
-        {/* cursor custom */}
+        {/* cursor custom
         <div ref={cursorContRef} className="customCursorCont">
           <div className="customCursor" ref={cursorRef}>
             View Image
           </div>
-        </div>
+        </div> */}
         {/* --------slideshow modal-------------- */}
         {isVisible ? (
           <SlideShowModal
@@ -144,20 +150,20 @@ const Product = forwardRef(function Product(props, ref) {
             <div className="img-cont">
               <div
                 className="prod-img"
-                onMouseOver={() => {
-                  cursorRef.current.style.opacity = "0.9";
-                  cursorRef.current.style.transform = "scale(1)";
-                }}
-                onMouseOut={() => {
-                  cursorRef.current.style.transform = "scale(0)";
-                  cursorRef.current.style.opacity = "0";
-                }}
-                onMouseMove={(e) => {
-                  const mouseX = e.clientX;
-                  const mouseY = e.clientY;
+                // onMouseOver={() => {
+                //   cursorRef.current.style.opacity = "0.9";
+                //   cursorRef.current.style.transform = "scale(1)";
+                // }}
+                // onMouseOut={() => {
+                //   cursorRef.current.style.transform = "scale(0)";
+                //   cursorRef.current.style.opacity = "0";
+                // }}
+                // onMouseMove={(e) => {
+                //   const mouseX = e.clientX;
+                //   const mouseY = e.clientY;
 
-                  cursorContRef.current.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
-                }}
+                //   cursorContRef.current.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+                // }}
                 onClick={() => {
                   setIsVisible(true);
                   cursorRef.current.style.transform = "scale(0)";
@@ -198,10 +204,7 @@ const Product = forwardRef(function Product(props, ref) {
             {propsData.available ? (
               <div className="prod-price">
                 <div className="price-top">
-                  <h2 className="price-main">
-                    ₹
-                    {discountedPrice}
-                  </h2>
+                  <h2 className="price-main">₹{discountedPrice}</h2>
                   {propsData.price.discount.percentage > 0 ? (
                     <div className="price-disc">
                       {propsData.price.discount.percentage}%

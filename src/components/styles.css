@@ -149,6 +149,11 @@ body::-webkit-scrollbar,
   justify-content: center;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   overflow: hidden;
+  transition: all 0.3s;
+}
+
+.card:hover {
+  box-shadow: rgba(149, 157, 165, 0.6) 0px 8px 40px;
 }
 
 .add {
@@ -402,7 +407,7 @@ body::-webkit-scrollbar,
   display: flex;
   justify-content: center;
   padding: 20px;
-  cursor: none;
+  /* cursor: none; */
 }
 .prod-img-mod > img {
   height: 100%;
@@ -540,7 +545,8 @@ textarea::placeholder {
   height: calc(30vw);
   padding: 20px;
   max-height: 70vh;
-  cursor: none;
+  /* cursor: none; */
+  cursor: pointer;
 }
 .prod-img > img {
   object-fit: contain;
@@ -594,6 +600,7 @@ textarea::placeholder {
   padding: 10px 40px;
   font-size: 3rem;
   font-weight: 700;
+  line-height: 1.2;
 }
 
 .prod-desc {

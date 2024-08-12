@@ -5,7 +5,13 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { useDisclosure, Spinner, Alert, AlertIcon, Center } from "@chakra-ui/react";
+import {
+  useDisclosure,
+  Spinner,
+  Alert,
+  AlertIcon,
+  Center,
+} from "@chakra-ui/react";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PrivateRoute from "./components/PrivateRoute";
 import { Login } from "./pages/Login";
@@ -50,7 +56,7 @@ function App() {
           color="blue.500"
           size="xl"
           mt="20%"
-          min-height='100vh'
+          min-height="100vh"
         />
       </Center>
     );
@@ -66,7 +72,7 @@ function App() {
   }
 
   const products = itemsData || [];
-  const categories = categoriesData || [];
+  // const categories = categoriesData || [];
 
   return (
     <Router>
@@ -80,9 +86,9 @@ function App() {
           element={
             <Shop
               products={products}
-              categories={categories}
-              isCategory={false}
-              isSearched={false}
+              // categories={categories}
+              // isCategory={false}
+              // isSearched={false}
               onOpen={onOpen}
               isOpen={isOpen}
               onClose={onClose}
@@ -105,7 +111,7 @@ function App() {
             }
           />
         ))}
-        {categories.map((cat) => (
+        {/* {categories.map((cat) => (
           <Route
             key={cat._id}
             path={"/category/" + cat.name}
@@ -125,7 +131,7 @@ function App() {
               />
             }
           />
-        ))}
+        ))} */}
 
         {/* Private Routes */}
         <Route path="/dashboard" element={<PrivateRoute />}>

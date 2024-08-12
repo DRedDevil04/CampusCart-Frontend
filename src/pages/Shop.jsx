@@ -2,13 +2,12 @@ import React from "react";
 import "../components/styles.css";
 import Card from "../components/Card";
 import Carousel from "../components/Carousel";
-import CategoryCard from "../components/CategoryCard";
+// import CategoryCard from "../components/CategoryCard";
 import Header from "../components/header";
 import Sidebar from "../components/sidebar";
 import { useSelector } from "react-redux";
 import { selectUser } from "../slices/authSlice";
 import PropTypes from "prop-types";
-import { IoArrowBackCircle } from "react-icons/io5";
 
 function Shop(props) {
   const {
@@ -16,10 +15,10 @@ function Shop(props) {
     isOpen,
     onClose,
     btnRef,
-    isCategory,
-    isSearched,
+    // isCategory,
+    // isSearched,
     products,
-    categories,
+    // categories,
   } = props;
   const userInfo = useSelector(selectUser);
   const email = userInfo?.email;
@@ -43,21 +42,19 @@ function Shop(props) {
       <Header onOpen={onOpen} />
       <Sidebar isOpen={isOpen} onClose={onClose} btnRef={btnRef} />
       <section className="page">
-        {!isCategory && !isSearched && (
-          <div className="img-cont-car">
-            <Carousel
-              srcs={srcs}
-              currentImg={currentImg}
-              setCurrentImg={setCurrentImg}
-              isInfinite={true}
-              nextTime={5000}
-              nextImg={nextImg}
-              prevImg={prevImg}
-            />
-          </div>
-        )}
+        <div className="img-cont-car">
+          <Carousel
+            srcs={srcs}
+            currentImg={currentImg}
+            setCurrentImg={setCurrentImg}
+            isInfinite={true}
+            nextTime={5000}
+            nextImg={nextImg}
+            prevImg={prevImg}
+          />
+        </div>
 
-        {!isCategory && !isSearched && (
+        {/* {!isCategory && !isSearched && (
           <h1 className="text-hover">Explore by kits</h1>
         )}
         <div className="cat-cont container">
@@ -73,18 +70,8 @@ function Shop(props) {
           <div className="back-shop" onClick={() => history.back()}>
             <IoArrowBackCircle /> <div>Back to shop</div>
           </div>
-        )}
-        <h1 className="text-hover">
-          {!isCategory && !isSearched
-            ? "Our products"
-            : isCategory && !isSearched
-            ? products.length > 0
-              ? "Explore " +
-                products[0].category.name[0].toUpperCase() +
-                products[0].category.name.slice(1)
-              : "Explore"
-            : "Search Results"}
-        </h1>
+        )} */}
+        <h1 className="text-hover">Our products</h1>
         <div className="container">
           {products.length === 0 ? (
             <h2 className="no-prod">No products found...</h2>
