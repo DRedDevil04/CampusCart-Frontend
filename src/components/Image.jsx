@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Spinner,Badge } from "@chakra-ui/react";
+import { Spinner, Badge } from "@chakra-ui/react";
 
 function CardImage(props) {
   const navigate = useNavigate();
@@ -18,18 +18,18 @@ function CardImage(props) {
 
   const handleImageError = () => {
     setImageAvailable(false);
-    setImageLoading(false); 
+    setImageLoading(false);
   };
 
   return (
     <div
       className="card-image"
-      style={{ cursor: "pointer", position: "relative" }} 
+      style={{ cursor: "pointer", position: "relative" }}
       onClick={handleImageClick}
     >
       {imageLoading && (
         <Spinner
-          size="sm" 
+          size="sm"
           position="absolute"
           top="50%"
           left="50%"
@@ -50,6 +50,19 @@ function CardImage(props) {
           alt="Image not available"
         />
       )}
+      {id == "66b9f18482b36d46c6108c29" ? (
+        <Badge
+          borderRadius="full"
+          px="2"
+          colorScheme="orange"
+          position="absolute"
+          top="8px"
+          left="8px"
+          zIndex="1"
+        >
+          Bestseller
+        </Badge>
+      ) : null}
       {discount > 0 && (
         <Badge
           borderRadius="full"

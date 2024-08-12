@@ -22,27 +22,26 @@ function Shop(props) {
   } = props;
   const userInfo = useSelector(selectUser);
   const email = userInfo?.email;
-  const srcs = [
-    "https://www.nykaa.com/beauty-blog/wp-content/uploads/images/issue283/8-Breakthrough-Products-That-Are-Selling-Faster-Than-You-Can-Cou_OI.jpg",
-    "https://cdn.shopify.com/s/files/1/0070/7032/files/trending-products_c8d0d15c-9afc-47e3-9ba2-f7bad0505b9b.png?v=1614559651",
-    "https://hips.hearstapps.com/hmg-prod/images/gh-best-skincare-products-6557978b58b57.png",
-    "https://www.nowfoods.com/sites/default/files/styles/masthead_64/public/2023-11/Natrual_Foods_Hero-2_0.jpg?itok=WYhBCrrj",
-    "https://cdn.shopify.com/s/files/1/1859/8979/files/image17_3cfc7cfb-8215-40b7-a297-db7285d5375b.png?v=1610384290",
-    "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-madebymath-90946.jpg&fm=jpg",
-  ];
+  // const srcs = [
+  //   // "https://i.imgur.com/hDpGIev.jpeg",
+  //   "https://www.nykaa.com/beauty-blog/wp-content/uploads/images/issue283/8-Breakthrough-Products-That-Are-Selling-Faster-Than-You-Can-Cou_OI.jpg",
+  //   "https://cdn.shopify.com/s/files/1/0070/7032/files/trending-products_c8d0d15c-9afc-47e3-9ba2-f7bad0505b9b.png?v=1614559651",
+  //   "https://hips.hearstapps.com/hmg-prod/images/gh-best-skincare-products-6557978b58b57.png",
+  //   "https://www.nowfoods.com/sites/default/files/styles/masthead_64/public/2023-11/Natrual_Foods_Hero-2_0.jpg?itok=WYhBCrrj",
+  // ];
 
-  const [currentImg, setCurrentImg] = React.useState(0);
+  // const [currentImg, setCurrentImg] = React.useState(0);
 
-  const nextImg = () => setCurrentImg((currentImg + 1) % srcs.length);
-  const prevImg = () =>
-    setCurrentImg((currentImg - 1 + srcs.length) % srcs.length);
+  // const nextImg = () => setCurrentImg((currentImg + 1) % srcs.length);
+  // const prevImg = () =>
+  //   setCurrentImg((currentImg - 1 + srcs.length) % srcs.length);
 
   return (
     <>
       <Header onOpen={onOpen} />
       <Sidebar isOpen={isOpen} onClose={onClose} btnRef={btnRef} />
       <section className="page">
-        <div className="img-cont-car">
+        {/* <div className="img-cont-car">
           <Carousel
             srcs={srcs}
             currentImg={currentImg}
@@ -52,7 +51,7 @@ function Shop(props) {
             nextImg={nextImg}
             prevImg={prevImg}
           />
-        </div>
+        </div> */}
 
         {/* {!isCategory && !isSearched && (
           <h1 className="text-hover">Explore by kits</h1>
@@ -96,7 +95,7 @@ function Shop(props) {
           )}
         </div>
       </section>
-      <footer className="footer">Contact us: +91XXXXXXXXXX</footer>
+      <footer className="footer">Contact us: +917068618014</footer>
     </>
   );
 }
