@@ -56,7 +56,6 @@ const Checkout = ({ address }) => {
       img: item.img,
     }));
     setOrderItems(items);
-    setPayment(paymentMethod);
     const paymentObj = { payment_method: paymentMethod, amount: totalAmount };
     const orderDetails = {
       items,
@@ -72,6 +71,7 @@ const Checkout = ({ address }) => {
         setTotalCost(totalAmount);
         dispatch(clearCart({ email: userInfo.email }));
       }
+      setPayment(paymentMethod);
       if (paymentMethod == "Google Form")
         window.open(
           "https://docs.google.com/forms/d/15HACDsdx7p42BM6Fk3TgTm-1uAnwyZHRhXhZxaWiOi8/edit"
@@ -92,16 +92,18 @@ const Checkout = ({ address }) => {
         <Card m="1rem" maxWidth={{ base: "100%", md: "800px" }}>
           <CardHeader fontSize="xl" fontWeight="bold" textAlign="center">
             Order Placed Successfully
-            {payment == "Google form" ? (
+            {console.log(payment)}
+            {payment === "Google Form" ? (
               <span>
-                , please pay using the redirected google form or
+                , if not paid{" "}
                 <a
                   href="https://docs.google.com/forms/d/15HACDsdx7p42BM6Fk3TgTm-1uAnwyZHRhXhZxaWiOi8/edit"
                   target="_blank"
                   style={{ textDecoration: "underline", color: "blue" }}
                 >
                   click here.
-                </a>
+                </a>{" "}
+                We will comfirm your payment shortly.
               </span>
             ) : null}
           </CardHeader>
